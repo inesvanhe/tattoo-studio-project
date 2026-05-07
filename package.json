@@ -1,0 +1,15 @@
+{
+  "name": "tattoo-studio-project",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Fullstack web platform for HONEY | BEEZ ink.",
+  "workspaces": [
+    "apps/*"
+  ],
+  "scripts": {
+    "dev": "echo \"Dev scripts will be wired after apps/web and apps/api are scaffolded.\"",
+    "dev:web": "echo \"apps/web is not scaffolded yet.\"",
+    "dev:api": "echo \"apps/api is not scaffolded yet.\"",
+    "check": "echo \"No checks configured yet.\""
+  }
+}
