@@ -332,4 +332,6 @@ Task 2 ist umgesetzt.
 
 Task 3 ist umgesetzt.
 
-Als naechstes wird Task 4 umgesetzt: Workspace-Scripts verbinden.
+Task 4 ist umgesetzt.
+
+Als naechstes wird Task 5 umgesetzt: Brand Foundation vorbereiten.

@@ -47,6 +47,40 @@ AI unterstuetzt Nutzer beim Strukturieren ihrer Ideen, stellt Rueckfragen und er
 - Business-Logik deterministisch im Backend
 - AI unterstuetzt nur, entscheidet nicht
 
+## Lokale Entwicklung
+
+Abhaengigkeiten installieren:
+
+```bash
+npm install
+```
+
+Frontend starten:
+
+```bash
+npm run dev:web
+```
+
+Backend starten:
+
+```bash
+npm run dev:api
+```
+
+Qualitaetschecks:
+
+```bash
+npm run check
+npm run lint
+npm run build
+```
+
+Lokale URLs:
+
+- Web: `http://localhost:5173`
+- API: `http://localhost:4000`
+- Health Check: `http://localhost:4000/api/health`
+
 ## Dokumente
 
 - [Vision](./vision.md)
