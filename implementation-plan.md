@@ -328,4 +328,6 @@ Akzeptanzkriterien:
 
 Task 1 ist umgesetzt.
 
-Als naechstes wird Task 2 umgesetzt: Frontend-App scaffolden.
+Task 2 ist umgesetzt.
+
+Als naechstes wird Task 3 umgesetzt: Backend-App scaffolden.

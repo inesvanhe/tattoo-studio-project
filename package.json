@@ -7,9 +7,10 @@
     "apps/*"
   ],
   "scripts": {
-    "dev": "echo \"Dev scripts will be wired after apps/web and apps/api are scaffolded.\"",
-    "dev:web": "echo \"apps/web is not scaffolded yet.\"",
+    "dev": "npm run dev:web",
+    "dev:web": "npm run dev --workspace @honey-beez/web",
     "dev:api": "echo \"apps/api is not scaffolded yet.\"",
-    "check": "echo \"No checks configured yet.\""
+    "build": "npm run build --workspace @honey-beez/web",
+    "check": "npm run check --workspace @honey-beez/web"
   }
 }
