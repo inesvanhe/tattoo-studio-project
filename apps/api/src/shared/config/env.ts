@@ -1,4 +1,16 @@
+import { existsSync } from 'node:fs'
+import { resolve } from 'node:path'
+
+import dotenv from 'dotenv'
 import { z } from 'zod'
+
+const envFileCandidates = [resolve(process.cwd(), '.env'), resolve(process.cwd(), '../../.env')]
+
+for (const envFilePath of envFileCandidates) {
+  if (existsSync(envFilePath)) {
+    dotenv.config({ path: envFilePath, quiet: true })
+  }
+}
 
 const emptyStringToUndefined = (value: unknown) => (value === '' ? undefined : value)
 

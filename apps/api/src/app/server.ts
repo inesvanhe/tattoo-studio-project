@@ -1,5 +1,3 @@
-import 'dotenv/config'
-
 import { createApp } from './app.js'
 import { env } from '../shared/config/env.js'
 import { connectToDatabase } from '../shared/database/database.js'
