@@ -1,0 +1,13 @@
+import { z } from 'zod'
+
+const emptyStringToUndefined = (value: unknown) => (value === '' ? undefined : value)
+
+const envSchema = z.object({
+  MONGODB_URI: z.preprocess(emptyStringToUndefined, z.string().trim().min(1).optional()),
+  NODE_ENV: z
+    .enum(['development', 'test', 'production'])
+    .default('development'),
+  PORT: z.coerce.number().int().positive().default(4000),
+})
+
+export const env = envSchema.parse(process.env)
