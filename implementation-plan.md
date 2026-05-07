@@ -330,4 +330,6 @@ Task 1 ist umgesetzt.
 
 Task 2 ist umgesetzt.
 
-Als naechstes wird Task 3 umgesetzt: Backend-App scaffolden.
+Task 3 ist umgesetzt.
+
+Als naechstes wird Task 4 umgesetzt: Workspace-Scripts verbinden.

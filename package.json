@@ -9,8 +9,8 @@
   "scripts": {
     "dev": "npm run dev:web",
     "dev:web": "npm run dev --workspace @honey-beez/web",
-    "dev:api": "echo \"apps/api is not scaffolded yet.\"",
-    "build": "npm run build --workspace @honey-beez/web",
-    "check": "npm run check --workspace @honey-beez/web"
+    "dev:api": "npm run dev --workspace @honey-beez/api",
+    "build": "npm run build --workspace @honey-beez/web && npm run build --workspace @honey-beez/api",
+    "check": "npm run check --workspace @honey-beez/web && npm run check --workspace @honey-beez/api"
   }
 }
