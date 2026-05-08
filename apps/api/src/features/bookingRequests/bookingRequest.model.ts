@@ -1,6 +1,6 @@
 import mongoose, { Schema, type InferSchemaType } from 'mongoose'
 
-export const bookingRequestStatuses = ['new', 'reviewing', 'contacted', 'closed'] as const
+export const bookingRequestStatuses = ['new', 'reviewed', 'contacted', 'archived'] as const
 
 const bookingRequestSchema = new Schema(
   {

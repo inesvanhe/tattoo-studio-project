@@ -34,5 +34,14 @@ export const bookingRequestResponseSchema = z.object({
   createdAt: z.string(),
 })
 
+export const updateBookingRequestStatusSchema = z.object({
+  status: z.enum(bookingRequestStatuses),
+})
+
+export const bookingRequestParamsSchema = z.object({
+  id: z.string().trim().min(1),
+})
+
 export type CreateBookingRequestInput = z.infer<typeof createBookingRequestSchema>
+export type UpdateBookingRequestStatusInput = z.infer<typeof updateBookingRequestStatusSchema>
 export type BookingRequestResponse = z.infer<typeof bookingRequestResponseSchema>
