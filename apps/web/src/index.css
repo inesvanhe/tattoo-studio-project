@@ -378,6 +378,83 @@ a {
   margin-top: 2rem;
 }
 
+.admin-metric,
+.admin-request-row,
+.admin-detail,
+.admin-field {
+  border: 1px solid var(--color-line);
+  background:
+    linear-gradient(135deg, rgba(255, 193, 5, 0.08), transparent 38%),
+    rgba(245, 245, 240, 0.03);
+}
+
+.admin-metric {
+  display: grid;
+  min-height: 9rem;
+  align-content: space-between;
+  padding: 1.25rem;
+}
+
+.admin-metric strong {
+  color: var(--color-paper);
+  font-size: 2rem;
+  font-weight: 900;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.admin-request-list {
+  display: grid;
+  gap: 1rem;
+}
+
+.admin-request-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.25rem;
+  padding: 1.25rem;
+  transition:
+    border-color 200ms ease,
+    transform 200ms ease;
+}
+
+.admin-request-row:hover,
+.admin-request-row:focus-visible {
+  border-color: rgba(255, 193, 5, 0.7);
+  transform: translateY(-0.2rem);
+}
+
+.admin-detail {
+  padding: 1.5rem;
+}
+
+.admin-detail-grid {
+  display: grid;
+  gap: 1rem;
+  margin: 2rem 0 1rem;
+}
+
+.admin-field {
+  display: grid;
+  gap: 0.5rem;
+  padding: 1rem;
+}
+
+.admin-field span {
+  color: var(--color-honey);
+  font-size: 0.75rem;
+  font-weight: 900;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.admin-field strong {
+  color: var(--color-paper);
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
 @media (min-width: 900px) {
   .booking-shell {
     grid-template-columns: 16rem 1fr;
@@ -387,6 +464,10 @@ a {
   .booking-steps {
     position: sticky;
     top: 2rem;
+  }
+
+  .admin-detail-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
