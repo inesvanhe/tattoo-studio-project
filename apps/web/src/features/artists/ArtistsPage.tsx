@@ -90,18 +90,27 @@ export function ArtistsPage() {
 }
 
 function ArtistCard({ artist }: { artist: Artist }) {
+  const initials = artist.name
+    .split(' ')
+    .map((part) => part[0])
+    .join('')
+  const firstName = artist.name.split(' ')[0]
+
   return (
-    <article className="artist-card grid gap-6 border border-[var(--color-line)] p-5 sm:grid-cols-[10rem_1fr] sm:p-6">
+    <article
+      aria-label={`${artist.name}, ${artist.title}`}
+      className="artist-card group grid gap-6 border border-[var(--color-line)] p-5 outline-none transition duration-300 ease-out hover:border-[var(--color-honey)]/60 focus-visible:border-[var(--color-honey)]/70 sm:grid-cols-[10rem_1fr] sm:p-6"
+      tabIndex={0}
+    >
       <div className="artist-portrait flex aspect-square items-center justify-center border border-[var(--color-honey)]/45 bg-[rgba(255,193,5,0.08)]">
-        <span className="text-4xl font-black uppercase text-[var(--color-honey)]">
-          {artist.name
-            .split(' ')
-            .map((part) => part[0])
-            .join('')}
-        </span>
+        {artist.profileImageUrl ? (
+          <img alt="" className="h-full w-full object-cover" src={artist.profileImageUrl} />
+        ) : (
+          <span className="text-4xl font-black uppercase text-[var(--color-honey)]">{initials}</span>
+        )}
       </div>
 
-      <div>
+      <div className="artist-card-summary">
         <div className="flex flex-wrap items-start justify-between gap-4">
           <div>
             <p className="text-sm font-black uppercase tracking-[0.18em] text-[var(--color-honey)]">
@@ -122,6 +131,26 @@ function ArtistCard({ artist }: { artist: Artist }) {
               {style}
             </span>
           ))}
+        </div>
+      </div>
+
+      <div className="artist-card-details">
+        <p className="eyebrow">Artist File / {artist.sortOrder.toString().padStart(2, '0')}</p>
+        <h3 className="mt-4 text-3xl font-black uppercase leading-none text-[var(--color-paper)] sm:text-4xl">
+          {artist.name}
+        </h3>
+        <p className="mt-4 max-w-2xl text-base leading-7 text-[var(--color-muted)]">{artist.bio}</p>
+        <div className="mt-6 flex flex-wrap gap-2">
+          {artist.styles.map((style) => (
+            <span className="badge badge-dark" key={style}>
+              {style}
+            </span>
+          ))}
+        </div>
+        <div className="mt-6">
+          <ButtonLink href="/#booking" variant="secondary">
+            Termin mit {firstName} anfragen
+          </ButtonLink>
         </div>
       </div>
     </article>

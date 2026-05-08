@@ -88,13 +88,95 @@ a {
 }
 
 .artist-card {
+  position: relative;
+  overflow: hidden;
   background:
     linear-gradient(135deg, rgba(255, 193, 5, 0.08), transparent 34%),
     rgba(245, 245, 240, 0.03);
 }
 
+.artist-card::after {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background:
+    linear-gradient(110deg, transparent 0%, rgba(255, 193, 5, 0.12) 45%, transparent 72%);
+  content: "";
+  opacity: 0;
+  transform: translateX(-18%);
+  transition:
+    opacity 200ms ease,
+    transform 300ms ease;
+}
+
+.artist-card:hover::after,
+.artist-card:focus-visible::after,
+.artist-card:focus-within::after {
+  opacity: 1;
+  transform: translateX(0);
+}
+
 .artist-portrait {
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
   box-shadow: inset 0 0 32px rgba(255, 193, 5, 0.12);
+}
+
+.artist-card-summary,
+.artist-card-details {
+  position: relative;
+  z-index: 1;
+}
+
+.artist-card-summary {
+  transition:
+    opacity 220ms ease,
+    transform 220ms ease;
+}
+
+.artist-card-details {
+  margin-top: 1.25rem;
+  border-top: 1px solid var(--color-line);
+  padding-top: 1.25rem;
+}
+
+@media (min-width: 768px) {
+  .artist-card {
+    min-height: 18rem;
+  }
+
+  .artist-card-details {
+    position: absolute;
+    inset: 1.5rem 1.5rem 1.5rem 12.5rem;
+    display: grid;
+    align-content: center;
+    margin-top: 0;
+    border-top: 0;
+    padding: 1rem;
+    background: rgba(5, 5, 5, 0.84);
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(0.75rem);
+    transition:
+      opacity 220ms ease,
+      transform 220ms ease;
+  }
+
+  .artist-card:hover .artist-card-summary,
+  .artist-card:focus-visible .artist-card-summary,
+  .artist-card:focus-within .artist-card-summary {
+    opacity: 0.18;
+    transform: translateX(-0.5rem);
+  }
+
+  .artist-card:hover .artist-card-details,
+  .artist-card:focus-visible .artist-card-details,
+  .artist-card:focus-within .artist-card-details {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+  }
 }
 
 .badge {
