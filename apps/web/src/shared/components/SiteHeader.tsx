@@ -2,8 +2,9 @@ import { Link, NavLink } from 'react-router-dom'
 
 const navItems = [
   { label: 'Artists', href: '/artists' },
-  { label: 'Tattoos', href: '/#portfolio' },
-  { label: 'Termin buchen', href: '/#booking' },
+  { label: 'Portfolio', href: '/portfolio' },
+  { label: 'Termin buchen', href: '/booking' },
+  { label: 'Admin', href: '/admin' },
 ]
 
 export function SiteHeader() {
