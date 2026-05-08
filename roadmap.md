@@ -241,19 +241,22 @@ Ziel: Admin-Funktionen werden fuer echte Nutzung vorbereitet.
 
 Enthalten:
 
-- Clerk evaluieren und integrieren
-- Admin-Routen schuetzen
-- Admin-API-Endpunkte absichern
+- Clerk backend-first integrieren
+- Admin-API-Endpunkte serverseitig schuetzen
+- JSON-Fehler fuer nicht authentifizierte API-Anfragen liefern
+- Admin-Routen im Frontend erst nach Figma/UI-Planung anbinden
 - Rollenmodell fuer Admins und eventuell Artists klaeren
 
 Nicht enthalten:
 
 - komplexes Rechte-CMS
 - Multi-Tenant-Struktur
+- Frontend-Redesign ohne Figma-Freigabe
 
 Ergebnis:
 
 - Der Admin-Bereich ist nicht mehr nur Entwicklungsfunktion.
+- Admin-Zugriff haengt nicht nur von Frontend-Navigation ab.
 
 ## Phase 11 - Spaetere Erweiterungen
 

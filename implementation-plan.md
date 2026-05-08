@@ -324,6 +324,32 @@ Akzeptanzkriterien:
 - Gespeicherte Daten sind in Compass sichtbar.
 - Ohne gueltige lokale `.env` startet die API kontrolliert oder gibt eine klare Fehlermeldung.
 
+## Task 12 - Clerk Admin Auth vorbereiten
+
+Ziel: Admin-API-Endpunkte werden backendseitig mit Clerk geschuetzt.
+
+Enthalten:
+
+- Clerk-Abhaengigkeit fuer die API installieren
+- Clerk-Env-Konfiguration vorbereiten
+- `clerkMiddleware()` im API-Setup einbinden
+- eigene Admin-Auth-Middleware fuer JSON-APIs anlegen
+- geschuetzten Admin-Testendpunkt ergaenzen
+
+Nicht enthalten:
+
+- Admin-UI-Redesign
+- Figma-unabhaengige Frontend-Arbeit
+- komplexes Rollenmodell
+- echte Secrets im Repository
+
+Akzeptanzkriterien:
+
+- Oeffentliche API-Endpunkte bleiben ohne Login erreichbar.
+- Admin-Testendpunkt lehnt nicht authentifizierte Anfragen mit JSON-`401` ab.
+- Clerk-Secrets werden nur lokal in `.env` verwendet.
+- Rollen- oder Rechtepruefung bleibt als separater Schritt dokumentiert.
+
 ## Naechster konkreter Schritt
 
 Task 1 ist umgesetzt.
@@ -334,4 +360,6 @@ Task 3 ist umgesetzt.
 
 Task 4 ist umgesetzt.
 
-Als naechstes wird Task 5 umgesetzt: Brand Foundation vorbereiten.
+Frontend-Arbeit wird bis zur Figma-Planung geparkt.
+
+Als naechstes wird Task 12 umgesetzt: Clerk Admin Auth vorbereiten.

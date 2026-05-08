@@ -228,9 +228,19 @@ AI-Endpunkte:
 
 Oeffentliche Seiten bleiben ohne Login erreichbar.
 
-Clerk wird spaeter fuer Admin- und eventuell Artist-Bereiche vorbereitet, aber nicht im ersten MVP umgesetzt.
+Clerk wird fuer Admin- und eventuell spaetere Artist-Bereiche verwendet.
 
-Bis Auth eingefuehrt ist, duerfen Admin-Funktionen nur als Entwicklungsfunktion betrachtet werden. Vor echter Nutzung muessen Admin-Endpunkte geschuetzt werden.
+Der naechste Auth-Schritt ist backend-first: Admin-API-Endpunkte werden zuerst serverseitig geschuetzt, bevor Admin-UI-Arbeit vertieft wird.
+
+Vorgehen:
+
+- Clerk wird im API-Server als Express-Middleware eingebunden.
+- Oeffentliche API-Endpunkte bleiben ohne Login erreichbar.
+- Admin-Endpunkte werden ueber eine eigene Admin-Auth-Middleware geschuetzt.
+- Ungueltige oder fehlende Authentifizierung fuehrt bei API-Routen zu JSON-Fehlern, nicht zu Redirects.
+- Rollen- oder Rechtepruefung wird nach der Grundauthentifizierung bewusst separat entschieden.
+
+Bis Auth eingefuehrt ist, duerfen Admin-Funktionen nur als Entwicklungsfunktion betrachtet werden.
 
 ## AI-Schicht
 
@@ -278,6 +288,6 @@ Noch bewusst offen:
 - konkrete Routing-Library im Frontend
 - genaue UI-Komponentenstruktur
 - ob Artists und Portfolio im ersten Schritt statisch oder direkt aus MongoDB Atlas kommen
-- wann Clerk eingefuehrt wird
+- konkretes Clerk-Rollenmodell fuer Admins und eventuell Artists
 
 Diese Entscheidungen sollen getroffen werden, wenn sie fuer die naechste Implementierungsphase relevant sind.
