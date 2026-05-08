@@ -1,50 +1,12 @@
-import { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 
 import { AppShell } from '../../app/AppShell'
 import { ButtonLink } from '../../shared/components/Button'
-import { type Artist, getArtists } from './artists.api'
-
-type ArtistsState =
-  | { status: 'loading'; artists: Artist[]; error?: undefined }
-  | { status: 'success'; artists: Artist[]; error?: undefined }
-  | { status: 'error'; artists: Artist[]; error: string }
+import type { Artist } from './artists.api'
+import { useArtists } from './useArtists'
 
 export function ArtistsPage() {
-  const [artistsState, setArtistsState] = useState<ArtistsState>({
-    status: 'loading',
-    artists: [],
-  })
-
-  useEffect(() => {
-    let isMounted = true
-
-    getArtists()
-      .then((response) => {
-        if (!isMounted) {
-          return
-        }
-
-        setArtistsState({
-          status: 'success',
-          artists: response.data,
-        })
-      })
-      .catch(() => {
-        if (!isMounted) {
-          return
-        }
-
-        setArtistsState({
-          status: 'error',
-          artists: [],
-          error: 'Artists konnten gerade nicht geladen werden.',
-        })
-      })
-
-    return () => {
-      isMounted = false
-    }
-  }, [])
+  const artistsState = useArtists()
 
   return (
     <AppShell>
@@ -62,7 +24,7 @@ export function ArtistsPage() {
               das lieber Haltung zeigt als Hochglanz verspricht.
             </p>
             <div className="mt-6">
-              <ButtonLink href="/#booking">Termin anfragen</ButtonLink>
+              <ButtonLink href="/booking">Termin anfragen</ButtonLink>
             </div>
           </div>
         </div>
@@ -97,10 +59,10 @@ function ArtistCard({ artist }: { artist: Artist }) {
   const firstName = artist.name.split(' ')[0]
 
   return (
-    <article
+    <Link
+      to={`/artists/${artist.slug}`}
       aria-label={`${artist.name}, ${artist.title}`}
       className="artist-card group grid gap-6 border border-[var(--color-line)] p-5 outline-none transition duration-300 ease-out hover:border-[var(--color-honey)]/60 focus-visible:border-[var(--color-honey)]/70 sm:grid-cols-[10rem_1fr] sm:p-6"
-      tabIndex={0}
     >
       <div className="artist-portrait flex aspect-square items-center justify-center border border-[var(--color-honey)]/45 bg-[rgba(255,193,5,0.08)]">
         {artist.profileImageUrl ? (
@@ -148,12 +110,10 @@ function ArtistCard({ artist }: { artist: Artist }) {
           ))}
         </div>
         <div className="mt-6">
-          <ButtonLink href="/#booking" variant="secondary">
-            Termin mit {firstName} anfragen
-          </ButtonLink>
+          <span className="badge badge-dark">Profil ansehen / Termin mit {firstName}</span>
         </div>
       </div>
-    </article>
+    </Link>
   )
 }
 

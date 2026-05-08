@@ -198,6 +198,50 @@ a {
   color: var(--color-paper);
 }
 
+.portfolio-card {
+  display: grid;
+  min-height: 24rem;
+  overflow: hidden;
+  border: 1px solid var(--color-line);
+  background:
+    linear-gradient(135deg, rgba(255, 193, 5, 0.08), transparent 38%),
+    rgba(245, 245, 240, 0.03);
+  transition:
+    border-color 200ms ease,
+    transform 200ms ease;
+}
+
+.portfolio-card:hover,
+.portfolio-card:focus-visible {
+  border-color: rgba(255, 193, 5, 0.7);
+  transform: translateY(-0.25rem);
+}
+
+.portfolio-card-media,
+.portfolio-detail-media {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 1px solid var(--color-line);
+  background:
+    radial-gradient(circle at 50% 10%, rgba(255, 193, 5, 0.24), transparent 30%),
+    linear-gradient(135deg, rgba(255, 193, 5, 0.12), rgba(245, 245, 240, 0.04));
+  color: var(--color-honey);
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.portfolio-card-media {
+  min-height: 12rem;
+  font-size: 4rem;
+}
+
+.portfolio-detail-media {
+  min-height: 24rem;
+  border: 1px solid rgba(255, 193, 5, 0.42);
+  font-size: 6rem;
+}
+
 .dashboard-panel,
 .speed-gauge {
   border: 1px solid var(--color-line);
