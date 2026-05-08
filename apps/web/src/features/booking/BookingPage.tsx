@@ -3,6 +3,7 @@ import { useSearchParams } from 'react-router-dom'
 
 import { AppShell } from '../../app/AppShell'
 import { Button } from '../../shared/components/Button'
+import { createBookingRequest } from './booking.api'
 
 type BookingFormData = {
   customerName: string
@@ -70,6 +71,8 @@ export function BookingPage() {
   })
   const [currentStep, setCurrentStep] = useState(0)
   const [submitted, setSubmitted] = useState(false)
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [submitError, setSubmitError] = useState('')
   const [touchedStep, setTouchedStep] = useState(false)
 
   const missingFields = useMemo(
@@ -81,6 +84,7 @@ export function BookingPage() {
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>,
   ) {
     setSubmitted(false)
+    setSubmitError('')
     setFormData((current) => ({
       ...current,
       [event.target.name]: event.target.value,
@@ -102,7 +106,7 @@ export function BookingPage() {
     setCurrentStep((step) => Math.max(step - 1, 0))
   }
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
 
     if (missingFields.length > 0) {
@@ -110,7 +114,28 @@ export function BookingPage() {
       return
     }
 
-    setSubmitted(true)
+    setIsSubmitting(true)
+    setSubmitError('')
+
+    try {
+      await createBookingRequest({
+        approximateSize: formData.approximateSize,
+        artistSlug: formData.artistSlug,
+        availabilityNotes: mergeAvailabilityNotes(formData),
+        bodyPlacement: formData.bodyPlacement,
+        budgetRange: formData.budgetRange,
+        customerEmail: formData.customerEmail,
+        customerName: formData.customerName,
+        customerPhone: formData.customerPhone,
+        ideaDescription: formData.ideaDescription,
+        preferredStyle: formData.preferredStyle,
+      })
+      setSubmitted(true)
+    } catch {
+      setSubmitError('Die Anfrage konnte gerade nicht gespeichert werden.')
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   return (
@@ -123,8 +148,8 @@ export function BookingPage() {
           </h1>
           <div className="panel-frame p-6">
             <p className="text-lg leading-8 text-[var(--color-muted)]">
-              Bereite deine Anfrage strukturiert vor. Dieser MVP-Flow simuliert
-              das Absenden lokal und bestaetigt keinen Termin und keinen Preis.
+              Bereite deine Anfrage strukturiert vor. Das Studio prueft sie
+              spaeter manuell und bestaetigt keinen Termin und keinen Preis.
             </p>
           </div>
         </div>
@@ -253,7 +278,7 @@ export function BookingPage() {
           {currentStep === 4 ? (
             <BookingStep
               title="Zusammenfassung"
-              description="Pruefe deine Angaben. Das Absenden ist in diesem Schritt noch simuliert."
+              description="Pruefe deine Angaben. Danach wird die Anfrage an das Studio uebermittelt."
             >
               <div className="booking-summary">
                 {Object.entries(formData).map(([field, value]) => (
@@ -274,8 +299,14 @@ export function BookingPage() {
 
           {submitted ? (
             <div className="booking-success" role="status">
-              Anfrage simuliert vorbereitet. Es wurde nichts gespeichert, kein Termin bestaetigt
-              und kein Preis zugesagt.
+              Anfrage gespeichert. Das Studio prueft deine Angaben und meldet sich
+              persoenlich. Es wurde kein Termin bestaetigt und kein Preis zugesagt.
+            </div>
+          ) : null}
+
+          {submitError ? (
+            <div className="booking-error" role="alert">
+              {submitError}
             </div>
           ) : null}
 
@@ -288,13 +319,26 @@ export function BookingPage() {
                 Weiter
               </Button>
             ) : (
-              <Button type="submit">Simuliert absenden</Button>
+              <Button disabled={isSubmitting} type="submit">
+                {isSubmitting ? 'Wird gesendet' : 'Anfrage senden'}
+              </Button>
             )}
           </div>
         </section>
       </form>
     </AppShell>
   )
+}
+
+function mergeAvailabilityNotes(formData: BookingFormData) {
+  const notes = formData.availabilityNotes.trim()
+  const references = formData.references.trim()
+
+  if (!references) {
+    return notes
+  }
+
+  return [notes, `Referenzen: ${references}`].filter(Boolean).join('\n\n')
 }
 
 function BookingStep({
