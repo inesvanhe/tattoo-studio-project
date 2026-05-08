@@ -1,5 +1,6 @@
 import { AppShell } from '../../app/AppShell'
 import { ButtonLink } from '../../shared/components/Button'
+import { AdminAuthGate } from './AdminAuthGate'
 
 export function AdminPage() {
   return (
@@ -23,11 +24,13 @@ export function AdminPage() {
         </div>
       </section>
 
-      <section className="grid gap-5 py-12 md:grid-cols-3">
-        <AdminMetric label="Requests" value="API" />
-        <AdminMetric label="Auth" value="Clerk" />
-        <AdminMetric label="Status" value="Protected" />
-      </section>
+      <AdminAuthGate>
+        <section className="grid gap-5 py-12 md:grid-cols-3">
+          <AdminMetric label="Requests" value="API" />
+          <AdminMetric label="Auth" value="Clerk" />
+          <AdminMetric label="Status" value="Protected" />
+        </section>
+      </AdminAuthGate>
     </AppShell>
   )
 }

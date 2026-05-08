@@ -2,6 +2,7 @@ import { useParams } from 'react-router-dom'
 
 import { AppShell } from '../../app/AppShell'
 import { ButtonLink } from '../../shared/components/Button'
+import { AdminAuthGate } from './AdminAuthGate'
 import { useAdminBookingRequest } from './useAdminBookingRequests'
 
 export function AdminBookingRequestDetailPage() {
@@ -17,45 +18,47 @@ export function AdminBookingRequestDetailPage() {
         </h1>
       </section>
 
-      <section className="py-12">
-        {requestState.status === 'loading' ? <AdminNotice text="Anfrage wird geladen." /> : null}
+      <AdminAuthGate>
+        <section className="py-12">
+          {requestState.status === 'loading' ? <AdminNotice text="Anfrage wird geladen." /> : null}
 
-        {requestState.status === 'error' ? <AdminNotice text={requestState.error} /> : null}
+          {requestState.status === 'error' ? <AdminNotice text={requestState.error} /> : null}
 
-        {requestState.status === 'success' ? (
-          <article className="admin-detail">
-            <div className="flex flex-wrap items-start justify-between gap-4">
-              <div>
-                <p className="eyebrow">{requestState.request.status}</p>
-                <h2 className="mt-4 text-4xl font-black uppercase leading-none">
-                  {requestState.request.customerName}
-                </h2>
+          {requestState.status === 'success' ? (
+            <article className="admin-detail">
+              <div className="flex flex-wrap items-start justify-between gap-4">
+                <div>
+                  <p className="eyebrow">{requestState.request.status}</p>
+                  <h2 className="mt-4 text-4xl font-black uppercase leading-none">
+                    {requestState.request.customerName}
+                  </h2>
+                </div>
+                <ButtonLink href="/admin/booking-requests" variant="secondary">
+                  Zur Liste
+                </ButtonLink>
               </div>
-              <ButtonLink href="/admin/booking-requests" variant="secondary">
-                Zur Liste
-              </ButtonLink>
-            </div>
 
-            <div className="admin-detail-grid">
-              <AdminField label="E-Mail" value={requestState.request.customerEmail} />
-              <AdminField label="Telefon" value={requestState.request.customerPhone || 'Nicht angegeben'} />
-              <AdminField label="Stil" value={requestState.request.preferredStyle} />
-              <AdminField label="Koerperstelle" value={requestState.request.bodyPlacement} />
-              <AdminField label="Groesse" value={requestState.request.approximateSize} />
-              <AdminField label="Artist" value={requestState.request.artistSlug || 'Nicht angegeben'} />
-              <AdminField label="Budget" value={requestState.request.budgetRange || 'Nicht angegeben'} />
-              <AdminField label="Erstellt" value={new Date(requestState.request.createdAt).toLocaleString()} />
-            </div>
+              <div className="admin-detail-grid">
+                <AdminField label="E-Mail" value={requestState.request.customerEmail} />
+                <AdminField label="Telefon" value={requestState.request.customerPhone || 'Nicht angegeben'} />
+                <AdminField label="Stil" value={requestState.request.preferredStyle} />
+                <AdminField label="Koerperstelle" value={requestState.request.bodyPlacement} />
+                <AdminField label="Groesse" value={requestState.request.approximateSize} />
+                <AdminField label="Artist" value={requestState.request.artistSlug || 'Nicht angegeben'} />
+                <AdminField label="Budget" value={requestState.request.budgetRange || 'Nicht angegeben'} />
+                <AdminField label="Erstellt" value={new Date(requestState.request.createdAt).toLocaleString()} />
+              </div>
 
-            <AdminField label="Motividee" value={requestState.request.ideaDescription} wide />
-            <AdminField
-              label="Terminwunsch / Referenzen"
-              value={requestState.request.availabilityNotes || 'Nicht angegeben'}
-              wide
-            />
-          </article>
-        ) : null}
-      </section>
+              <AdminField label="Motividee" value={requestState.request.ideaDescription} wide />
+              <AdminField
+                label="Terminwunsch / Referenzen"
+                value={requestState.request.availabilityNotes || 'Nicht angegeben'}
+                wide
+              />
+            </article>
+          ) : null}
+        </section>
+      </AdminAuthGate>
     </AppShell>
   )
 }

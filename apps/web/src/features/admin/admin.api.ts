@@ -1,4 +1,4 @@
-import { getJson } from '../../shared/api/client'
+import { apiBaseUrl } from '../../shared/api/client'
 
 export type AdminBookingRequest = {
   id: string
@@ -24,10 +24,24 @@ type AdminBookingRequestResponse = {
   data: AdminBookingRequest
 }
 
-export function getAdminBookingRequests() {
-  return getJson<AdminBookingRequestsResponse>('/api/admin/booking-requests')
+async function getAdminJson<TResponse>(path: string, token: string) {
+  const response = await fetch(`${apiBaseUrl}${path}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  })
+
+  if (!response.ok) {
+    throw new Error(`Admin API request failed with status ${response.status}`)
+  }
+
+  return response.json() as Promise<TResponse>
 }
 
-export function getAdminBookingRequest(id: string) {
-  return getJson<AdminBookingRequestResponse>(`/api/admin/booking-requests/${id}`)
+export function getAdminBookingRequests(token: string) {
+  return getAdminJson<AdminBookingRequestsResponse>('/api/admin/booking-requests', token)
+}
+
+export function getAdminBookingRequest(id: string, token: string) {
+  return getAdminJson<AdminBookingRequestResponse>(`/api/admin/booking-requests/${id}`, token)
 }

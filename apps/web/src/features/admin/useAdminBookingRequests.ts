@@ -1,3 +1,4 @@
+import { useAuth } from '@clerk/clerk-react'
 import { useEffect, useState } from 'react'
 
 import {
@@ -17,6 +18,7 @@ type AdminBookingRequestState =
   | { status: 'error'; request?: undefined; error: string }
 
 export function useAdminBookingRequests() {
+  const { getToken, isLoaded, isSignedIn } = useAuth()
   const [requestsState, setRequestsState] = useState<AdminBookingRequestsState>({
     status: 'loading',
     requests: [],
@@ -25,7 +27,18 @@ export function useAdminBookingRequests() {
   useEffect(() => {
     let isMounted = true
 
-    getAdminBookingRequests()
+    if (!isLoaded || !isSignedIn) {
+      return
+    }
+
+    getToken()
+      .then((token) => {
+        if (!token) {
+          throw new Error('Missing Clerk token')
+        }
+
+        return getAdminBookingRequests(token)
+      })
       .then((response) => {
         if (!isMounted) {
           return
@@ -44,19 +57,28 @@ export function useAdminBookingRequests() {
         setRequestsState({
           status: 'error',
           requests: [],
-          error: 'Admin-Anfragen konnten nicht geladen werden. Clerk-Login folgt im naechsten Schritt.',
+          error: 'Admin-Anfragen konnten nicht geladen werden.',
         })
       })
 
     return () => {
       isMounted = false
     }
-  }, [])
+  }, [getToken, isLoaded, isSignedIn])
+
+  if (isLoaded && !isSignedIn) {
+    return {
+      status: 'error',
+      requests: [],
+      error: 'Bitte melde dich an, um Admin-Anfragen zu laden.',
+    } satisfies AdminBookingRequestsState
+  }
 
   return requestsState
 }
 
 export function useAdminBookingRequest(id: string | undefined) {
+  const { getToken, isLoaded, isSignedIn } = useAuth()
   const [requestState, setRequestState] = useState<AdminBookingRequestState>({
     ...(id
       ? { status: 'loading' as const }
@@ -66,11 +88,22 @@ export function useAdminBookingRequest(id: string | undefined) {
   useEffect(() => {
     let isMounted = true
 
-    if (!id) {
+    if (!isLoaded) {
       return
     }
 
-    getAdminBookingRequest(id)
+    if (!id || !isLoaded || !isSignedIn) {
+      return
+    }
+
+    getToken()
+      .then((token) => {
+        if (!token) {
+          throw new Error('Missing Clerk token')
+        }
+
+        return getAdminBookingRequest(id, token)
+      })
       .then((response) => {
         if (!isMounted) {
           return
@@ -88,14 +121,21 @@ export function useAdminBookingRequest(id: string | undefined) {
 
         setRequestState({
           status: 'error',
-          error: 'Admin-Anfrage konnte nicht geladen werden. Clerk-Login folgt im naechsten Schritt.',
+          error: 'Admin-Anfrage konnte nicht geladen werden.',
         })
       })
 
     return () => {
       isMounted = false
     }
-  }, [id])
+  }, [getToken, id, isLoaded, isSignedIn])
+
+  if (isLoaded && !isSignedIn) {
+    return {
+      status: 'error',
+      error: 'Bitte melde dich an, um diese Anfrage zu laden.',
+    } satisfies AdminBookingRequestState
+  }
 
   return requestState
 }

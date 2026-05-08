@@ -83,12 +83,13 @@ Lokale URLs:
 
 ## Lokale Konfiguration
 
-Admin-Authentifizierung wird backendseitig mit Clerk vorbereitet.
+Admin-Authentifizierung wird mit Clerk vorbereitet.
 
 Lokale Secrets gehoeren in eine nicht versionierte `.env`:
 
 ```bash
 CLERK_SECRET_KEY=
+VITE_CLERK_PUBLISHABLE_KEY=
 ```
 
 Echte Clerk-Keys duerfen nicht ins Repository geschrieben werden.
