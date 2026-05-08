@@ -81,6 +81,18 @@ Lokale URLs:
 - API: `http://localhost:4000`
 - Health Check: `http://localhost:4000/api/health`
 
+## Lokale Konfiguration
+
+Admin-Authentifizierung wird backendseitig mit Clerk vorbereitet.
+
+Lokale Secrets gehoeren in eine nicht versionierte `.env`:
+
+```bash
+CLERK_SECRET_KEY=
+```
+
+Echte Clerk-Keys duerfen nicht ins Repository geschrieben werden.
+
 ## Dokumente
 
 - [Vision](./vision.md)
