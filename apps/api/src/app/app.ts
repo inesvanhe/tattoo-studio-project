@@ -2,6 +2,7 @@ import { clerkMiddleware } from '@clerk/express'
 import cors from 'cors'
 import express from 'express'
 
+import { adminRouter } from '../features/admin/admin.routes.js'
 import { artistRouter } from '../features/artists/artist.routes.js'
 import { bookingRequestRouter } from '../features/bookingRequests/bookingRequest.routes.js'
 import { healthRouter } from '../features/health/health.routes.js'
@@ -24,6 +25,7 @@ export function createApp() {
   app.use('/api/artists', artistRouter)
   app.use('/api/booking-requests', bookingRequestRouter)
   app.use('/api/tattoos', tattooRouter)
+  app.use('/api/admin', adminRouter)
 
   app.use(notFoundHandler)
   app.use(errorHandler)
