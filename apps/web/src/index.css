@@ -508,6 +508,33 @@ a {
   transform: translateY(-0.2rem);
 }
 
+.admin-request-status {
+  display: inline-flex;
+  border: 1px solid rgba(255, 193, 5, 0.48);
+  color: var(--color-honey);
+  font-size: 0.75rem;
+  font-weight: 900;
+  letter-spacing: 0.14em;
+  padding: 0.35rem 0.55rem;
+  text-transform: uppercase;
+}
+
+.admin-request-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-top: 1rem;
+}
+
+.admin-request-meta span {
+  border: 1px solid var(--color-line);
+  color: var(--color-muted);
+  font-size: 0.8rem;
+  font-weight: 800;
+  line-height: 1.4;
+  padding: 0.4rem 0.55rem;
+}
+
 .admin-detail {
   padding: 1.5rem;
 }

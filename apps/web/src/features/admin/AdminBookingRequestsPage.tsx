@@ -1,8 +1,10 @@
 import { Link } from 'react-router-dom'
 
 import { AppShell } from '../../app/AppShell'
+import { formatBudgetRange } from '../../shared/formatters/budget'
 import { AdminAuthGate } from './AdminAuthGate'
 import { AdminNotice, getAdminNoticeKind } from './AdminNotice'
+import type { AdminBookingRequest } from './admin.api'
 import { useAdminBookingRequests } from './useAdminBookingRequests'
 
 export function AdminBookingRequestsPage() {
@@ -38,13 +40,18 @@ export function AdminBookingRequestsPage() {
                   to={`/admin/booking-requests/${request.id}`}
                 >
                   <div>
-                    <p className="text-sm font-black uppercase tracking-[0.18em] text-[var(--color-honey)]">
+                    <p className="admin-request-status">
                       {request.status}
                     </p>
                     <h2 className="mt-2 text-2xl font-black uppercase">{request.customerName}</h2>
                     <p className="mt-2 text-base leading-7 text-[var(--color-muted)]">
                       {request.preferredStyle} / {request.bodyPlacement} / {request.approximateSize}
                     </p>
+                    <div className="admin-request-meta">
+                      <span>{getContactLabel(request)}</span>
+                      <span>{getBudgetLabel(request)}</span>
+                      <span>{new Date(request.createdAt).toLocaleDateString()}</span>
+                    </div>
                   </div>
                   <span className="badge badge-dark">Details</span>
                 </Link>
@@ -55,4 +62,12 @@ export function AdminBookingRequestsPage() {
       </AdminAuthGate>
     </AppShell>
   )
+}
+
+function getContactLabel(request: AdminBookingRequest) {
+  return request.customerPhone || request.customerEmail
+}
+
+function getBudgetLabel(request: AdminBookingRequest) {
+  return formatBudgetRange(request.budgetRange) || 'Kein Budget'
 }
