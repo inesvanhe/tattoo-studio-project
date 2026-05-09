@@ -491,6 +491,34 @@ a {
   gap: 1rem;
 }
 
+.admin-request-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.admin-request-filters button {
+  min-height: 2.5rem;
+  border: 1px solid var(--color-line);
+  background: rgba(245, 245, 240, 0.03);
+  color: var(--color-muted);
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.75rem;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  padding: 0.6rem 0.8rem;
+  text-transform: uppercase;
+}
+
+.admin-request-filters button:hover,
+.admin-request-filters button:focus-visible,
+.admin-request-filters .admin-filter-active {
+  border-color: rgba(255, 193, 5, 0.72);
+  color: var(--color-honey);
+}
+
 .admin-request-row {
   display: flex;
   align-items: center;

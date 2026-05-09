@@ -1,14 +1,30 @@
 import { Link } from 'react-router-dom'
+import { useState } from 'react'
 
 import { AppShell } from '../../app/AppShell'
 import { formatBudgetRange } from '../../shared/formatters/budget'
 import { AdminAuthGate } from './AdminAuthGate'
 import { AdminNotice, getAdminNoticeKind } from './AdminNotice'
-import type { AdminBookingRequest } from './admin.api'
+import {
+  adminBookingRequestStatuses,
+  type AdminBookingRequest,
+  type AdminBookingRequestStatus,
+} from './admin.api'
 import { useAdminBookingRequests } from './useAdminBookingRequests'
+
+type AdminStatusFilter = 'all' | AdminBookingRequestStatus
 
 export function AdminBookingRequestsPage() {
   const requestsState = useAdminBookingRequests()
+  const [activeStatus, setActiveStatus] = useState<AdminStatusFilter>('all')
+
+  const filteredRequests = requestsState.requests.filter((request) => {
+    if (activeStatus === 'all') {
+      return true
+    }
+
+    return request.status === activeStatus
+  })
 
   return (
     <AppShell>
@@ -32,8 +48,27 @@ export function AdminBookingRequestsPage() {
           ) : null}
 
           {requestsState.requests.length > 0 ? (
+            <div className="admin-request-filters" aria-label="Anfragen nach Status filtern">
+              {(['all', ...adminBookingRequestStatuses] as AdminStatusFilter[]).map((status) => (
+                <button
+                  className={activeStatus === status ? 'admin-filter-active' : undefined}
+                  key={status}
+                  onClick={() => setActiveStatus(status)}
+                  type="button"
+                >
+                  {status === 'all' ? 'Alle' : status}
+                </button>
+              ))}
+            </div>
+          ) : null}
+
+          {requestsState.status === 'success' && requestsState.requests.length > 0 && filteredRequests.length === 0 ? (
+            <AdminNotice text="Für diesen Status gibt es gerade keine Anfragen." />
+          ) : null}
+
+          {requestsState.requests.length > 0 ? (
             <div className="admin-request-list">
-              {requestsState.requests.map((request) => (
+              {filteredRequests.map((request) => (
                 <Link
                   className="admin-request-row"
                   key={request.id}
