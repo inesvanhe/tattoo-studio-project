@@ -108,6 +108,7 @@ Für spätere Artist-Bereiche:
 
 ```json
 {
+  "artistSlug": "maya-black",
   "role": "artist"
 }
 ```

@@ -4,6 +4,7 @@ import type { RequestHandler } from 'express'
 import { env } from '../../shared/config/env.js'
 
 type ClerkPublicMetadata = {
+  artistSlug?: unknown
   role?: unknown
   roles?: unknown
 }
@@ -12,6 +13,7 @@ export type AppRole = 'admin' | 'artist'
 
 export type AdminAuthLocals = {
   adminAuth?: {
+    artistSlug: string
     roles: AppRole[]
     userId: string
   }
@@ -88,6 +90,7 @@ function requireRole(allowedRoles: AppRole[]): RequestHandler {
       }
 
       response.locals.adminAuth = {
+        artistSlug: typeof publicMetadata.artistSlug === 'string' ? publicMetadata.artistSlug : '',
         roles,
         userId,
       }

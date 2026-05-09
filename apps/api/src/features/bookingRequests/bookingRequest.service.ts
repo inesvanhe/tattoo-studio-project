@@ -21,6 +21,12 @@ export async function getBookingRequestsForAdmin() {
   return bookingRequests.map(toBookingRequestResponse)
 }
 
+export async function getBookingRequestsForArtist(artistSlug: string) {
+  const bookingRequests = await BookingRequestModel.find({ artistSlug }).sort({ createdAt: -1 })
+
+  return bookingRequests.map(toBookingRequestResponse)
+}
+
 export async function getBookingRequestForAdmin(id: string) {
   const bookingRequest = await BookingRequestModel.findById(id)
 
