@@ -49,7 +49,7 @@ export function useAdminBookingRequests() {
           requests: response.data,
         })
       })
-      .catch(() => {
+      .catch((error: Error) => {
         if (!isMounted) {
           return
         }
@@ -57,7 +57,7 @@ export function useAdminBookingRequests() {
         setRequestsState({
           status: 'error',
           requests: [],
-          error: 'Admin-Anfragen konnten nicht geladen werden.',
+          error: getAdminErrorMessage(error, 'Admin-Anfragen konnten nicht geladen werden.'),
         })
       })
 
@@ -114,14 +114,14 @@ export function useAdminBookingRequest(id: string | undefined) {
           request: response.data,
         })
       })
-      .catch(() => {
+      .catch((error: Error) => {
         if (!isMounted) {
           return
         }
 
         setRequestState({
           status: 'error',
-          error: 'Admin-Anfrage konnte nicht geladen werden.',
+          error: getAdminErrorMessage(error, 'Admin-Anfrage konnte nicht geladen werden.'),
         })
       })
 
@@ -138,4 +138,16 @@ export function useAdminBookingRequest(id: string | undefined) {
   }
 
   return requestState
+}
+
+function getAdminErrorMessage(error: Error, fallback: string) {
+  if (error.message === 'Admin role required') {
+    return 'Dein Clerk-User hat noch keine Admin-Rolle.'
+  }
+
+  if (error.message === 'Admin authentication required') {
+    return 'Bitte melde dich an, um Admin-Anfragen zu laden.'
+  }
+
+  return fallback
 }

@@ -95,6 +95,15 @@ VITE_CLERK_PUBLISHABLE_KEY=
 
 Echte Clerk-Keys dürfen nicht ins Repository geschrieben werden.
 
+Admin-Zugriff setzt zusätzlich voraus, dass der Clerk-User in den Public Metadata
+die Rolle `admin` hat:
+
+```json
+{
+  "role": "admin"
+}
+```
+
 ## Dokumente
 
 - [Vision](./vision.md)

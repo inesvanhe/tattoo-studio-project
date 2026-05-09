@@ -24,6 +24,12 @@ type AdminBookingRequestResponse = {
   data: AdminBookingRequest
 }
 
+type ApiErrorResponse = {
+  error?: {
+    message?: string
+  }
+}
+
 async function getAdminJson<TResponse>(path: string, token: string) {
   const response = await fetch(`${apiBaseUrl}${path}`, {
     headers: {
@@ -32,7 +38,10 @@ async function getAdminJson<TResponse>(path: string, token: string) {
   })
 
   if (!response.ok) {
-    throw new Error(`Admin API request failed with status ${response.status}`)
+    const responseBody = (await response.json().catch(() => null)) as ApiErrorResponse | null
+    const message = responseBody?.error?.message ?? `Admin API request failed with status ${response.status}`
+
+    throw new Error(message)
   }
 
   return response.json() as Promise<TResponse>
