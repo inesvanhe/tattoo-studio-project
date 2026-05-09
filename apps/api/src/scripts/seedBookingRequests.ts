@@ -7,7 +7,7 @@ import { connectToDatabase } from '../shared/database/database.js'
 const demoBookingRequests = [
   {
     approximateSize: '10 cm',
-    artistSlug: 'rico-vail',
+    artistSlug: 'rico-chrome',
     availabilityNotes: 'Am liebsten freitags ab 15 Uhr.',
     bodyPlacement: 'Oberarm',
     budgetRange: '300-600',
@@ -20,7 +20,7 @@ const demoBookingRequests = [
   },
   {
     approximateSize: 'handflächengroß',
-    artistSlug: 'mara-hex',
+    artistSlug: 'maya-black',
     availabilityNotes: 'Keine Samstage. Referenzen: florale Blackwork-Ornamente.',
     bodyPlacement: 'Rippen',
     budgetRange: 'nach Absprache',
@@ -33,15 +33,15 @@ const demoBookingRequests = [
   },
   {
     approximateSize: 'kleines Lettering',
-    artistSlug: 'jules-noir',
+    artistSlug: 'luna-vex',
     availabilityNotes: 'Flexible Termine unter der Woche.',
     bodyPlacement: 'Schulterblatt',
     budgetRange: '200-350',
     customerEmail: 'toni.demo@example.com',
     customerName: 'Toni Demo',
     customerPhone: '+49 160 7654321',
-    ideaDescription: 'Grafisches Lettering mit Halo-Element.',
-    preferredStyle: 'Lettering',
+    ideaDescription: 'Grafisches Dotwork-Motiv mit Halo-Element.',
+    preferredStyle: 'Dotwork',
     status: 'contacted',
   },
   {
