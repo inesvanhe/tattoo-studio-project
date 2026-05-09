@@ -89,6 +89,7 @@ Lokale Secrets gehoeren in eine nicht versionierte `.env`:
 
 ```bash
 CLERK_SECRET_KEY=
+CLERK_PUBLISHABLE_KEY=
 VITE_CLERK_PUBLISHABLE_KEY=
 ```
 
