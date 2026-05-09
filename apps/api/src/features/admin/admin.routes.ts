@@ -3,6 +3,7 @@ import { Router } from 'express'
 import {
   getAdminBookingRequest,
   listAdminBookingRequests,
+  updateAdminBookingRequestAdminNotes,
   updateAdminBookingRequestStatus,
 } from './adminBookingRequest.controller.js'
 import { requireAdminAuth } from './adminAuth.middleware.js'
@@ -17,4 +18,9 @@ adminRouter.patch(
   '/booking-requests/:id/status',
   requireAdminAuth,
   updateAdminBookingRequestStatus,
+)
+adminRouter.patch(
+  '/booking-requests/:id/admin-notes',
+  requireAdminAuth,
+  updateAdminBookingRequestAdminNotes,
 )

@@ -384,6 +384,7 @@ a {
 .admin-request-row,
 .admin-detail,
 .admin-field,
+.admin-notes-control,
 .admin-status-control,
 .admin-auth-panel,
 .admin-access-denied,
@@ -572,11 +573,24 @@ a {
   padding: 1rem;
 }
 
+.admin-notes-control {
+  display: grid;
+  gap: 1rem;
+  margin-top: 1rem;
+  padding: 1rem;
+}
+
 .admin-status-control label {
   display: grid;
   gap: 0.6rem;
 }
 
+.admin-notes-control label {
+  display: grid;
+  gap: 0.6rem;
+}
+
+.admin-notes-control span,
 .admin-status-control span {
   color: var(--color-honey);
   font-size: 0.75rem;
@@ -585,6 +599,7 @@ a {
   text-transform: uppercase;
 }
 
+.admin-notes-control textarea,
 .admin-status-control select {
   min-height: 2.75rem;
   border: 1px solid var(--color-line);
@@ -596,12 +611,41 @@ a {
   text-transform: uppercase;
 }
 
+.admin-notes-control textarea {
+  line-height: 1.6;
+  min-height: 9rem;
+  resize: vertical;
+  text-transform: none;
+}
+
+.admin-notes-control button {
+  justify-self: start;
+  min-height: 2.75rem;
+  border: 1px solid var(--color-honey);
+  background: var(--color-honey);
+  color: #000;
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.8rem;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  padding: 0.7rem 1rem;
+  text-transform: uppercase;
+}
+
+.admin-notes-control button:disabled {
+  cursor: wait;
+  opacity: 0.62;
+}
+
+.admin-notes-control p,
 .admin-status-control p {
   margin: 0.75rem 0 0;
   color: var(--color-muted);
   font-weight: 800;
 }
 
+.admin-notes-control .admin-status-error,
 .admin-status-control .admin-status-error {
   color: #ffb8b3;
 }

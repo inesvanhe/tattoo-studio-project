@@ -18,6 +18,7 @@ export function toBookingRequestResponse(
     artistSlug: bookingRequest.artistSlug,
     budgetRange: bookingRequest.budgetRange,
     availabilityNotes: bookingRequest.availabilityNotes,
+    adminNotes: bookingRequest.adminNotes ?? '',
     status: bookingRequest.status,
     createdAt: bookingRequest.createdAt.toISOString(),
   }

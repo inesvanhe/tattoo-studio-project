@@ -2,6 +2,7 @@ import { BookingRequestModel } from './bookingRequest.model.js'
 import { toBookingRequestResponse } from './bookingRequest.mapper.js'
 import type {
   CreateBookingRequestInput,
+  UpdateBookingRequestAdminNotesInput,
   UpdateBookingRequestStatusInput,
 } from './bookingRequest.schema.js'
 
@@ -33,6 +34,19 @@ export async function updateBookingRequestStatusForAdmin(
   const bookingRequest = await BookingRequestModel.findByIdAndUpdate(
     id,
     { status: input.status },
+    { new: true, runValidators: true },
+  )
+
+  return bookingRequest ? toBookingRequestResponse(bookingRequest) : null
+}
+
+export async function updateBookingRequestAdminNotesForAdmin(
+  id: string,
+  input: UpdateBookingRequestAdminNotesInput,
+) {
+  const bookingRequest = await BookingRequestModel.findByIdAndUpdate(
+    id,
+    { adminNotes: input.adminNotes },
     { new: true, runValidators: true },
   )
 

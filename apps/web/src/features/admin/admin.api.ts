@@ -12,6 +12,7 @@ export type AdminBookingRequest = {
   artistSlug: string
   budgetRange: string
   availabilityNotes: string
+  adminNotes: string
   status: 'new' | 'reviewed' | 'contacted' | 'archived'
   createdAt: string
 }
@@ -88,5 +89,13 @@ export function updateAdminBookingRequestStatus(
     `/api/admin/booking-requests/${id}/status`,
     token,
     { status },
+  )
+}
+
+export function updateAdminBookingRequestAdminNotes(id: string, token: string, adminNotes: string) {
+  return patchAdminJson<AdminBookingRequestResponse, { adminNotes: string }>(
+    `/api/admin/booking-requests/${id}/admin-notes`,
+    token,
+    { adminNotes },
   )
 }

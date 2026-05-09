@@ -6,6 +6,7 @@ import {
   type AdminBookingRequestStatus,
   getAdminBookingRequest,
   getAdminBookingRequests,
+  updateAdminBookingRequestAdminNotes,
   updateAdminBookingRequestStatus,
 } from './admin.api'
 
@@ -153,6 +154,20 @@ export function useUpdateAdminBookingRequestStatus() {
     }
 
     return updateAdminBookingRequestStatus(id, token, status)
+  }
+}
+
+export function useUpdateAdminBookingRequestAdminNotes() {
+  const { getToken } = useAuth()
+
+  return async (id: string, adminNotes: string) => {
+    const token = await getToken()
+
+    if (!token) {
+      throw new Error('Missing Clerk token')
+    }
+
+    return updateAdminBookingRequestAdminNotes(id, token, adminNotes)
   }
 }
 

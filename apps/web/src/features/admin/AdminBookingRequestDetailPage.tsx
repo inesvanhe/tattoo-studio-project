@@ -13,19 +13,26 @@ import {
 } from './admin.api'
 import {
   useAdminBookingRequest,
+  useUpdateAdminBookingRequestAdminNotes,
   useUpdateAdminBookingRequestStatus,
 } from './useAdminBookingRequests'
 
 export function AdminBookingRequestDetailPage() {
   const { id } = useParams()
   const requestState = useAdminBookingRequest(id)
+  const updateAdminNotes = useUpdateAdminBookingRequestAdminNotes()
   const updateStatus = useUpdateAdminBookingRequestStatus()
   const [updatedRequest, setUpdatedRequest] = useState<AdminBookingRequest | null>(null)
+  const [adminNotesDraft, setAdminNotesDraft] = useState<string | null>(null)
+  const [adminNotesUpdateState, setAdminNotesUpdateState] = useState<
+    'idle' | 'saving' | 'success' | 'error'
+  >('idle')
   const [statusUpdateState, setStatusUpdateState] = useState<
     'idle' | 'saving' | 'success' | 'error'
   >('idle')
 
   const request = requestState.status === 'success' ? updatedRequest ?? requestState.request : null
+  const adminNotesValue = adminNotesDraft ?? request?.adminNotes ?? ''
 
   async function handleStatusChange(event: ChangeEvent<HTMLSelectElement>) {
     if (!request) {
@@ -47,6 +54,24 @@ export function AdminBookingRequestDetailPage() {
       setStatusUpdateState('success')
     } catch {
       setStatusUpdateState('error')
+    }
+  }
+
+  async function handleAdminNotesSubmit() {
+    if (!request) {
+      return
+    }
+
+    setAdminNotesUpdateState('saving')
+
+    try {
+      const response = await updateAdminNotes(request.id, adminNotesValue)
+
+      setUpdatedRequest(response.data)
+      setAdminNotesDraft(null)
+      setAdminNotesUpdateState('success')
+    } catch {
+      setAdminNotesUpdateState('error')
     }
   }
 
@@ -123,6 +148,32 @@ export function AdminBookingRequestDetailPage() {
                 value={request.availabilityNotes || 'Nicht angegeben'}
                 wide
               />
+
+              <div className="admin-notes-control">
+                <label>
+                  <span>Interne Notiz</span>
+                  <textarea
+                    onChange={(event) => {
+                      setAdminNotesDraft(event.target.value)
+                      setAdminNotesUpdateState('idle')
+                    }}
+                    placeholder="Notizen für Studio, Admins oder Artists"
+                    rows={5}
+                    value={adminNotesValue}
+                  />
+                </label>
+                <button
+                  disabled={adminNotesUpdateState === 'saving'}
+                  onClick={handleAdminNotesSubmit}
+                  type="button"
+                >
+                  {adminNotesUpdateState === 'saving' ? 'Speichert...' : 'Notiz speichern'}
+                </button>
+                {adminNotesUpdateState === 'success' ? <p>Notiz gespeichert.</p> : null}
+                {adminNotesUpdateState === 'error' ? (
+                  <p className="admin-status-error">Notiz konnte nicht gespeichert werden.</p>
+                ) : null}
+              </div>
             </article>
           ) : null}
         </section>

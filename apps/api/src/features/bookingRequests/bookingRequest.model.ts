@@ -57,6 +57,11 @@ const bookingRequestSchema = new Schema(
       trim: true,
       default: '',
     },
+    adminNotes: {
+      type: String,
+      trim: true,
+      default: '',
+    },
     status: {
       type: String,
       enum: bookingRequestStatuses,
