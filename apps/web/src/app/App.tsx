@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { AdminBookingRequestDetailPage } from '../features/admin/AdminBookingRequestDetailPage'
 import { AdminBookingRequestsPage } from '../features/admin/AdminBookingRequestsPage'
 import { AdminPage } from '../features/admin/AdminPage'
+import { ArtistBookingRequestsPage } from '../features/artistAdmin/ArtistBookingRequestsPage'
 import { ArtistDetailPage } from '../features/artists/ArtistDetailPage'
 import { ArtistsPage } from '../features/artists/ArtistsPage'
 import { BookingPage } from '../features/booking/BookingPage'
@@ -24,6 +25,7 @@ export function App() {
         <Route path="/admin" element={<AdminPage />} />
         <Route path="/admin/booking-requests" element={<AdminBookingRequestsPage />} />
         <Route path="/admin/booking-requests/:id" element={<AdminBookingRequestDetailPage />} />
+        <Route path="/artist/booking-requests" element={<ArtistBookingRequestsPage />} />
         <Route
           path="*"
           element={

@@ -5,6 +5,7 @@ const navItems = [
   { label: 'Portfolio', href: '/portfolio' },
   { label: 'Termin buchen', href: '/booking' },
   { label: 'Admin', href: '/admin' },
+  { label: 'Artist', href: '/artist/booking-requests' },
 ]
 
 export function SiteHeader() {
