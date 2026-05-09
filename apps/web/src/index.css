@@ -384,6 +384,7 @@ a {
 .admin-request-row,
 .admin-detail,
 .admin-field,
+.admin-status-control,
 .admin-auth-panel,
 .admin-access-denied,
 .admin-session-bar {
@@ -509,6 +510,45 @@ a {
 
 .admin-detail {
   padding: 1.5rem;
+}
+
+.admin-status-control {
+  margin-top: 2rem;
+  padding: 1rem;
+}
+
+.admin-status-control label {
+  display: grid;
+  gap: 0.6rem;
+}
+
+.admin-status-control span {
+  color: var(--color-honey);
+  font-size: 0.75rem;
+  font-weight: 900;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.admin-status-control select {
+  min-height: 2.75rem;
+  border: 1px solid var(--color-line);
+  background: #050505;
+  color: var(--color-paper);
+  font: inherit;
+  font-weight: 900;
+  padding: 0.75rem;
+  text-transform: uppercase;
+}
+
+.admin-status-control p {
+  margin: 0.75rem 0 0;
+  color: var(--color-muted);
+  font-weight: 800;
+}
+
+.admin-status-control .admin-status-error {
+  color: #ffb8b3;
 }
 
 .admin-detail-grid {

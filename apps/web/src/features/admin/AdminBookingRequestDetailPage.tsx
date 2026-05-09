@@ -1,15 +1,54 @@
 import { useParams } from 'react-router-dom'
+import { type ChangeEvent, useState } from 'react'
 
 import { AppShell } from '../../app/AppShell'
 import { ButtonLink } from '../../shared/components/Button'
 import { formatBudgetRange } from '../../shared/formatters/budget'
 import { AdminAuthGate } from './AdminAuthGate'
 import { AdminNotice, getAdminNoticeKind } from './AdminNotice'
-import { useAdminBookingRequest } from './useAdminBookingRequests'
+import {
+  adminBookingRequestStatuses,
+  type AdminBookingRequest,
+  type AdminBookingRequestStatus,
+} from './admin.api'
+import {
+  useAdminBookingRequest,
+  useUpdateAdminBookingRequestStatus,
+} from './useAdminBookingRequests'
 
 export function AdminBookingRequestDetailPage() {
   const { id } = useParams()
   const requestState = useAdminBookingRequest(id)
+  const updateStatus = useUpdateAdminBookingRequestStatus()
+  const [updatedRequest, setUpdatedRequest] = useState<AdminBookingRequest | null>(null)
+  const [statusUpdateState, setStatusUpdateState] = useState<
+    'idle' | 'saving' | 'success' | 'error'
+  >('idle')
+
+  const request = requestState.status === 'success' ? updatedRequest ?? requestState.request : null
+
+  async function handleStatusChange(event: ChangeEvent<HTMLSelectElement>) {
+    if (!request) {
+      return
+    }
+
+    const nextStatus = event.target.value as AdminBookingRequestStatus
+
+    if (nextStatus === request.status) {
+      return
+    }
+
+    setStatusUpdateState('saving')
+
+    try {
+      const response = await updateStatus(request.id, nextStatus)
+
+      setUpdatedRequest(response.data)
+      setStatusUpdateState('success')
+    } catch {
+      setStatusUpdateState('error')
+    }
+  }
 
   return (
     <AppShell>
@@ -28,13 +67,13 @@ export function AdminBookingRequestDetailPage() {
             <AdminNotice kind={getAdminNoticeKind(requestState.error)} text={requestState.error} />
           ) : null}
 
-          {requestState.status === 'success' ? (
+          {request ? (
             <article className="admin-detail">
               <div className="flex flex-wrap items-start justify-between gap-4">
                 <div>
-                  <p className="eyebrow">{requestState.request.status}</p>
+                  <p className="eyebrow">{request.status}</p>
                   <h2 className="mt-4 text-4xl font-black uppercase leading-none">
-                    {requestState.request.customerName}
+                    {request.customerName}
                   </h2>
                 </div>
                 <ButtonLink href="/admin/booking-requests" variant="secondary">
@@ -42,24 +81,46 @@ export function AdminBookingRequestDetailPage() {
                 </ButtonLink>
               </div>
 
-              <div className="admin-detail-grid">
-                <AdminField label="E-Mail" value={requestState.request.customerEmail} />
-                <AdminField label="Telefon" value={requestState.request.customerPhone || 'Nicht angegeben'} />
-                <AdminField label="Stil" value={requestState.request.preferredStyle} />
-                <AdminField label="Körperstelle" value={requestState.request.bodyPlacement} />
-                <AdminField label="Größe" value={requestState.request.approximateSize} />
-                <AdminField label="Artist" value={requestState.request.artistSlug || 'Nicht angegeben'} />
-                <AdminField
-                  label="Budget"
-                  value={formatBudgetRange(requestState.request.budgetRange) || 'Nicht angegeben'}
-                />
-                <AdminField label="Erstellt" value={new Date(requestState.request.createdAt).toLocaleString()} />
+              <div className="admin-status-control">
+                <label>
+                  <span>Status</span>
+                  <select
+                    disabled={statusUpdateState === 'saving'}
+                    onChange={handleStatusChange}
+                    value={request.status}
+                  >
+                    {adminBookingRequestStatuses.map((status) => (
+                      <option key={status} value={status}>
+                        {status}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+                {statusUpdateState === 'saving' ? <p>Speichere Status...</p> : null}
+                {statusUpdateState === 'success' ? <p>Status aktualisiert.</p> : null}
+                {statusUpdateState === 'error' ? (
+                  <p className="admin-status-error">Status konnte nicht gespeichert werden.</p>
+                ) : null}
               </div>
 
-              <AdminField label="Motividee" value={requestState.request.ideaDescription} wide />
+              <div className="admin-detail-grid">
+                <AdminField label="E-Mail" value={request.customerEmail} />
+                <AdminField label="Telefon" value={request.customerPhone || 'Nicht angegeben'} />
+                <AdminField label="Stil" value={request.preferredStyle} />
+                <AdminField label="Körperstelle" value={request.bodyPlacement} />
+                <AdminField label="Größe" value={request.approximateSize} />
+                <AdminField label="Artist" value={request.artistSlug || 'Nicht angegeben'} />
+                <AdminField
+                  label="Budget"
+                  value={formatBudgetRange(request.budgetRange) || 'Nicht angegeben'}
+                />
+                <AdminField label="Erstellt" value={new Date(request.createdAt).toLocaleString()} />
+              </div>
+
+              <AdminField label="Motividee" value={request.ideaDescription} wide />
               <AdminField
                 label="Terminwunsch / Referenzen"
-                value={requestState.request.availabilityNotes || 'Nicht angegeben'}
+                value={request.availabilityNotes || 'Nicht angegeben'}
                 wide
               />
             </article>

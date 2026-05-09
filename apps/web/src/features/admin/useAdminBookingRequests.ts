@@ -3,8 +3,10 @@ import { useEffect, useState } from 'react'
 
 import {
   type AdminBookingRequest,
+  type AdminBookingRequestStatus,
   getAdminBookingRequest,
   getAdminBookingRequests,
+  updateAdminBookingRequestStatus,
 } from './admin.api'
 
 type AdminBookingRequestsState =
@@ -138,6 +140,20 @@ export function useAdminBookingRequest(id: string | undefined) {
   }
 
   return requestState
+}
+
+export function useUpdateAdminBookingRequestStatus() {
+  const { getToken } = useAuth()
+
+  return async (id: string, status: AdminBookingRequestStatus) => {
+    const token = await getToken()
+
+    if (!token) {
+      throw new Error('Missing Clerk token')
+    }
+
+    return updateAdminBookingRequestStatus(id, token, status)
+  }
 }
 
 function getAdminErrorMessage(error: Error, fallback: string) {
