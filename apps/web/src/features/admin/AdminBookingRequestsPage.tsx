@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom'
 
 import { AppShell } from '../../app/AppShell'
 import { AdminAuthGate } from './AdminAuthGate'
+import { AdminNotice, getAdminNoticeKind } from './AdminNotice'
 import { useAdminBookingRequests } from './useAdminBookingRequests'
 
 export function AdminBookingRequestsPage() {
@@ -20,7 +21,9 @@ export function AdminBookingRequestsPage() {
         <section className="py-12">
           {requestsState.status === 'loading' ? <AdminNotice text="Anfragen werden geladen." /> : null}
 
-          {requestsState.status === 'error' ? <AdminNotice text={requestsState.error} /> : null}
+          {requestsState.status === 'error' ? (
+            <AdminNotice kind={getAdminNoticeKind(requestsState.error)} text={requestsState.error} />
+          ) : null}
 
           {requestsState.status === 'success' && requestsState.requests.length === 0 ? (
             <AdminNotice text="Noch keine Anfragen vorhanden." />
@@ -51,13 +54,5 @@ export function AdminBookingRequestsPage() {
         </section>
       </AdminAuthGate>
     </AppShell>
-  )
-}
-
-function AdminNotice({ text }: { text: string }) {
-  return (
-    <div className="panel-frame p-6 text-[var(--color-muted)]">
-      <p>{text}</p>
-    </div>
   )
 }

@@ -4,6 +4,7 @@ import { AppShell } from '../../app/AppShell'
 import { ButtonLink } from '../../shared/components/Button'
 import { formatBudgetRange } from '../../shared/formatters/budget'
 import { AdminAuthGate } from './AdminAuthGate'
+import { AdminNotice, getAdminNoticeKind } from './AdminNotice'
 import { useAdminBookingRequest } from './useAdminBookingRequests'
 
 export function AdminBookingRequestDetailPage() {
@@ -23,7 +24,9 @@ export function AdminBookingRequestDetailPage() {
         <section className="py-12">
           {requestState.status === 'loading' ? <AdminNotice text="Anfrage wird geladen." /> : null}
 
-          {requestState.status === 'error' ? <AdminNotice text={requestState.error} /> : null}
+          {requestState.status === 'error' ? (
+            <AdminNotice kind={getAdminNoticeKind(requestState.error)} text={requestState.error} />
+          ) : null}
 
           {requestState.status === 'success' ? (
             <article className="admin-detail">
@@ -72,14 +75,6 @@ function AdminField({ label, value, wide = false }: { label: string; value: stri
     <div className={wide ? 'admin-field admin-field-wide' : 'admin-field'}>
       <span>{label}</span>
       <strong>{value}</strong>
-    </div>
-  )
-}
-
-function AdminNotice({ text }: { text: string }) {
-  return (
-    <div className="panel-frame p-6 text-[var(--color-muted)]">
-      <p>{text}</p>
     </div>
   )
 }
