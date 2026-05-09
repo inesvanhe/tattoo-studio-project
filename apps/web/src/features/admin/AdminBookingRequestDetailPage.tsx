@@ -2,6 +2,7 @@ import { useParams } from 'react-router-dom'
 
 import { AppShell } from '../../app/AppShell'
 import { ButtonLink } from '../../shared/components/Button'
+import { formatBudgetRange } from '../../shared/formatters/budget'
 import { AdminAuthGate } from './AdminAuthGate'
 import { useAdminBookingRequest } from './useAdminBookingRequests'
 
@@ -42,10 +43,13 @@ export function AdminBookingRequestDetailPage() {
                 <AdminField label="E-Mail" value={requestState.request.customerEmail} />
                 <AdminField label="Telefon" value={requestState.request.customerPhone || 'Nicht angegeben'} />
                 <AdminField label="Stil" value={requestState.request.preferredStyle} />
-                <AdminField label="Koerperstelle" value={requestState.request.bodyPlacement} />
-                <AdminField label="Groesse" value={requestState.request.approximateSize} />
+                <AdminField label="Körperstelle" value={requestState.request.bodyPlacement} />
+                <AdminField label="Größe" value={requestState.request.approximateSize} />
                 <AdminField label="Artist" value={requestState.request.artistSlug || 'Nicht angegeben'} />
-                <AdminField label="Budget" value={requestState.request.budgetRange || 'Nicht angegeben'} />
+                <AdminField
+                  label="Budget"
+                  value={formatBudgetRange(requestState.request.budgetRange) || 'Nicht angegeben'}
+                />
                 <AdminField label="Erstellt" value={new Date(requestState.request.createdAt).toLocaleString()} />
               </div>
 

@@ -16,7 +16,7 @@ export function PortfolioPage() {
           <div className="panel-frame p-6">
             <p className="text-lg leading-8 text-[var(--color-muted)]">
               Ein erster klickbarer Galerie-Stand mit kuratierten Mock-Arbeiten.
-              Filter und echte Daten folgen in den naechsten Iterationen.
+              Filter und echte Daten folgen in den nächsten Iterationen.
             </p>
             <div className="mt-6">
               <ButtonLink href="/booking">Termin anfragen</ButtonLink>

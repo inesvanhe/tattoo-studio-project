@@ -3,6 +3,7 @@ import { useSearchParams } from 'react-router-dom'
 
 import { AppShell } from '../../app/AppShell'
 import { Button } from '../../shared/components/Button'
+import { formatBudgetRange } from '../../shared/formatters/budget'
 import { createBookingRequest } from './booking.api'
 
 type BookingFormData = {
@@ -55,12 +56,26 @@ const fieldLabels: Record<keyof BookingFormData, string> = {
   customerPhone: 'Telefon',
   ideaDescription: 'Motividee',
   preferredStyle: 'Stilrichtung',
-  bodyPlacement: 'Koerperstelle',
-  approximateSize: 'Ungefaehre Groesse',
+  bodyPlacement: 'Körperstelle',
+  approximateSize: 'Ungefähre Größe',
   references: 'Referenzen',
   artistSlug: 'Artist-Wunsch',
   budgetRange: 'Budgetrahmen',
   availabilityNotes: 'Terminwunsch',
+}
+
+function getSummaryValue(field: keyof BookingFormData, value: string) {
+  const trimmedValue = value.trim()
+
+  if (!trimmedValue) {
+    return 'Nicht angegeben'
+  }
+
+  if (field === 'budgetRange') {
+    return formatBudgetRange(trimmedValue)
+  }
+
+  return trimmedValue
 }
 
 export function BookingPage() {
@@ -148,8 +163,8 @@ export function BookingPage() {
           </h1>
           <div className="panel-frame p-6">
             <p className="text-lg leading-8 text-[var(--color-muted)]">
-              Bereite deine Anfrage strukturiert vor. Das Studio prueft sie
-              spaeter manuell und bestaetigt keinen Termin und keinen Preis.
+              Bereite deine Anfrage strukturiert vor. Das Studio prüft sie
+              später manuell und bestätigt keinen Termin und keinen Preis.
             </p>
           </div>
         </div>
@@ -223,20 +238,20 @@ export function BookingPage() {
           ) : null}
 
           {currentStep === 2 ? (
-            <BookingStep title="Platzierung und Groesse" description="Wo soll das Tattoo sitzen?">
+            <BookingStep title="Platzierung und Größe" description="Wo soll das Tattoo sitzen?">
               <BookingInput
-                label="Koerperstelle"
+                label="Körperstelle"
                 name="bodyPlacement"
                 onChange={updateField}
-                placeholder="Oberarm, Rippen, Ruecken..."
+                placeholder="Oberarm, Rippen, Rücken..."
                 required
                 value={formData.bodyPlacement}
               />
               <BookingInput
-                label="Ungefaehre Groesse"
+                label="Ungefähre Größe"
                 name="approximateSize"
                 onChange={updateField}
-                placeholder="z.B. 10 cm, handflaechengross, Sleeve..."
+                placeholder="z.B. 10 cm, handflächengroß, Sleeve..."
                 required
                 value={formData.approximateSize}
               />
@@ -244,7 +259,7 @@ export function BookingPage() {
           ) : null}
 
           {currentStep === 3 ? (
-            <BookingStep title="Zusatzinfos" description="Alles, was beim Einschaetzen hilft.">
+            <BookingStep title="Zusatzinfos" description="Alles, was beim Einschätzen hilft.">
               <BookingTextarea
                 label="Referenzen"
                 name="references"
@@ -262,14 +277,14 @@ export function BookingPage() {
                 label="Budgetrahmen"
                 name="budgetRange"
                 onChange={updateField}
-                placeholder="Optional und unverbindlich"
+                placeholder="z.B. 300-600 € oder nach Absprache"
                 value={formData.budgetRange}
               />
               <BookingTextarea
                 label="Terminwunsch"
                 name="availabilityNotes"
                 onChange={updateField}
-                placeholder="Zeitraum, Wochentage oder Hinweise zur Verfuegbarkeit"
+                placeholder="Zeitraum, Wochentage oder Hinweise zur Verfügbarkeit"
                 value={formData.availabilityNotes}
               />
             </BookingStep>
@@ -278,13 +293,13 @@ export function BookingPage() {
           {currentStep === 4 ? (
             <BookingStep
               title="Zusammenfassung"
-              description="Pruefe deine Angaben. Danach wird die Anfrage an das Studio uebermittelt."
+              description="Prüfe deine Angaben. Danach wird die Anfrage an das Studio übermittelt."
             >
               <div className="booking-summary">
                 {Object.entries(formData).map(([field, value]) => (
                   <div className="booking-summary-row" key={field}>
                     <span>{fieldLabels[field as keyof BookingFormData]}</span>
-                    <strong>{value.trim() || 'Nicht angegeben'}</strong>
+                    <strong>{getSummaryValue(field as keyof BookingFormData, value)}</strong>
                   </div>
                 ))}
               </div>
@@ -293,14 +308,14 @@ export function BookingPage() {
 
           {touchedStep && missingFields.length > 0 ? (
             <div className="booking-error" role="alert">
-              Bitte fuelle aus: {missingFields.map((field) => fieldLabels[field]).join(', ')}.
+              Bitte fülle aus: {missingFields.map((field) => fieldLabels[field]).join(', ')}.
             </div>
           ) : null}
 
           {submitted ? (
             <div className="booking-success" role="status">
-              Anfrage gespeichert. Das Studio prueft deine Angaben und meldet sich
-              persoenlich. Es wurde kein Termin bestaetigt und kein Preis zugesagt.
+              Anfrage gespeichert. Das Studio prüft deine Angaben und meldet sich
+              persönlich. Es wurde kein Termin bestätigt und kein Preis zugesagt.
             </div>
           ) : null}
 
@@ -312,7 +327,7 @@ export function BookingPage() {
 
           <div className="booking-actions">
             <Button disabled={currentStep === 0} onClick={goToPreviousStep} type="button" variant="secondary">
-              Zurueck
+              Zurück
             </Button>
             {currentStep < steps.length - 1 ? (
               <Button onClick={goToNextStep} type="button">

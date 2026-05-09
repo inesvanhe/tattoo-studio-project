@@ -1,6 +1,6 @@
 # Architecture Notes
 
-Diese Architektur beschreibt die geplante technische Struktur fuer HONEY | BEEZ ink. Sie soll einfach genug fuer ein Weiterbildungsprojekt bleiben, aber klar genug sein, um wartbar und feature-basiert zu wachsen.
+Diese Architektur beschreibt die geplante technische Struktur für HONEY | BEEZ ink. Sie soll einfach genug für ein Weiterbildungsprojekt bleiben, aber klar genug sein, um wartbar und feature-basiert zu wachsen.
 
 ## Grundrichtung
 
@@ -8,9 +8,9 @@ Das Projekt wird als kleine Fullstack-Plattform mit getrenntem Frontend und Back
 
 - `apps/web`: React, Vite, TypeScript, Tailwind CSS
 - `apps/api`: Node.js, Express, TypeScript, Zod, Mongoose, dotenv
-- MongoDB Atlas als primaere Entwicklungsdatenbank, einsehbar ueber MongoDB Compass
+- MongoDB Atlas als primäre Entwicklungsdatenbank, einsehbar über MongoDB Compass
 
-Frontend und Backend kommunizieren ueber HTTP-JSON-APIs.
+Frontend und Backend kommunizieren über HTTP-JSON-APIs.
 
 ## Architekturprinzipien
 
@@ -18,11 +18,11 @@ Frontend und Backend kommunizieren ueber HTTP-JSON-APIs.
 - kleine, nachvollziehbare Iterationen
 - feature-basierte Struktur statt technischer Sammelordner als Standard
 - Business-Logik deterministisch im Backend
-- Frontend fuer Darstellung, Interaktion und nutzerfreundliche Validierung
-- Backend fuer Validierung, Persistenz und Statuslogik
+- Frontend für Darstellung, Interaktion und nutzerfreundliche Validierung
+- Backend für Validierung, Persistenz und Statuslogik
 - AI hinter klaren Service-Interfaces kapseln
-- Mock-Services zuerst, echte externe Services spaeter
-- keine unnoetige Abstraktion
+- Mock-Services zuerst, echte externe Services später
+- keine unnötige Abstraktion
 
 ## Geplante Ordnerstruktur
 
@@ -52,18 +52,18 @@ Die genaue Struktur darf beim Setup leicht abweichen, solange die fachlichen Gre
 
 ## Frontend: apps/web
 
-Das Frontend ist die oeffentliche Website und spaeter der Einstieg in Admin- und AI-Funktionen.
+Das Frontend ist die öffentliche Website und später der Einstieg in Admin- und AI-Funktionen.
 
 Geplante Bereiche:
 
 - Startseite
-- Artist-Uebersicht
+- Artist-Übersicht
 - Artist-Detailseite
 - Portfolio-Galerie
 - Portfolio-Detailseite
 - Terminanfrage-Flow
-- spaeter Admin-Dashboard
-- spaeter AI Advisor und AI Booking Assistant
+- später Admin-Dashboard
+- später AI Advisor und AI Booking Assistant
 
 Empfohlene Struktur:
 
@@ -128,7 +128,7 @@ apps/api/src/
     types/
 ```
 
-Ein groesseres Backend-Feature kann intern so aufgebaut werden:
+Ein größeres Backend-Feature kann intern so aufgebaut werden:
 
 ```txt
 features/bookingRequests/
@@ -140,7 +140,7 @@ features/bookingRequests/
   bookingRequest.types.ts
 ```
 
-Kleine Features duerfen kleiner bleiben. Die Struktur soll helfen, nicht beeindrucken.
+Kleine Features dürfen kleiner bleiben. Die Struktur soll helfen, nicht beeindrucken.
 
 ## Backend-Schichten
 
@@ -166,27 +166,27 @@ Mongoose-Models bilden gespeicherte Daten in MongoDB Atlas ab.
 
 ## Datenbank
 
-MongoDB Atlas ist die primaere Entwicklungsdatenbank. Dadurch kann von mehreren Geraeten auf dieselbe Entwicklungsdatenbank zugegriffen werden.
+MongoDB Atlas ist die primäre Entwicklungsdatenbank. Dadurch kann von mehreren Geräten auf dieselbe Entwicklungsdatenbank zugegriffen werden.
 
-MongoDB Compass bleibt die bevorzugte GUI, um Daten einzusehen und zu pruefen.
+MongoDB Compass bleibt die bevorzugte GUI, um Daten einzusehen und zu prüfen.
 
-Eine lokale MongoDB-Instanz ist optional moeglich, aber nicht der Standard fuer dieses Projekt.
+Eine lokale MongoDB-Instanz ist optional möglich, aber nicht der Standard für dieses Projekt.
 
-Mongoose dient als Modellschicht fuer:
+Mongoose dient als Modellschicht für:
 
 - Booking Requests
-- spaeter Artists
-- spaeter Portfolio-Eintraege
+- später Artists
+- später Portfolio-Einträge
 
-Fuer fruehe MVP-Schritte duerfen Artists und Portfolio auch als Seed- oder Mock-Daten starten. Sobald sie bearbeitbar werden oder dauerhaft gespeichert werden muessen, wandern sie in MongoDB Atlas.
+Für frühe MVP-Schritte dürfen Artists und Portfolio auch als Seed- oder Mock-Daten starten. Sobald sie bearbeitbar werden oder dauerhaft gespeichert werden müssen, wandern sie in MongoDB Atlas.
 
 ## BookingRequest-Datenfluss
 
 Der wichtigste MVP-Datenfluss ist die Terminanfrage.
 
-1. Nutzer fuellt das Formular im Frontend aus.
-2. Frontend prueft nutzerfreundlich auf fehlende Angaben.
-3. Nutzer bestaetigt die Zusammenfassung.
+1. Nutzer füllt das Formular im Frontend aus.
+2. Frontend prüft nutzerfreundlich auf fehlende Angaben.
+3. Nutzer bestätigt die Zusammenfassung.
 4. Frontend sendet `POST /api/booking-requests`.
 5. Backend validiert die Daten mit Zod.
 6. Backend setzt den initialen Status `new`.
@@ -198,13 +198,13 @@ Wichtig:
 - Das Frontend setzt keinen finalen Status.
 - AI setzt keinen Status.
 - Der Server entscheidet, ob eine Anfrage gespeichert wird.
-- Es wird kein Termin bestaetigt und kein Preis genannt.
+- Es wird kein Termin bestätigt und kein Preis genannt.
 
 ## API-Grenzen
 
 Die API orientiert sich an `spec.md`.
 
-Oeffentliche Endpunkte:
+Öffentliche Endpunkte:
 
 - `GET /api/health`
 - `GET /api/artists`
@@ -226,34 +226,34 @@ AI-Endpunkte:
 
 ## Auth
 
-Oeffentliche Seiten bleiben ohne Login erreichbar.
+Öffentliche Seiten bleiben ohne Login erreichbar.
 
-Clerk wird fuer Admin- und eventuell spaetere Artist-Bereiche verwendet.
+Clerk wird für Admin- und eventuell spätere Artist-Bereiche verwendet.
 
-Der naechste Auth-Schritt ist backend-first: Admin-API-Endpunkte werden zuerst serverseitig geschuetzt, bevor Admin-UI-Arbeit vertieft wird.
+Der nächste Auth-Schritt ist backend-first: Admin-API-Endpunkte werden zuerst serverseitig geschützt, bevor Admin-UI-Arbeit vertieft wird.
 
 Vorgehen:
 
 - Clerk wird im API-Server als Express-Middleware eingebunden.
-- Oeffentliche API-Endpunkte bleiben ohne Login erreichbar.
-- Admin-Endpunkte werden ueber eine eigene Admin-Auth-Middleware geschuetzt.
-- Ungueltige oder fehlende Authentifizierung fuehrt bei API-Routen zu JSON-Fehlern, nicht zu Redirects.
-- Rollen- oder Rechtepruefung wird nach der Grundauthentifizierung bewusst separat entschieden.
+- Öffentliche API-Endpunkte bleiben ohne Login erreichbar.
+- Admin-Endpunkte werden über eine eigene Admin-Auth-Middleware geschützt.
+- Ungültige oder fehlende Authentifizierung führt bei API-Routen zu JSON-Fehlern, nicht zu Redirects.
+- Rollen- oder Rechteprüfung wird nach der Grundauthentifizierung bewusst separat entschieden.
 
-Bis Auth eingefuehrt ist, duerfen Admin-Funktionen nur als Entwicklungsfunktion betrachtet werden.
+Bis Auth eingeführt ist, dürfen Admin-Funktionen nur als Entwicklungsfunktion betrachtet werden.
 
 ## AI-Schicht
 
 AI wird hinter klaren Interfaces gekapselt.
 
-Im MVP wird zuerst ein Mock-Service gebaut. Dieser kann feste oder regelbasierte Antworten erzeugen, damit UI und Datenfluss ohne echte AI-API entwickelt werden koennen.
+Im MVP wird zuerst ein Mock-Service gebaut. Dieser kann feste oder regelbasierte Antworten erzeugen, damit UI und Datenfluss ohne echte AI-API entwickelt werden können.
 
 Regeln:
 
 - AI-Services liefern Texte, Hinweise oder Zusammenfassungen.
 - AI-Services kontrollieren keine Business-Logik.
 - AI-Services setzen keine Statuswerte.
-- AI-Services bestaetigen keine Termine.
+- AI-Services bestätigen keine Termine.
 - AI-Services nennen keine verbindlichen Preise.
 - AI-Services geben keine medizinische Beratung.
 - AI-Services generieren keine Tattoo-Bilder.
@@ -268,17 +268,17 @@ Geplante Kategorien:
 - Nicht gefunden
 - Serverfehler
 
-Validierungsfehler sollen fuer das Frontend so strukturiert sein, dass Formularfelder sinnvoll markiert werden koennen.
+Validierungsfehler sollen für das Frontend so strukturiert sein, dass Formularfelder sinnvoll markiert werden können.
 
 ## Konfiguration
 
-`.env.template` bleibt zunaechst leer.
+`.env.template` bleibt zunächst leer.
 
-Umgebungsvariablen werden erst eingetragen, wenn sie bewusst im Projekt benoetigt und dokumentiert werden.
+Umgebungsvariablen werden erst eingetragen, wenn sie bewusst im Projekt benötigt und dokumentiert werden.
 
-Echte Secrets duerfen nicht in Repository-Dateien eingetragen werden.
+Echte Secrets dürfen nicht in Repository-Dateien eingetragen werden.
 
-Wenn die Datenbankanbindung umgesetzt wird, wird voraussichtlich eine lokale `.env` mit einem Atlas-Connection-String benoetigt. Der echte Connection-String darf nicht committed werden.
+Wenn die Datenbankanbindung umgesetzt wird, wird voraussichtlich eine lokale `.env` mit einem Atlas-Connection-String benötigt. Der echte Connection-String darf nicht committed werden.
 
 ## Architekturentscheidungen
 
@@ -288,6 +288,6 @@ Noch bewusst offen:
 - konkrete Routing-Library im Frontend
 - genaue UI-Komponentenstruktur
 - ob Artists und Portfolio im ersten Schritt statisch oder direkt aus MongoDB Atlas kommen
-- konkretes Clerk-Rollenmodell fuer Admins und eventuell Artists
+- konkretes Clerk-Rollenmodell für Admins und eventuell Artists
 
-Diese Entscheidungen sollen getroffen werden, wenn sie fuer die naechste Implementierungsphase relevant sind.
+Diese Entscheidungen sollen getroffen werden, wenn sie für die nächste Implementierungsphase relevant sind.

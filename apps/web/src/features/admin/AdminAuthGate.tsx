@@ -34,7 +34,7 @@ export function AdminAuthGate({ children }: AdminAuthGateProps) {
         <div className="admin-auth-panel">
           <p className="eyebrow">Admin Login</p>
           <h2>Bitte anmelden</h2>
-          <p>Der Admin-Bereich ist geschuetzt. Melde dich mit Clerk an, um Anfragen zu sehen.</p>
+          <p>Der Admin-Bereich ist geschützt. Melde dich mit Clerk an, um Anfragen zu sehen.</p>
           <div className="mt-6">
             <SignInButton mode="modal">
               <button className="admin-auth-button" type="button">

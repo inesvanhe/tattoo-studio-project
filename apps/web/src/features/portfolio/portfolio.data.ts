@@ -27,7 +27,7 @@ export const portfolioWorks: PortfolioWork[] = [
     styles: ['Blackwork', 'Ornamental'],
     bodyPlacement: 'Ribs',
     description:
-      'Florales Blackwork-Piece mit dunklen Flaechen, ruhigem Rhythmus und klarer Silhouette.',
+      'Florales Blackwork-Piece mit dunklen Flächen, ruhigem Rhythmus und klarer Silhouette.',
   },
   {
     slug: 'street-halo',
@@ -37,7 +37,7 @@ export const portfolioWorks: PortfolioWork[] = [
     styles: ['Blackwork', 'Lettering'],
     bodyPlacement: 'Back Shoulder',
     description:
-      'Grafisches Lettering-Motiv mit Halo-Form, Streetwear-Kante und praeziser Linienfuehrung.',
+      'Grafisches Lettering-Motiv mit Halo-Form, Streetwear-Kante und präziser Linienführung.',
   },
 ]
 

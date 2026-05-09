@@ -1,6 +1,6 @@
 # Roadmap
 
-Diese Roadmap uebersetzt `vision.md`, `spec.md`, `agents.md` und `architecture.md` in eine sinnvolle Umsetzungsreihenfolge. Ziel ist ein lernfreundliches, spec-first Vorgehen in kleinen, pruefbaren Schritten.
+Diese Roadmap übersetzt `vision.md`, `spec.md`, `agents.md` und `architecture.md` in eine sinnvolle Umsetzungsreihenfolge. Ziel ist ein lernfreundliches, spec-first Vorgehen in kleinen, prüfbaren Schritten.
 
 ## Phase 0 - Spezifikation und Projektklarheit
 
@@ -9,25 +9,25 @@ Ziel: Die Produktidee, MVP-Grenzen, AI-Regeln und technische Richtung sind dokum
 Enthalten:
 
 - README finalisieren
-- Vision fuer HONEY | BEEZ ink schaerfen
+- Vision für HONEY | BEEZ ink schärfen
 - Product Spec mit MVP-Priorisierung definieren
 - AI Agent Guidelines festlegen
 - Architektur dokumentieren
-- MongoDB Atlas als primaere Entwicklungsdatenbank festlegen
-- `.env.template` leer lassen, bis Variablen bewusst eingefuehrt werden
+- MongoDB Atlas als primäre Entwicklungsdatenbank festlegen
+- `.env.template` leer lassen, bis Variablen bewusst eingeführt werden
 
 Ergebnis:
 
-- Die Dokumente sind die Grundlage fuer alle spaeteren Coding-Schritte.
+- Die Dokumente sind die Grundlage für alle späteren Coding-Schritte.
 
 ## Phase 1 - Projektsetup
 
-Ziel: Ein minimales lauffaehiges Fullstack-Grundgeruest steht.
+Ziel: Ein minimales lauffähiges Fullstack-Grundgerüst steht.
 
 Enthalten:
 
 - Git initialisieren
-- Root-Setup fuer das Projekt anlegen
+- Root-Setup für das Projekt anlegen
 - `apps/web` mit React, Vite, TypeScript und Tailwind CSS erstellen
 - `apps/api` mit Express und TypeScript erstellen
 - feature-basierte Grundordner anlegen
@@ -44,13 +44,13 @@ Nicht enthalten:
 
 Ergebnis:
 
-- Frontend und Backend koennen lokal gestartet werden.
+- Frontend und Backend können lokal gestartet werden.
 - Der Health Check funktioniert.
 - Die Projektstruktur entspricht grob `architecture.md`.
 
 ## Phase 2 - Brand Foundation und Landing Page
 
-Ziel: Die oeffentliche Website zeigt HONEY | BEEZ ink als klare Marke.
+Ziel: Die öffentliche Website zeigt HONEY | BEEZ ink als klare Marke.
 
 Enthalten:
 
@@ -66,7 +66,7 @@ Enthalten:
 Ergebnis:
 
 - Die Website wirkt nicht generisch, sondern klar nach HONEY | BEEZ ink.
-- Nutzer erkennen sofort, wohin sie navigieren koennen.
+- Nutzer erkennen sofort, wohin sie navigieren können.
 
 ## Phase 3 - Artists
 
@@ -75,7 +75,7 @@ Ziel: Artists werden als eigener Plattformbereich sichtbar.
 Enthalten:
 
 - Artist-Mock-Daten definieren
-- Artist-Uebersicht bauen
+- Artist-Übersicht bauen
 - Artist-Detailseite bauen
 - Spezialisierungen, Bio und Stilrichtungen anzeigen
 - CTA zur Terminanfrage mit optionalem Artist-Wunsch vorbereiten
@@ -87,7 +87,7 @@ Nicht enthalten:
 
 Ergebnis:
 
-- Nutzer koennen Artists entdecken und einzelne Profile oeffnen.
+- Nutzer können Artists entdecken und einzelne Profile öffnen.
 
 ## Phase 4 - Portfolio
 
@@ -105,32 +105,32 @@ Enthalten:
 Nicht enthalten:
 
 - Upload-Funktion
-- vollstaendiges CMS
+- vollständiges CMS
 - Persistenz in MongoDB Atlas
 
 Ergebnis:
 
-- Nutzer koennen Arbeiten ansehen und nach Stil oder Artist filtern.
+- Nutzer können Arbeiten ansehen und nach Stil oder Artist filtern.
 
 ## Phase 5 - Booking Flow im Frontend
 
-Ziel: Nutzer koennen eine strukturierte Terminanfrage vorbereiten.
+Ziel: Nutzer können eine strukturierte Terminanfrage vorbereiten.
 
 Enthalten:
 
 - mehrstufiges Anfrageformular bauen
 - Schritt 1: Kontakt
 - Schritt 2: Motividee
-- Schritt 3: Platzierung und Groesse
+- Schritt 3: Platzierung und Größe
 - Schritt 4: Zusatzinformationen
 - Schritt 5: Zusammenfassung und Absenden
-- Frontend-Validierung fuer bessere Nutzerfuehrung
+- Frontend-Validierung für bessere Nutzerführung
 - Erfolgsmeldung nach simuliertem Absenden
 
 Nicht enthalten:
 
 - Speicherung in MongoDB Atlas
-- echte Terminbestaetigung
+- echte Terminbestätigung
 - Preiszusage
 - AI-Zusammenfassung
 
@@ -140,13 +140,13 @@ Ergebnis:
 
 ## Phase 6 - Backend Booking API
 
-Ziel: Terminanfragen koennen serverseitig validiert und angenommen werden.
+Ziel: Terminanfragen können serverseitig validiert und angenommen werden.
 
 Enthalten:
 
 - `BookingRequest`-Zod-Schema
 - `POST /api/booking-requests`
-- Controller und Service fuer Booking Requests
+- Controller und Service für Booking Requests
 - konsistente Fehlerantworten
 - initialer Status `new` wird im Backend gesetzt
 - Frontend sendet echte Anfrage an API
@@ -159,7 +159,7 @@ Nicht enthalten:
 
 Ergebnis:
 
-- Das Backend entscheidet, ob eine Anfrage gueltig ist.
+- Das Backend entscheidet, ob eine Anfrage gültig ist.
 - Keine Anfrage wird ohne Pflichtfelder akzeptiert.
 
 ## Phase 7 - MongoDB Atlas und Persistenz
@@ -172,7 +172,7 @@ Enthalten:
 - Atlas-Connection-String lokal in `.env` verwenden
 - Mongoose-Verbindung einrichten
 - `BookingRequest`-Mongoose-Model bauen
-- gespeicherte Anfragen in Atlas pruefen
+- gespeicherte Anfragen in Atlas prüfen
 - Compass-Zugriff testen
 
 Nicht enthalten:
@@ -184,30 +184,30 @@ Nicht enthalten:
 Ergebnis:
 
 - Abgesendete Terminanfragen landen dauerhaft in MongoDB Atlas.
-- Daten koennen ueber MongoDB Compass eingesehen werden.
+- Daten können über MongoDB Compass eingesehen werden.
 
 ## Phase 8 - Admin Dashboard
 
-Ziel: Eingehende Anfragen koennen intern gesichtet und bearbeitet werden.
+Ziel: Eingehende Anfragen können intern gesichtet und bearbeitet werden.
 
 Enthalten:
 
-- Admin-Uebersicht fuer Booking Requests
+- Admin-Übersicht für Booking Requests
 - Anfrage-Detailansicht
 - Statusfilter
-- Statuswechsel fuer `new`, `reviewed`, `contacted`, `archived`
-- API-Endpunkte fuer Admin-Anfragen
+- Statuswechsel für `new`, `reviewed`, `contacted`, `archived`
+- API-Endpunkte für Admin-Anfragen
 
 Nicht enthalten:
 
 - Clerk-Authentifizierung
 - Rollen- und Rechteverwaltung
-- oeffentliche Nutzung des Admin-Bereichs
+- öffentliche Nutzung des Admin-Bereichs
 
 Ergebnis:
 
 - Das Studio kann Anfragen strukturiert bearbeiten.
-- Admin-Funktionen bleiben bis zur Auth-Einfuehrung Entwicklungsfunktionen.
+- Admin-Funktionen bleiben bis zur Auth-Einführung Entwicklungsfunktionen.
 
 ## Phase 9 - AI Mock Services
 
@@ -219,8 +219,8 @@ Enthalten:
 - AI Booking Assistant Mock
 - `POST /api/ai/advisor/message`
 - `POST /api/ai/booking-summary`
-- unverbindliche Rueckfragen, Hinweise und Zusammenfassungen
-- UI-Kennzeichnung als unterstuetzende AI-Funktion
+- unverbindliche Rückfragen, Hinweise und Zusammenfassungen
+- UI-Kennzeichnung als unterstützende AI-Funktion
 
 Nicht enthalten:
 
@@ -233,19 +233,19 @@ Nicht enthalten:
 
 Ergebnis:
 
-- AI-Workflows koennen im Produkt getestet werden, ohne Business-Logik an AI abzugeben.
+- AI-Workflows können im Produkt getestet werden, ohne Business-Logik an AI abzugeben.
 
 ## Phase 10 - Auth und Absicherung
 
-Ziel: Admin-Funktionen werden fuer echte Nutzung vorbereitet.
+Ziel: Admin-Funktionen werden für echte Nutzung vorbereitet.
 
 Enthalten:
 
 - Clerk backend-first integrieren
-- Admin-API-Endpunkte serverseitig schuetzen
-- JSON-Fehler fuer nicht authentifizierte API-Anfragen liefern
+- Admin-API-Endpunkte serverseitig schützen
+- JSON-Fehler für nicht authentifizierte API-Anfragen liefern
 - Admin-Routen im Frontend erst nach Figma/UI-Planung anbinden
-- Rollenmodell fuer Admins und eventuell Artists klaeren
+- Rollenmodell für Admins und eventuell Artists klären
 
 Nicht enthalten:
 
@@ -256,17 +256,17 @@ Nicht enthalten:
 Ergebnis:
 
 - Der Admin-Bereich ist nicht mehr nur Entwicklungsfunktion.
-- Admin-Zugriff haengt nicht nur von Frontend-Navigation ab.
+- Admin-Zugriff hängt nicht nur von Frontend-Navigation ab.
 
-## Phase 11 - Spaetere Erweiterungen
+## Phase 11 - Spätere Erweiterungen
 
-Moegliche Erweiterungen nach dem Kern-MVP:
+Mögliche Erweiterungen nach dem Kern-MVP:
 
 - Artist- und Portfolio-Verwaltung im Admin
-- Persistenz fuer Artists und Portfolio in MongoDB Atlas
+- Persistenz für Artists und Portfolio in MongoDB Atlas
 - echte AI-API-Anbindung
 - bessere Such- und Filterfunktionen
-- Uploads fuer Referenzbilder
+- Uploads für Referenzbilder
 - Deployment
 - Testing-Ausbau
 - Accessibility- und Performance-Feinschliff

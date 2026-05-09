@@ -28,11 +28,11 @@ export function ArtistDetailPage() {
             Artist nicht gefunden
           </h1>
           <p className="mt-6 max-w-2xl text-lg leading-8 text-[var(--color-muted)]">
-            Dieses Profil ist gerade nicht verfuegbar. Zurueck zur Uebersicht
+            Dieses Profil ist gerade nicht verfügbar. Zurück zur Übersicht
             und weiter durch die Resident Artists.
           </p>
           <div className="mt-8">
-            <ButtonLink href="/artists">Zur Artist-Uebersicht</ButtonLink>
+            <ButtonLink href="/artists">Zur Artist-Übersicht</ButtonLink>
           </div>
         </section>
       </AppShell>
@@ -72,8 +72,8 @@ export function ArtistDetailPage() {
             Motive mit Haltung.
           </h2>
           <p className="mt-5 text-base leading-7 text-[var(--color-muted)]">
-            Spaeter verknuepfen wir hier passende Portfolio-Arbeiten. Fuer den
-            ersten klickbaren Stand fuehrt dich der CTA direkt in die Anfrage
+            Später verknüpfen wir hier passende Portfolio-Arbeiten. Für den
+            ersten klickbaren Stand führt dich der CTA direkt in die Anfrage
             mit Artist-Wunsch.
           </p>
         </div>
@@ -81,8 +81,8 @@ export function ArtistDetailPage() {
           <p className="eyebrow">Next Step</p>
           <h2 className="mt-5 text-3xl font-black uppercase leading-none">Request</h2>
           <p className="mt-5 text-base leading-7 text-[var(--color-muted)]">
-            Stelle eine unverbindliche Anfrage. Das Studio prueft sie spaeter
-            manuell und bestaetigt keinen Termin automatisch.
+            Stelle eine unverbindliche Anfrage. Das Studio prüft sie später
+            manuell und bestätigt keinen Termin automatisch.
           </p>
           <div className="mt-6">
             <ButtonLink href={`/booking?artist=${artist.slug}`}>Termin mit Artist anfragen</ButtonLink>

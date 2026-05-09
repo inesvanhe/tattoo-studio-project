@@ -30,7 +30,7 @@ export function App() {
             <PlaceholderPage
               eyebrow="404"
               title="Page not found"
-              description="Diese Route existiert noch nicht. Zurueck zur Startseite und weiter durch die klickbare Projektstruktur."
+              description="Diese Route existiert noch nicht. Zurück zur Startseite und weiter durch die klickbare Projektstruktur."
             />
           }
         />

@@ -1,24 +1,24 @@
 # Tattoo Studio Project
 
-Moderne Website und Webplattform fuer HONEY | BEEZ ink, ein halb-fiktives Tattoo-Studio mit urbaner, edgy Ausrichtung und Fokus auf Blackwork und Neo-Traditional.
+Moderne Website und Webplattform für HONEY | BEEZ ink, ein halb-fiktives Tattoo-Studio mit urbaner, edgy Ausrichtung und Fokus auf Blackwork und Neo-Traditional.
 
 Das Projekt entsteht als erstes agentic-coding Projekt im Rahmen einer Webdev-Weiterbildung. Ziel ist nicht nur eine funktionierende Anwendung, sondern auch eine wartbare Codebasis, die spec-first, iterativ und bewusst unter menschlicher Kontrolle entwickelt wird.
 
 ## Ziel
 
-Die Plattform soll ein Tattoo-Studio digital abbilden: von der oeffentlichen Praesentation ueber Artist-Profile und Portfolio bis hin zu strukturierten Terminanfragen, Admin-Verwaltung und AI-gestuetzter Beratung.
+Die Plattform soll ein Tattoo-Studio digital abbilden: von der öffentlichen Präsentation über Artist-Profile und Portfolio bis hin zu strukturierten Terminanfragen, Admin-Verwaltung und AI-gestützter Beratung.
 
-AI unterstuetzt Nutzer beim Strukturieren ihrer Ideen, stellt Rueckfragen und erzeugt hilfreiche Zusammenfassungen. Geschaeftliche Entscheidungen, Terminbestaetigungen, verbindliche Preise und medizinische Aussagen bleiben immer menschlich kontrolliert und deterministisch im Backend abgesichert.
+AI unterstützt Nutzer beim Strukturieren ihrer Ideen, stellt Rückfragen und erzeugt hilfreiche Zusammenfassungen. Geschäftliche Entscheidungen, Terminbestätigungen, verbindliche Preise und medizinische Aussagen bleiben immer menschlich kontrolliert und deterministisch im Backend abgesichert.
 
 ## Marke
 
 - Name: HONEY | BEEZ ink
-- Stil: cool, fancy, underground, amerikanisch inspirierte Tattoo- und Lowrider-Aesthetik
+- Stil: cool, fancy, underground, amerikanisch inspirierte Tattoo- und Lowrider-Ästhetik
 - Farben: Schwarz, Weiss, `#ffc105`
 
 ## Plattformbereiche
 
-- Oeffentliche Studio-Website
+- Öffentliche Studio-Website
 - Artist-Profile
 - Portfolio-Galerie
 - Terminanfrage-System
@@ -30,10 +30,10 @@ AI unterstuetzt Nutzer beim Strukturieren ihrer Ideen, stellt Rueckfragen und er
 
 - Frontend: React, Vite, TypeScript, Tailwind CSS
 - Backend: Express, TypeScript
-- Datenbank: MongoDB Atlas mit Mongoose, einsehbar ueber MongoDB Compass
+- Datenbank: MongoDB Atlas mit Mongoose, einsehbar über MongoDB Compass
 - Validierung: Zod
-- Auth: spaeter Clerk
-- AI: zunaechst Mock-Service, spaeter echte API moeglich
+- Auth: später Clerk
+- AI: zunächst Mock-Service, später echte API möglich
 
 ## Entwicklungsprinzipien
 
@@ -41,15 +41,15 @@ AI unterstuetzt Nutzer beim Strukturieren ihrer Ideen, stellt Rueckfragen und er
 - Sokratischer Dialog
 - Kleine iterative Schritte
 - Feature-based Architektur
-- Von Menschen ueberwachte AI
+- Von Menschen überwachte AI
 - Wartbare Codebasis
-- Keine unnoetige Komplexitaet
+- Keine unnötige Komplexität
 - Business-Logik deterministisch im Backend
-- AI unterstuetzt nur, entscheidet nicht
+- AI unterstützt nur, entscheidet nicht
 
 ## Lokale Entwicklung
 
-Abhaengigkeiten installieren:
+Abhängigkeiten installieren:
 
 ```bash
 npm install
@@ -67,7 +67,7 @@ Backend starten:
 npm run dev:api
 ```
 
-Qualitaetschecks:
+Qualitätschecks:
 
 ```bash
 npm run check
@@ -85,7 +85,7 @@ Lokale URLs:
 
 Admin-Authentifizierung wird mit Clerk vorbereitet.
 
-Lokale Secrets gehoeren in eine nicht versionierte `.env`:
+Lokale Secrets gehören in eine nicht versionierte `.env`:
 
 ```bash
 CLERK_SECRET_KEY=
@@ -93,7 +93,7 @@ CLERK_PUBLISHABLE_KEY=
 VITE_CLERK_PUBLISHABLE_KEY=
 ```
 
-Echte Clerk-Keys duerfen nicht ins Repository geschrieben werden.
+Echte Clerk-Keys dürfen nicht ins Repository geschrieben werden.
 
 ## Dokumente
 

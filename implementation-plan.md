@@ -1,31 +1,31 @@
 # Implementation Plan
 
-Dieser Plan beschreibt die naechsten konkreten Coding-Schritte. Er ist kleinteiliger als `roadmap.md` und soll beim agentic-coding als Arbeitsanleitung dienen.
+Dieser Plan beschreibt die nächsten konkreten Coding-Schritte. Er ist kleinteiliger als `roadmap.md` und soll beim agentic-coding als Arbeitsanleitung dienen.
 
 ## Arbeitsweise
 
 - Spec zuerst lesen
-- kleinen Task auswaehlen
+- kleinen Task auswählen
 - Akzeptanzkriterien beachten
 - minimal und nachvollziehbar implementieren
 - lokal testen
 - Ergebnis kurz dokumentieren
 - nach stabilen Schritten committen
-- erst dann den naechsten Task starten
+- erst dann den nächsten Task starten
 
 Bei Unsicherheit gilt:
 
 - erst bestehende Dokumente lesen
-- einfache Loesung bevorzugen
+- einfache Lösung bevorzugen
 - Business-Logik ins Backend legen
-- AI nur unterstuetzend behandeln
+- AI nur unterstützend behandeln
 - keine Secrets in Dateien schreiben
 
 ## Definition of Done
 
 Ein Task gilt als erledigt, wenn:
 
-- der Code lauffaehig ist
+- der Code lauffähig ist
 - TypeScript keine bekannten Fehler wirft
 - der relevante Flow manuell getestet wurde
 - neue Struktur zur Architektur passt
@@ -52,7 +52,7 @@ Beispiele:
 
 ## Task 1 - Projektstruktur vorbereiten
 
-Ziel: Der Projektordner ist bereit fuer ein Fullstack-Setup.
+Ziel: Der Projektordner ist bereit für ein Fullstack-Setup.
 
 Enthalten:
 
@@ -60,7 +60,7 @@ Enthalten:
 - sinnvolle npm scripts planen
 - `apps/` Ordner anlegen
 - `apps/web` und `apps/api` als Zielstruktur vorbereiten
-- `.gitignore` pruefen
+- `.gitignore` prüfen
 - `.env.template` leer lassen
 
 Nicht enthalten:
@@ -77,7 +77,7 @@ Akzeptanzkriterien:
 
 ## Task 2 - Frontend-App scaffolden
 
-Ziel: `apps/web` laeuft mit React, Vite, TypeScript und Tailwind CSS.
+Ziel: `apps/web` läuft mit React, Vite, TypeScript und Tailwind CSS.
 
 Enthalten:
 
@@ -85,12 +85,12 @@ Enthalten:
 - Tailwind CSS einrichten
 - Startseite als einfache Platzhalteransicht
 - Grundstruktur unter `src/app`, `src/features`, `src/shared`
-- lokaler Start ueber npm script
+- lokaler Start über npm script
 
 Nicht enthalten:
 
 - finale Landing Page
-- Routing fuer alle Seiten
+- Routing für alle Seiten
 - API-Anbindung
 
 Akzeptanzkriterien:
@@ -101,7 +101,7 @@ Akzeptanzkriterien:
 
 ## Task 3 - Backend-App scaffolden
 
-Ziel: `apps/api` laeuft mit Express und TypeScript.
+Ziel: `apps/api` läuft mit Express und TypeScript.
 
 Enthalten:
 
@@ -131,9 +131,9 @@ Ziel: Frontend und Backend lassen sich komfortabel aus dem Root starten.
 
 Enthalten:
 
-- Root-Scripts fuer Web und API
-- optional Script fuer parallelen Dev-Start
-- klare README-Ergaenzung fuer lokale Starts
+- Root-Scripts für Web und API
+- optional Script für parallelen Dev-Start
+- klare README-Ergänzung für lokale Starts
 
 Nicht enthalten:
 
@@ -148,19 +148,19 @@ Akzeptanzkriterien:
 
 ## Task 5 - Brand Foundation vorbereiten
 
-Ziel: Die visuelle Basis fuer HONEY | BEEZ ink ist im Frontend angelegt.
+Ziel: Die visuelle Basis für HONEY | BEEZ ink ist im Frontend angelegt.
 
 Enthalten:
 
 - Farbwerte definieren: Schwarz, Weiss, `#ffc105`
 - globale Grundstyles
-- Layout-Grundgeruest
-- Navigation fuer Start, Artists, Portfolio und Anfrage vorbereiten
-- responsive Basis pruefen
+- Layout-Grundgerüst
+- Navigation für Start, Artists, Portfolio und Anfrage vorbereiten
+- responsive Basis prüfen
 
 Nicht enthalten:
 
-- vollstaendige Landing Page
+- vollständige Landing Page
 - echte Bildergalerie
 - Booking-Formular
 
@@ -172,7 +172,7 @@ Akzeptanzkriterien:
 
 ## Task 6 - Landing Page MVP
 
-Ziel: Die Startseite erfuellt Phase 2 der Roadmap.
+Ziel: Die Startseite erfüllt Phase 2 der Roadmap.
 
 Enthalten:
 
@@ -193,18 +193,18 @@ Nicht enthalten:
 Akzeptanzkriterien:
 
 - HONEY | BEEZ ink ist als Marke klar erkennbar.
-- Nutzer koennen zu den wichtigsten Bereichen navigieren.
+- Nutzer können zu den wichtigsten Bereichen navigieren.
 - Die Seite bleibt trotz starkem Look gut bedienbar.
 
 ## Task 7 - Artists MVP
 
-Ziel: Artist-Uebersicht und Artist-Detailseiten funktionieren mit Mock-Daten.
+Ziel: Artist-Übersicht und Artist-Detailseiten funktionieren mit Mock-Daten.
 
 Enthalten:
 
 - Artist-Datentyp definieren
 - Artist-Mock-Daten anlegen
-- Artist-Uebersicht
+- Artist-Übersicht
 - Artist-Detailseite
 - CTA zur Terminanfrage mit optionalem Artist-Wunsch vorbereiten
 
@@ -215,8 +215,8 @@ Nicht enthalten:
 
 Akzeptanzkriterien:
 
-- Nutzer koennen Artists sehen.
-- Nutzer koennen ein Artist-Profil oeffnen.
+- Nutzer können Artists sehen.
+- Nutzer können ein Artist-Profil öffnen.
 - Artist-Profile zeigen Spezialisierungen und passende Inhalte.
 
 ## Task 8 - Portfolio MVP
@@ -240,9 +240,9 @@ Nicht enthalten:
 
 Akzeptanzkriterien:
 
-- Nutzer koennen Portfolio-Eintraege sehen.
-- Nutzer koennen nach Stil und Artist filtern.
-- Nutzer koennen Details zu einer Arbeit oeffnen.
+- Nutzer können Portfolio-Einträge sehen.
+- Nutzer können nach Stil und Artist filtern.
+- Nutzer können Details zu einer Arbeit öffnen.
 
 ## Task 9 - Booking Flow Frontend
 
@@ -252,7 +252,7 @@ Enthalten:
 
 - Kontakt
 - Motividee
-- Platzierung und Groesse
+- Platzierung und Größe
 - Zusatzinformationen
 - Zusammenfassung und Absenden
 - Frontend-Validierung
@@ -262,13 +262,13 @@ Nicht enthalten:
 
 - Speicherung in MongoDB Atlas
 - echte API-Anbindung
-- Terminbestaetigung
+- Terminbestätigung
 - Preiszusage
 - AI-Zusammenfassung
 
 Akzeptanzkriterien:
 
-- Nutzer koennen alle fuenf Schritte durchlaufen.
+- Nutzer können alle fünf Schritte durchlaufen.
 - Pflichtfelder werden im Frontend sichtbar validiert.
 - Vor dem Absenden erscheint eine Zusammenfassung.
 - Es wird kein Termin und kein Preis zugesagt.
@@ -296,7 +296,7 @@ Nicht enthalten:
 Akzeptanzkriterien:
 
 - Valide Anfragen werden akzeptiert.
-- Ungueltige Anfragen werden abgelehnt.
+- Ungültige Anfragen werden abgelehnt.
 - Status wird im Backend gesetzt.
 - Pflichtvalidierung liegt im Backend.
 
@@ -306,11 +306,11 @@ Ziel: Booking Requests werden in MongoDB Atlas gespeichert.
 
 Enthalten:
 
-- lokale `.env` fuer Atlas-Connection-String
+- lokale `.env` für Atlas-Connection-String
 - Mongoose-Verbindung
 - `BookingRequest` Mongoose Model
 - Persistenz im Booking Service
-- Compass-Pruefung
+- Compass-Prüfung
 
 Nicht enthalten:
 
@@ -322,35 +322,35 @@ Akzeptanzkriterien:
 
 - Neue Booking Requests werden in Atlas gespeichert.
 - Gespeicherte Daten sind in Compass sichtbar.
-- Ohne gueltige lokale `.env` startet die API kontrolliert oder gibt eine klare Fehlermeldung.
+- Ohne gültige lokale `.env` startet die API kontrolliert oder gibt eine klare Fehlermeldung.
 
 ## Task 12 - Clerk Admin Auth vorbereiten
 
-Ziel: Admin-API-Endpunkte werden backendseitig mit Clerk geschuetzt.
+Ziel: Admin-API-Endpunkte werden backendseitig mit Clerk geschützt.
 
 Enthalten:
 
-- Clerk-Abhaengigkeit fuer die API installieren
+- Clerk-Abhängigkeit für die API installieren
 - Clerk-Env-Konfiguration vorbereiten
 - `clerkMiddleware()` im API-Setup einbinden
-- eigene Admin-Auth-Middleware fuer JSON-APIs anlegen
-- geschuetzten Admin-Testendpunkt ergaenzen
+- eigene Admin-Auth-Middleware für JSON-APIs anlegen
+- geschützten Admin-Testendpunkt ergänzen
 
 Nicht enthalten:
 
 - Admin-UI-Redesign
-- Figma-unabhaengige Frontend-Arbeit
+- Figma-unabhängige Frontend-Arbeit
 - komplexes Rollenmodell
 - echte Secrets im Repository
 
 Akzeptanzkriterien:
 
-- Oeffentliche API-Endpunkte bleiben ohne Login erreichbar.
+- Öffentliche API-Endpunkte bleiben ohne Login erreichbar.
 - Admin-Testendpunkt lehnt nicht authentifizierte Anfragen mit JSON-`401` ab.
 - Clerk-Secrets werden nur lokal in `.env` verwendet.
-- Rollen- oder Rechtepruefung bleibt als separater Schritt dokumentiert.
+- Rollen- oder Rechteprüfung bleibt als separater Schritt dokumentiert.
 
-## Naechster konkreter Schritt
+## Nächster konkreter Schritt
 
 Task 1 ist umgesetzt.
 
@@ -362,4 +362,4 @@ Task 4 ist umgesetzt.
 
 Frontend-Arbeit wird bis zur Figma-Planung geparkt.
 
-Als naechstes wird Task 12 umgesetzt: Clerk Admin Auth vorbereiten.
+Als nächstes wird Task 12 umgesetzt: Clerk Admin Auth vorbereiten.

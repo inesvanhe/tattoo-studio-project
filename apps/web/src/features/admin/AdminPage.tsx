@@ -13,9 +13,9 @@ export function AdminPage() {
           </h1>
           <div className="panel-frame p-6">
             <p className="text-lg leading-8 text-[var(--color-muted)]">
-              Interner Einstieg fuer Terminanfragen und spaetere Studio-Arbeit.
-              Der Backend-Zugriff ist bereits geschuetzt; Clerk-Login im
-              Frontend folgt als naechster Schritt.
+              Interner Einstieg für Terminanfragen und spätere Studio-Arbeit.
+              Der Backend-Zugriff ist bereits geschützt; Clerk-Login im
+              Frontend folgt als nächster Schritt.
             </p>
             <div className="mt-6">
               <ButtonLink href="/admin/booking-requests">Anfragen ansehen</ButtonLink>

@@ -17,7 +17,7 @@ export function PortfolioDetailPage() {
             Arbeit nicht gefunden
           </h1>
           <p className="mt-6 max-w-2xl text-lg leading-8 text-[var(--color-muted)]">
-            Dieses Portfolio-Piece ist gerade nicht verfuegbar.
+            Dieses Portfolio-Piece ist gerade nicht verfügbar.
           </p>
           <div className="mt-8">
             <ButtonLink href="/portfolio">Zur Galerie</ButtonLink>
@@ -47,7 +47,7 @@ export function PortfolioDetailPage() {
             ))}
           </div>
           <div className="mt-8 flex flex-wrap gap-4">
-            <ButtonLink href={`/booking?artist=${work.artistSlug}`}>Aehnliches anfragen</ButtonLink>
+            <ButtonLink href={`/booking?artist=${work.artistSlug}`}>Ähnliches anfragen</ButtonLink>
             <ButtonLink href="/portfolio" variant="secondary">
               Zur Galerie
             </ButtonLink>
@@ -60,8 +60,8 @@ export function PortfolioDetailPage() {
           <p className="eyebrow">Artist</p>
           <h2 className="mt-5 text-3xl font-black uppercase">{work.artistName}</h2>
           <p className="mt-4 text-base leading-7 text-[var(--color-muted)]">
-            Verknuepfung zum Artist-Profil folgt, sobald die Mock-Daten und API-Daten
-            zusammengefuehrt sind.
+            Verknüpfung zum Artist-Profil folgt, sobald die Mock-Daten und API-Daten
+            zusammengeführt sind.
           </p>
         </div>
         <div className="panel-frame p-6">

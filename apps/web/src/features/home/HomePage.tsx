@@ -3,17 +3,17 @@ import { ButtonLink } from '../../shared/components/Button'
 
 const entryPoints = [
   {
-    description: 'Resident Artists, Stilrichtungen und spaeter einzelne Profile.',
+    description: 'Resident Artists, Stilrichtungen und später einzelne Profile.',
     href: '/artists',
     label: 'Artists',
   },
   {
-    description: 'Kuratierte Arbeiten als Grundlage fuer Galerie und Detailseiten.',
+    description: 'Kuratierte Arbeiten als Grundlage für Galerie und Detailseiten.',
     href: '/portfolio',
     label: 'Portfolio',
   },
   {
-    description: 'Strukturierter Anfrageflow fuer Motiv, Platzierung und Kontakt.',
+    description: 'Strukturierter Anfrageflow für Motiv, Platzierung und Kontakt.',
     href: '/booking',
     label: 'Termin anfragen',
   },
@@ -28,9 +28,9 @@ export function HomePage() {
           Tattoo studio platform
         </h1>
         <p className="mt-6 max-w-2xl text-lg leading-8 text-[var(--color-muted)]">
-          Ein reduzierter Startpunkt fuer die weitere UI-Planung: Artists,
+          Ein reduzierter Startpunkt für die weitere UI-Planung: Artists,
           Portfolio, Terminanfrage und Admin-Bereich sind klickbar vorbereitet.
-          Das visuelle Feintuning kann spaeter in Figma entstehen.
+          Das visuelle Feintuning kann später in Figma entstehen.
         </p>
         <div className="mt-8 flex flex-wrap gap-4">
           <ButtonLink href="/booking">Termin anfragen</ButtonLink>
@@ -56,8 +56,8 @@ export function HomePage() {
         <p className="eyebrow">Admin</p>
         <div className="mt-5 flex flex-wrap items-center justify-between gap-5">
           <p className="max-w-2xl text-base leading-7 text-[var(--color-muted)]">
-            Der Admin-Bereich ist als geschuetztes Skeleton vorbereitet. Sobald
-            Clerk lokal konfiguriert ist, koennen die Anfragen dort getestet werden.
+            Der Admin-Bereich ist als geschütztes Skeleton vorbereitet. Sobald
+            Clerk lokal konfiguriert ist, können die Anfragen dort getestet werden.
           </p>
           <ButtonLink href="/admin" variant="secondary">
             Zum Admin

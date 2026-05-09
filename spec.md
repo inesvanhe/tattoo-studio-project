@@ -1,15 +1,15 @@
 # Product Spec
 
-Diese Spec beschreibt den ersten umsetzbaren Produktumfang fuer HONEY | BEEZ ink. Sie soll klar genug sein, um daraus Frontend-Routen, Backend-Endpunkte, Datenmodelle und spaetere Implementierungsschritte abzuleiten.
+Diese Spec beschreibt den ersten umsetzbaren Produktumfang für HONEY | BEEZ ink. Sie soll klar genug sein, um daraus Frontend-Routen, Backend-Endpunkte, Datenmodelle und spätere Implementierungsschritte abzuleiten.
 
 ## MVP-Priorisierung
 
-### MVP 1: Oeffentliche Website und Terminanfrage
+### MVP 1: Öffentliche Website und Terminanfrage
 
 Der erste MVP konzentriert sich auf die sichtbare Website und den wichtigsten Kundenfluss.
 
 - Startseite
-- Artist-Uebersicht
+- Artist-Übersicht
 - Artist-Detailseiten
 - Portfolio-Galerie
 - Portfolio-Detailansicht
@@ -24,17 +24,17 @@ Der zweite MVP macht eingehende Anfragen intern bearbeitbar.
 - Admin-Dashboard
 - Liste aller Terminanfragen
 - Detailansicht einer Terminanfrage
-- Statusverwaltung fuer Anfragen
+- Statusverwaltung für Anfragen
 - einfache Filter nach Status
 
 ### MVP 3: AI-Simulationen
 
-Der dritte MVP fuegt AI-gestuetzte Hilfsfunktionen als deterministische Mock-Services hinzu.
+Der dritte MVP fügt AI-gestützte Hilfsfunktionen als deterministische Mock-Services hinzu.
 
 - AI Tattoo Advisor als Simulation
 - AI Booking Assistant als Simulation
 - Zusammenfassung einer Terminanfrage
-- Rueckfragen und Hinweise ohne verbindliche Entscheidungen
+- Rückfragen und Hinweise ohne verbindliche Entscheidungen
 
 ## Nicht im MVP
 
@@ -44,7 +44,7 @@ Der dritte MVP fuegt AI-gestuetzte Hilfsfunktionen als deterministische Mock-Ser
 - medizinische Beratung
 - Tattoo-Bildgenerierung
 - Multi-Agent-System
-- vollstaendiges CMS
+- vollständiges CMS
 - echte Authentifizierung mit Clerk
 - echte AI-API-Anbindung
 
@@ -70,9 +70,9 @@ Gestaltungsrichtung:
 
 ## Artists
 
-### Artist-Uebersicht
+### Artist-Übersicht
 
-Die Artist-Uebersicht zeigt alle Artists des Studios als Einstieg in deren Profile.
+Die Artist-Übersicht zeigt alle Artists des Studios als Einstieg in deren Profile.
 
 Jeder Artist-Eintrag zeigt:
 
@@ -93,35 +93,35 @@ Inhalte:
 - Bio
 - Spezialisierungen
 - bevorzugte Stilrichtungen
-- ausgewaehlte Portfolio-Arbeiten
+- ausgewählte Portfolio-Arbeiten
 - CTA zur Terminanfrage mit optionalem Artist-Wunsch
 
 ## Portfolio-Galerie
 
-Die Portfolio-Galerie zeigt Arbeiten des Studios und hilft Nutzern, Stil, Qualitaet und Richtung einzuordnen.
+Die Portfolio-Galerie zeigt Arbeiten des Studios und hilft Nutzern, Stil, Qualität und Richtung einzuordnen.
 
-Ein Portfolio-Eintrag enthaelt:
+Ein Portfolio-Eintrag enthält:
 
 - Bild oder Platzhalterbild
 - Titel
 - Stilrichtung
 - Artist
-- Koerperstelle
+- Körperstelle
 - Tags
 - optionale Beschreibung
 
 MVP-Funktionen:
 
-- Galerieansicht aller Portfolio-Eintraege
-- Detailansicht fuer einzelne Portfolio-Eintraege
+- Galerieansicht aller Portfolio-Einträge
+- Detailansicht für einzelne Portfolio-Einträge
 - Filter nach Stilrichtung
 - Filter nach Artist
 
 ## Terminanfrage-Flow
 
-Das Terminanfrage-Formular ist der wichtigste interaktive Kundenfluss im MVP 1. Es soll Kunden helfen, eine vollstaendige und fuer das Studio gut pruefbare Anfrage zu stellen.
+Das Terminanfrage-Formular ist der wichtigste interaktive Kundenfluss im MVP 1. Es soll Kunden helfen, eine vollständige und für das Studio gut prüfbare Anfrage zu stellen.
 
-Der Flow besteht aus fuenf Schritten:
+Der Flow besteht aus fünf Schritten:
 
 1. Kontakt
    - Name
@@ -129,11 +129,11 @@ Der Flow besteht aus fuenf Schritten:
 
 2. Motividee
    - Beschreibung der Tattoo-Idee
-   - gewuenschte Stilrichtung
+   - gewünschte Stilrichtung
 
-3. Platzierung und Groesse
-   - Koerperstelle
-   - ungefaehre Groesse
+3. Platzierung und Größe
+   - Körperstelle
+   - ungefähre Größe
 
 4. Zusatzinformationen
    - optionale Referenzen
@@ -143,9 +143,9 @@ Der Flow besteht aus fuenf Schritten:
 
 5. Zusammenfassung und Absenden
    - Nutzer sieht seine Angaben vor dem Absenden
-   - Anfrage wird erst nach finaler Bestaetigung gespeichert
+   - Anfrage wird erst nach finaler Bestätigung gespeichert
 
-Nach dem Absenden erhaelt der Nutzer eine einfache Erfolgsmeldung. Es wird kein Termin bestaetigt und kein Preis zugesagt.
+Nach dem Absenden erhält der Nutzer eine einfache Erfolgsmeldung. Es wird kein Termin bestätigt und kein Preis zugesagt.
 
 ## Datenmodell: BookingRequest
 
@@ -156,19 +156,19 @@ Pflichtfelder:
 - `name`: Name des Kunden
 - `contact`: E-Mail oder Telefonnummer
 - `idea`: Beschreibung der Motividee
-- `style`: gewuenschte Stilrichtung
-- `bodyPlacement`: Koerperstelle
-- `approxSize`: ungefaehre Groesse
+- `style`: gewünschte Stilrichtung
+- `bodyPlacement`: Körperstelle
+- `approxSize`: ungefähre Größe
 - `status`: Bearbeitungsstatus
 
 Optionale Felder:
 
 - `references`: Referenzbilder oder Referenzlinks
-- `preferredArtistId`: gewuenschter Artist
+- `preferredArtistId`: gewünschter Artist
 - `budgetRange`: grober Budgetrahmen
 - `preferredDate`: Terminwunsch
-- `aiSummary`: spaetere AI-Zusammenfassung
-- `notes`: interne Notizen fuer Admins oder Artists
+- `aiSummary`: spätere AI-Zusammenfassung
+- `notes`: interne Notizen für Admins oder Artists
 
 Statuswerte:
 
@@ -210,34 +210,34 @@ Statuswerte:
 
 ## Validierungsprinzip
 
-Frontend-Validierung hilft Nutzern, Fehler frueh zu erkennen und Formulare angenehmer auszufuellen.
+Frontend-Validierung hilft Nutzern, Fehler früh zu erkennen und Formulare angenehmer auszufüllen.
 
 Backend-Validierung entscheidet, ob Daten akzeptiert und gespeichert werden. Zod wird an API-Grenzen verwendet.
 
-Business-Logik bleibt deterministisch im Backend. AI darf keine Statuswerte setzen, keine Termine bestaetigen, keine Preise berechnen und keine medizinischen Aussagen treffen.
+Business-Logik bleibt deterministisch im Backend. AI darf keine Statuswerte setzen, keine Termine bestätigen, keine Preise berechnen und keine medizinischen Aussagen treffen.
 
 ## Akzeptanzkriterien
 
-### Oeffentliche Website
+### Öffentliche Website
 
 - Die Startseite zeigt HONEY | BEEZ ink als klar erkennbare Marke.
 - Die Farben Schwarz, Weiss und `#ffc105` werden als visuelle Grundlage genutzt.
-- Nutzer koennen von der Startseite zu Artists, Portfolio und Terminanfrage navigieren.
+- Nutzer können von der Startseite zu Artists, Portfolio und Terminanfrage navigieren.
 - Die Website wirkt urban, hochwertig und underground, bleibt aber gut bedienbar.
 
 ### Artists
 
-- Nutzer koennen eine Liste von Artists sehen.
-- Nutzer koennen eine Detailseite fuer einen Artist oeffnen.
+- Nutzer können eine Liste von Artists sehen.
+- Nutzer können eine Detailseite für einen Artist öffnen.
 - Eine Artist-Detailseite zeigt Spezialisierungen und passende Portfolio-Arbeiten.
-- Nutzer koennen von einer Artist-Detailseite aus eine Terminanfrage starten.
+- Nutzer können von einer Artist-Detailseite aus eine Terminanfrage starten.
 
 ### Portfolio
 
-- Nutzer koennen Portfolio-Eintraege in einer Galerie sehen.
-- Nutzer koennen einzelne Portfolio-Eintraege genauer ansehen.
-- Nutzer koennen Portfolio-Eintraege nach Stilrichtung filtern.
-- Nutzer koennen Portfolio-Eintraege nach Artist filtern.
+- Nutzer können Portfolio-Einträge in einer Galerie sehen.
+- Nutzer können einzelne Portfolio-Einträge genauer ansehen.
+- Nutzer können Portfolio-Einträge nach Stilrichtung filtern.
+- Nutzer können Portfolio-Einträge nach Artist filtern.
 
 ### Terminanfrage
 
@@ -245,20 +245,20 @@ Business-Logik bleibt deterministisch im Backend. AI darf keine Statuswerte setz
 - Kontakt muss mindestens eine E-Mail oder Telefonnummer enthalten.
 - Der Nutzer sieht vor dem Absenden eine Zusammenfassung seiner Angaben.
 - Nach dem Absenden wird die Anfrage mit Status `new` gespeichert.
-- Nach dem Absenden wird kein Termin bestaetigt.
+- Nach dem Absenden wird kein Termin bestätigt.
 - Nach dem Absenden wird kein verbindlicher Preis genannt.
 
 ### Admin
 
-- Admins koennen alle Anfragen sehen.
-- Admins koennen einzelne Anfragen oeffnen.
-- Admins koennen den Status einer Anfrage aendern.
+- Admins können alle Anfragen sehen.
+- Admins können einzelne Anfragen öffnen.
+- Admins können den Status einer Anfrage ändern.
 - Erlaubte Statuswerte sind `new`, `reviewed`, `contacted` und `archived`.
 
 ### AI Simulation
 
 - AI-Funktionen laufen im MVP als Mock-Service.
-- AI darf Rueckfragen, Hinweise und Zusammenfassungen erzeugen.
-- AI darf keine Termine bestaetigen.
+- AI darf Rückfragen, Hinweise und Zusammenfassungen erzeugen.
+- AI darf keine Termine bestätigen.
 - AI darf keine verbindlichen Preise zusagen.
 - AI darf keine Statuswerte kontrollieren.
