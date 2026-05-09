@@ -1,11 +1,6 @@
 import type { Request, Response } from 'express'
 
-type AdminAuthLocals = {
-  adminAuth?: {
-    role: 'admin'
-    userId: string
-  }
-}
+import type { AdminAuthLocals } from './adminAuth.middleware.js'
 
 export function getAdminMe(_request: Request, response: Response<unknown, AdminAuthLocals>) {
   const adminAuth = response.locals.adminAuth
@@ -21,7 +16,7 @@ export function getAdminMe(_request: Request, response: Response<unknown, AdminA
 
   response.status(200).json({
     data: {
-      role: adminAuth.role,
+      roles: adminAuth.roles,
       userId: adminAuth.userId,
     },
   })

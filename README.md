@@ -95,12 +95,28 @@ VITE_CLERK_PUBLISHABLE_KEY=
 
 Echte Clerk-Keys dürfen nicht ins Repository geschrieben werden.
 
-Admin-Zugriff setzt zusätzlich voraus, dass der Clerk-User in den Public Metadata
-die Rolle `admin` hat:
+Rollenbasierter Zugriff setzt zusätzlich voraus, dass der Clerk-User in den
+Public Metadata passende Rollen hat. Für volle Admin-Rechte:
 
 ```json
 {
   "role": "admin"
+}
+```
+
+Für spätere Artist-Bereiche:
+
+```json
+{
+  "role": "artist"
+}
+```
+
+Mehrere Rollen sind ebenfalls möglich:
+
+```json
+{
+  "roles": ["admin", "artist"]
 }
 ```
 

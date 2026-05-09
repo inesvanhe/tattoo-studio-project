@@ -176,7 +176,7 @@ function getAdminErrorMessage(error: Error, fallback: string) {
     return 'Dein Clerk-User hat noch keine Admin-Rolle.'
   }
 
-  if (error.message === 'Admin authentication required') {
+  if (error.message === 'Admin authentication required' || error.message === 'Authentication required') {
     return 'Bitte melde dich an, um Admin-Anfragen zu laden.'
   }
 
