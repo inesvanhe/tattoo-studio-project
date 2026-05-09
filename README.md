@@ -75,6 +75,12 @@ npm run lint
 npm run build
 ```
 
+Demo-Terminanfragen für die lokale Entwicklung einspielen:
+
+```bash
+npm run seed:booking-requests
+```
+
 Lokale URLs:
 
 - Web: `http://localhost:5173`
