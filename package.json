@@ -12,7 +12,6 @@
     "dev:api": "npm run dev --workspace @honey-beez/api",
     "build": "npm run build --workspace @honey-beez/web && npm run build --workspace @honey-beez/api",
     "check": "npm run check --workspace @honey-beez/web && npm run check --workspace @honey-beez/api",
-    "lint": "npm run lint --workspace @honey-beez/web",
-    "seed:booking-requests": "npm run seed:booking-requests --workspace @honey-beez/api"
+    "lint": "npm run lint --workspace @honey-beez/web"
   }
 }
