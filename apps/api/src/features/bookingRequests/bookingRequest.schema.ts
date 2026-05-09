@@ -4,11 +4,15 @@ import { bookingRequestStatuses } from './bookingRequest.model.js'
 
 const requiredTextSchema = z.string().trim().min(1).max(2000)
 const optionalTextSchema = z.string().trim().max(1000).optional().default('')
+const phoneSchema = optionalTextSchema.refine(
+  (value) => value === '' || /^[\d\s()+/-]+$/.test(value),
+  'Phone number can only contain numbers, spaces and common phone symbols.',
+)
 
 export const createBookingRequestSchema = z.object({
   customerName: requiredTextSchema.max(120),
   customerEmail: z.string().trim().email().max(180).toLowerCase(),
-  customerPhone: optionalTextSchema,
+  customerPhone: phoneSchema,
   ideaDescription: requiredTextSchema,
   preferredStyle: requiredTextSchema.max(120),
   bodyPlacement: requiredTextSchema.max(120),

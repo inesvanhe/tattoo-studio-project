@@ -50,6 +50,19 @@ const requiredFieldsByStep: Record<number, Array<keyof BookingFormData>> = {
   4: [],
 }
 
+const fieldsByStep: Record<number, Array<keyof BookingFormData>> = {
+  0: ['customerName', 'customerEmail', 'customerPhone'],
+  1: ['ideaDescription', 'preferredStyle'],
+  2: ['bodyPlacement', 'approximateSize'],
+  3: ['references', 'artistSlug', 'budgetRange', 'availabilityNotes'],
+  4: [],
+}
+
+const allFormFields = Object.keys(initialFormData) as Array<keyof BookingFormData>
+const requiredFields = new Set(Object.values(requiredFieldsByStep).flat())
+const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+const phonePattern = /^[\d\s()+/-]+$/
+
 const fieldLabels: Record<keyof BookingFormData, string> = {
   customerName: 'Name',
   customerEmail: 'E-Mail',
@@ -62,6 +75,30 @@ const fieldLabels: Record<keyof BookingFormData, string> = {
   artistSlug: 'Artist-Wunsch',
   budgetRange: 'Budgetrahmen',
   availabilityNotes: 'Terminwunsch',
+}
+
+function getFieldError(field: keyof BookingFormData, value: string) {
+  const trimmedValue = value.trim()
+
+  if (requiredFields.has(field) && !trimmedValue) {
+    return `${fieldLabels[field]} ist erforderlich.`
+  }
+
+  if (field === 'customerEmail' && trimmedValue && !emailPattern.test(trimmedValue)) {
+    return 'Bitte gib eine gültige E-Mail-Adresse ein.'
+  }
+
+  if (field === 'customerPhone' && trimmedValue && !phonePattern.test(trimmedValue)) {
+    return 'Bitte gib eine gültige Telefonnummer ein.'
+  }
+
+  return ''
+}
+
+function getFormErrors(formData: BookingFormData, fields: Array<keyof BookingFormData>) {
+  return fields
+    .map((field) => getFieldError(field, formData[field]))
+    .filter((message) => message.length > 0)
 }
 
 function getSummaryValue(field: keyof BookingFormData, value: string) {
@@ -89,10 +126,11 @@ export function BookingPage() {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitError, setSubmitError] = useState('')
   const [touchedStep, setTouchedStep] = useState(false)
+  const visibleFields = currentStep === steps.length - 1 ? allFormFields : fieldsByStep[currentStep]
 
-  const missingFields = useMemo(
-    () => requiredFieldsByStep[currentStep].filter((field) => !formData[field].trim()),
-    [currentStep, formData],
+  const currentStepErrors = useMemo(
+    () => getFormErrors(formData, visibleFields),
+    [formData, visibleFields],
   )
 
   function updateField(
@@ -107,7 +145,7 @@ export function BookingPage() {
   }
 
   function goToNextStep() {
-    if (missingFields.length > 0) {
+    if (currentStepErrors.length > 0) {
       setTouchedStep(true)
       return
     }
@@ -124,7 +162,7 @@ export function BookingPage() {
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
 
-    if (missingFields.length > 0) {
+    if (getFormErrors(formData, allFormFields).length > 0) {
       setTouchedStep(true)
       return
     }
@@ -212,6 +250,7 @@ export function BookingPage() {
                 label="Telefon"
                 name="customerPhone"
                 onChange={updateField}
+                type="tel"
                 value={formData.customerPhone}
               />
             </BookingStep>
@@ -306,9 +345,11 @@ export function BookingPage() {
             </BookingStep>
           ) : null}
 
-          {touchedStep && missingFields.length > 0 ? (
+          {touchedStep && currentStepErrors.length > 0 ? (
             <div className="booking-error" role="alert">
-              Bitte fülle aus: {missingFields.map((field) => fieldLabels[field]).join(', ')}.
+              {currentStepErrors.map((message) => (
+                <p key={message}>{message}</p>
+              ))}
             </div>
           ) : null}
 
