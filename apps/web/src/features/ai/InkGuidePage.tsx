@@ -1,5 +1,4 @@
 import { useMemo, useRef, useState } from 'react'
-import type { FormEvent } from 'react'
 
 import { AppShell } from '../../app/AppShell'
 import { sendAiChatMessage } from './aiChat.api'
@@ -10,10 +9,43 @@ type ChatMessage = {
   text: string
 }
 
-const starterSuggestions = [
-  'Ich suche einen passenden Stil.',
-  'Wie bereite ich eine Anfrage vor?',
-  'Welche Platzierung passt zu meinem Motiv?',
+type GuideQuestion = {
+  label: string
+  message: string
+  topic: string
+}
+
+const starterQuestions: GuideQuestion[] = [
+  {
+    label: 'Welcher Stil passt zu meiner Idee?',
+    message: 'Ich suche einen passenden Stil für meine Tattoo-Idee.',
+    topic: 'Stilfindung',
+  },
+  {
+    label: 'Welche Körperstelle passt?',
+    message: 'Welche Platzierung passt zu meinem Motiv?',
+    topic: 'Platzierung',
+  },
+  {
+    label: 'Wie groß sollte das Tattoo sein?',
+    message: 'Wie schätze ich die passende Größe für mein Tattoo ein?',
+    topic: 'Größe',
+  },
+  {
+    label: 'Wie bereite ich eine Anfrage vor?',
+    message: 'Wie bereite ich eine gute Terminanfrage vor?',
+    topic: 'Anfrage',
+  },
+  {
+    label: 'Welcher Artist könnte passen?',
+    message: 'Ich suche eine Artist-Empfehlung für Blackwork, Fine Line oder Flash.',
+    topic: 'Artists',
+  },
+  {
+    label: 'Was ist bei Heilung und Pflege wichtig?',
+    message: 'Welche allgemeinen Pflege- und Heilungshinweise sind wichtig?',
+    topic: 'Pflege',
+  },
 ]
 
 const thinkingStates = [
@@ -33,8 +65,7 @@ const initialMessages: ChatMessage[] = [
 
 export function InkGuidePage() {
   const [messages, setMessages] = useState<ChatMessage[]>(initialMessages)
-  const [inputValue, setInputValue] = useState('')
-  const [suggestions, setSuggestions] = useState(starterSuggestions)
+  const [questions, setQuestions] = useState(starterQuestions)
   const [isThinking, setIsThinking] = useState(false)
   const timeoutRef = useRef<number | null>(null)
 
@@ -53,8 +84,7 @@ export function InkGuidePage() {
       window.clearTimeout(timeoutRef.current)
     }
 
-    setInputValue('')
-    setSuggestions([])
+    setQuestions([])
     setMessages((currentMessages) => [
       ...currentMessages,
       {
@@ -77,7 +107,7 @@ export function InkGuidePage() {
             text: response.data.reply,
           },
         ])
-        setSuggestions(response.data.suggestions)
+        setQuestions(createFollowUpQuestions(response.data.suggestions))
         setIsThinking(false)
       }, 900)
     } catch {
@@ -90,15 +120,10 @@ export function InkGuidePage() {
             text: 'Ich kann gerade keine Antwort laden. Prüfe bitte kurz, ob die API läuft, und versuche es dann erneut.',
           },
         ])
-        setSuggestions(starterSuggestions)
+        setQuestions(starterQuestions)
         setIsThinking(false)
       }, 700)
     }
-  }
-
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault()
-    void submitMessage(inputValue)
   }
 
   return (
@@ -149,37 +174,21 @@ export function InkGuidePage() {
             ) : null}
           </div>
 
-          {suggestions.length > 0 ? (
-            <div className="ink-guide-suggestions" aria-label="Vorschläge">
-              {suggestions.map((suggestion) => (
+          {questions.length > 0 ? (
+            <div className="ink-guide-question-grid" aria-label="Vorgeschlagene Fragen">
+              {questions.map((question) => (
                 <button
                   disabled={isThinking}
-                  key={suggestion}
-                  onClick={() => void submitMessage(suggestion)}
+                  key={question.label}
+                  onClick={() => void submitMessage(question.message)}
                   type="button"
                 >
-                  {suggestion}
+                  <span>{question.topic}</span>
+                  {question.label}
                 </button>
               ))}
             </div>
           ) : null}
-
-          <form className="ink-guide-form" onSubmit={handleSubmit}>
-            <label htmlFor="ink-guide-message">Nachricht an Ink Guide</label>
-            <div>
-              <input
-                id="ink-guide-message"
-                maxLength={1200}
-                onChange={(event) => setInputValue(event.target.value)}
-                placeholder="Frag nach Stil, Platzierung oder Vorbereitung..."
-                type="text"
-                value={inputValue}
-              />
-              <button disabled={isThinking || inputValue.trim().length === 0} type="submit">
-                Senden
-              </button>
-            </div>
-          </form>
         </div>
 
         <aside className="ink-guide-rules panel-frame">
@@ -198,4 +207,12 @@ export function InkGuidePage() {
       </section>
     </AppShell>
   )
+}
+
+function createFollowUpQuestions(suggestions: string[]): GuideQuestion[] {
+  return suggestions.map((suggestion, index) => ({
+    label: suggestion,
+    message: suggestion,
+    topic: index === 0 ? 'Nächster Schritt' : 'Follow-up',
+  }))
 }
