@@ -19,7 +19,7 @@ const variantClasses: Record<ButtonVariant, string> = {
 
 function buttonClasses(variant: ButtonVariant = 'primary') {
   return [
-    'inline-flex min-h-11 items-center justify-center rounded-full border px-5 py-3 text-sm font-black uppercase tracking-[0.12em] transition duration-200 ease-out',
+    'inline-flex min-h-11 items-center justify-center rounded-[0.375rem] border px-5 py-3 text-sm font-black uppercase tracking-[0.12em] transition duration-200 ease-out',
     variantClasses[variant],
   ].join(' ')
 }

@@ -1,9 +1,58 @@
 import { Link } from 'react-router-dom'
 
 import { AppShell } from '../../app/AppShell'
+import fallbackOneImage from '../../assets/artists/fallback-one.png'
+import fallbackTwoImage from '../../assets/artists/fallback-two.png'
+import ivyAshImage from '../../assets/artists/ivy-ash.png'
+import kadeMonroeImage from '../../assets/artists/kade-monroe.png'
+import lunaVexImage from '../../assets/artists/luna-vex.png'
+import mayaBlackImage from '../../assets/artists/maya-black.png'
+import novaWrenImage from '../../assets/artists/nova-wren.png'
+import ricoChromeImage from '../../assets/artists/rico-chrome.png'
 import { ButtonLink } from '../../shared/components/Button'
 import type { Artist } from './artists.api'
 import { useArtists } from './useArtists'
+
+type ArtistCardContent = {
+  detail: string
+  image: string
+  note: string
+}
+
+const artistContentBySlug: Record<string, ArtistCardContent> = {
+  'ivy-ash': {
+    detail: 'Ornamentale Florals, feine Linien und ruhige Kompositionen.',
+    image: ivyAshImage,
+    note: 'Botanical / Ornamental',
+  },
+  'kade-monroe': {
+    detail: 'Bold Details, dunkle Flächen und starke Kontraste.',
+    image: kadeMonroeImage,
+    note: 'Darkwork / Lettering',
+  },
+  'luna-vex': {
+    detail: 'Leichte Linien, botanische Motive und weiche Platzierungen.',
+    image: lunaVexImage,
+    note: 'Fine Line / Florals',
+  },
+  'maya-black': {
+    detail: 'Blackwork mit klarer Haltung, grafischen Formen und Tiefe.',
+    image: mayaBlackImage,
+    note: 'Blackwork / Custom',
+  },
+  'nova-wren': {
+    detail: 'Flash, Neo-Traditional und Motive mit lauter Silhouette.',
+    image: novaWrenImage,
+    note: 'Flash / Neo-Trad',
+  },
+  'rico-chrome': {
+    detail: 'Chrome Mood, satte Linien und präzise dunkle Details.',
+    image: ricoChromeImage,
+    note: 'Black & Grey / Chrome',
+  },
+}
+
+const fallbackArtistImages = [fallbackOneImage, fallbackTwoImage, mayaBlackImage, ricoChromeImage]
 
 export function ArtistsPage() {
   const artistsState = useArtists()
@@ -18,7 +67,7 @@ export function ArtistsPage() {
               Meet the hands behind the lines.
             </h1>
           </div>
-          <div className="panel-frame p-6">
+          <div className="panel-frame artist-intro-panel p-6">
             <p className="text-lg leading-8 text-[var(--color-muted)]">
               Blackwork, Neo-Traditional und Custom Pieces aus einem Studio,
               das lieber Haltung zeigt als Hochglanz verspricht.
@@ -40,7 +89,7 @@ export function ArtistsPage() {
         ) : null}
 
         {artistsState.artists.length > 0 ? (
-          <div className="grid gap-5">
+          <div className="artists-grid">
             {artistsState.artists.map((artist) => (
               <ArtistCard artist={artist} key={artist.id} />
             ))}
@@ -52,68 +101,50 @@ export function ArtistsPage() {
 }
 
 function ArtistCard({ artist }: { artist: Artist }) {
-  const initials = artist.name
-    .split(' ')
-    .map((part) => part[0])
-    .join('')
   const firstName = artist.name.split(' ')[0]
+  const content = getArtistCardContent(artist)
 
   return (
     <Link
       to={`/artists/${artist.slug}`}
       aria-label={`${artist.name}, ${artist.title}`}
-      className="artist-card group grid gap-6 border border-[var(--color-line)] p-5 outline-none transition duration-300 ease-out hover:border-[var(--color-honey)]/60 focus-visible:border-[var(--color-honey)]/70 sm:grid-cols-[10rem_1fr] sm:p-6"
+      className="artist-card"
     >
-      <div className="artist-portrait flex aspect-square items-center justify-center border border-[var(--color-honey)]/45 bg-[rgba(255,193,5,0.08)]">
-        {artist.profileImageUrl ? (
-          <img alt="" className="h-full w-full object-cover" src={artist.profileImageUrl} />
-        ) : (
-          <span className="text-4xl font-black uppercase text-[var(--color-honey)]">{initials}</span>
-        )}
+      <div className="artist-card-image">
+        <img alt="" src={content.image} />
       </div>
 
       <div className="artist-card-summary">
-        <div className="flex flex-wrap items-start justify-between gap-4">
-          <div>
-            <p className="text-sm font-black uppercase tracking-[0.18em] text-[var(--color-honey)]">
-              {artist.title}
-            </p>
-            <h2 className="mt-2 text-3xl font-black uppercase text-[var(--color-paper)]">
-              {artist.name}
-            </h2>
-          </div>
-          <span className="badge badge-dark">{artist.slug}</span>
-        </div>
-
-        <p className="mt-5 max-w-3xl text-base leading-7 text-[var(--color-muted)]">{artist.bio}</p>
-
-        <div className="mt-6 flex flex-wrap gap-2">
-          {artist.styles.map((style) => (
-            <span className="badge" key={style}>
-              {style}
-            </span>
-          ))}
-        </div>
+        <p className="artist-card-kicker">{content.note}</p>
+        <h2>{artist.name}</h2>
+        <p>{artist.title}</p>
       </div>
 
       <div className="artist-card-details">
-        <p className="eyebrow">Artist File / {artist.sortOrder.toString().padStart(2, '0')}</p>
-        <h3 className="mt-4 text-3xl font-black uppercase leading-none text-[var(--color-paper)] sm:text-4xl">
-          {artist.name}
-        </h3>
-        <p className="mt-4 max-w-2xl text-base leading-7 text-[var(--color-muted)]">{artist.bio}</p>
-        <div className="mt-6 flex flex-wrap gap-2">
+        <p className="artist-card-file">Artist File / {artist.sortOrder.toString().padStart(2, '0')}</p>
+        <h3>{artist.name}</h3>
+        <p>{content.detail}</p>
+        <p>{artist.bio}</p>
+        <div className="artist-card-tags">
           {artist.styles.map((style) => (
             <span className="badge badge-dark" key={style}>
               {style}
             </span>
           ))}
         </div>
-        <div className="mt-6">
-          <span className="badge badge-dark">Profil ansehen / Termin mit {firstName}</span>
-        </div>
+        <span className="artist-card-link">Profil ansehen / Termin mit {firstName}</span>
       </div>
     </Link>
+  )
+}
+
+function getArtistCardContent(artist: Artist) {
+  return (
+    artistContentBySlug[artist.slug] ?? {
+      detail: 'Custom Work, klare Beratung und Motive mit eigener Richtung.',
+      image: fallbackArtistImages[artist.sortOrder % fallbackArtistImages.length],
+      note: artist.styles.slice(0, 2).join(' / ') || 'Custom Tattoo',
+    }
   )
 }
 
