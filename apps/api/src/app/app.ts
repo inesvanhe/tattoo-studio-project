@@ -3,11 +3,11 @@ import cors from 'cors'
 import express from 'express'
 
 import { adminRouter } from '../features/admin/admin.routes.js'
-import { aiRouter } from '../features/ai/ai.routes.js'
 import { artistAdminRouter } from '../features/artistAdmin/artistAdmin.routes.js'
 import { artistRouter } from '../features/artists/artist.routes.js'
 import { bookingRequestRouter } from '../features/bookingRequests/bookingRequest.routes.js'
 import { healthRouter } from '../features/health/health.routes.js'
+import { inkGuideRouter } from '../features/inkGuide/inkGuide.routes.js'
 import { tattooRouter } from '../features/tattoos/tattoo.routes.js'
 import { env } from '../shared/config/env.js'
 import { notFoundHandler } from '../shared/errors/notFoundHandler.js'
@@ -27,7 +27,7 @@ export function createApp() {
   app.use('/api/artists', artistRouter)
   app.use('/api/booking-requests', bookingRequestRouter)
   app.use('/api/tattoos', tattooRouter)
-  app.use('/api/ai', aiRouter)
+  app.use('/api/ink-guide', inkGuideRouter)
   app.use('/api/admin', adminRouter)
   app.use('/api/artist', artistAdminRouter)
 

@@ -1,9 +1,9 @@
 import { useMemo, useRef, useState } from 'react'
 
 import { AppShell } from '../../app/AppShell'
-import { sendAiChatMessage } from './aiChat.api'
+import { getInkGuideAnswer } from './inkGuide.api'
 
-type ChatMessage = {
+type GuideMessage = {
   id: string
   role: 'assistant' | 'user'
   text: string
@@ -17,54 +17,54 @@ type GuideQuestion = {
 
 const starterQuestions: GuideQuestion[] = [
   {
-    label: 'Welcher Stil passt zu meiner Idee?',
-    message: 'Ich suche einen passenden Stil für meine Tattoo-Idee.',
-    topic: 'Stilfindung',
+    label: 'Was sollte ich vor dem Termin beachten?',
+    message: 'Was sollte ich vor einem Tattoo-Termin beachten?',
+    topic: 'Vorbereitung',
   },
   {
-    label: 'Welche Körperstelle passt?',
-    message: 'Welche Platzierung passt zu meinem Motiv?',
-    topic: 'Platzierung',
+    label: 'Was sollte ich zum Termin mitbringen?',
+    message: 'Was sollte ich zu einem Tattoo-Termin mitbringen?',
+    topic: 'Termin',
   },
   {
-    label: 'Wie groß sollte das Tattoo sein?',
-    message: 'Wie schätze ich die passende Größe für mein Tattoo ein?',
-    topic: 'Größe',
+    label: 'Was ist bei der Pflege wichtig?',
+    message: 'Welche allgemeinen Pflegehinweise sind nach einem Tattoo wichtig?',
+    topic: 'Pflege',
   },
   {
-    label: 'Wie bereite ich eine Anfrage vor?',
-    message: 'Wie bereite ich eine gute Terminanfrage vor?',
+    label: 'Welche Infos braucht ihr für eine Anfrage?',
+    message: 'Welche Infos braucht das Studio für eine gute Terminanfrage?',
     topic: 'Anfrage',
   },
   {
-    label: 'Welcher Artist könnte passen?',
-    message: 'Ich suche eine Artist-Empfehlung für Blackwork, Fine Line oder Flash.',
+    label: 'Wie wähle ich einen passenden Artist?',
+    message: 'Wie kann ich einschätzen, welcher Artist zu meinem Tattoo-Wunsch passt?',
     topic: 'Artists',
   },
   {
-    label: 'Was ist bei Heilung und Pflege wichtig?',
-    message: 'Welche allgemeinen Pflege- und Heilungshinweise sind wichtig?',
-    topic: 'Pflege',
+    label: 'Wie nutze ich Referenzbilder richtig?',
+    message: 'Wie nutze ich Referenzbilder sinnvoll für eine Tattoo-Anfrage?',
+    topic: 'Referenzen',
   },
 ]
 
 const thinkingStates = [
-  'Motividee wird eingeordnet',
-  'Styles werden abgeglichen',
-  'Platzierung wird eingeschätzt',
-  'Artist-Schwerpunkte werden geprüft',
+  'Studio-Hinweise werden sortiert',
+  'Antwort wird vorbereitet',
+  'Pflege-Grenzen werden geprüft',
+  'Artist-Schwerpunkte werden abgeglichen',
 ]
 
-const initialMessages: ChatMessage[] = [
+const initialMessages: GuideMessage[] = [
   {
     id: 'welcome',
     role: 'assistant',
-    text: 'Hi, ich bin der Ink Guide. Ich helfe dir bei Stil, Platzierung, Größe, Vorbereitung und passenden Artist-Ideen. Entscheidungen trifft am Ende immer das Studio.',
+    text: 'Hi, ich bin der Ink Guide. Ich beantworte typische Studio-Fragen zu Vorbereitung, Pflege, Anfrage, Referenzen und Artist-Auswahl. Keine Sorge: Ich bestätige keine Termine, nenne keine verbindlichen Preise und gebe keine medizinischen Diagnosen.',
   },
 ]
 
 export function InkGuidePage() {
-  const [messages, setMessages] = useState<ChatMessage[]>(initialMessages)
+  const [messages, setMessages] = useState<GuideMessage[]>(initialMessages)
   const [questions, setQuestions] = useState(starterQuestions)
   const [isThinking, setIsThinking] = useState(false)
   const timeoutRef = useRef<number | null>(null)
@@ -96,7 +96,7 @@ export function InkGuidePage() {
     setIsThinking(true)
 
     try {
-      const response = await sendAiChatMessage(trimmedMessage)
+      const response = await getInkGuideAnswer(trimmedMessage)
 
       timeoutRef.current = window.setTimeout(() => {
         setMessages((currentMessages) => [
@@ -138,21 +138,21 @@ export function InkGuidePage() {
           </div>
           <div className="panel-frame ink-guide-intro p-6">
             <p>
-              Tattoo-spezifischer Demo-Assistent für Stilfindung, Platzierung,
-              Größengefühl, Terminvorbereitung und Artist-Ideen.
+              Tattoo-spezifischer Demo-Assistent für Vorbereitung, Pflege,
+              Anfrageinfos, Referenzen und Artist-Orientierung.
             </p>
           </div>
         </div>
       </section>
 
       <section className="ink-guide-shell py-12">
-        <div className="ink-guide-chat panel-frame">
-          <div className="ink-guide-chat-header">
+        <div className="ink-guide-panel panel-frame">
+          <div className="ink-guide-panel-header">
             <div>
               <p className="eyebrow">Studio Assistant</p>
               <h2>Ink Guide</h2>
             </div>
-            <span>Mock AI</span>
+            <span>FAQ Guide</span>
           </div>
 
           <div className="ink-guide-messages" aria-live="polite">
@@ -195,10 +195,10 @@ export function InkGuidePage() {
           <p className="eyebrow">Kann helfen bei</p>
           <ul>
             <li>Pflege-Tipps als allgemeine Orientierung</li>
-            <li>Stil-Empfehlungen und Motivklärung</li>
-            <li>Größengefühl und Platzierungs-Ideen</li>
+            <li>Vorbereitung auf den Tattoo-Termin</li>
+            <li>Referenzen und Anfrageinfos sortieren</li>
             <li>Vorbereitung auf Terminanfragen</li>
-            <li>Artist-Empfehlung nach Stilrichtung</li>
+            <li>Artist-Orientierung nach Stilrichtung</li>
           </ul>
           <p>
             Keine Preise, keine Terminbestätigung, keine medizinische Diagnose.
