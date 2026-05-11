@@ -12,9 +12,9 @@ type ButtonLinkProps = ButtonBaseProps & AnchorHTMLAttributes<HTMLAnchorElement>
 
 const variantClasses: Record<ButtonVariant, string> = {
   primary:
-    'border-[var(--color-honey)] bg-[var(--color-honey)] text-black shadow-[0_0_0_rgba(255,193,5,0)] hover:-translate-y-0.5 hover:bg-[var(--color-honey-soft)] hover:shadow-[0_12px_32px_rgba(255,193,5,0.18)]',
+    'border-[var(--color-neon-honey)] bg-[var(--color-neon-honey)] text-black shadow-[0_0_0_rgba(255,207,74,0)] hover:-translate-y-0.5 hover:bg-[var(--color-honey-soft)] hover:shadow-[0_12px_32px_rgba(255,207,74,0.18)]',
   secondary:
-    'border-[var(--color-line-strong)] bg-transparent text-[var(--color-paper)] hover:-translate-y-0.5 hover:border-[var(--color-honey)] hover:bg-[rgba(255,193,5,0.08)] hover:text-[var(--color-honey)]',
+    'border-[var(--color-line-strong)] bg-transparent text-[var(--color-paper)] hover:-translate-y-0.5 hover:border-[var(--color-neon-honey)] hover:bg-[rgba(255,207,74,0.08)] hover:text-[var(--color-neon-honey)]',
 }
 
 function buttonClasses(variant: ButtonVariant = 'primary') {

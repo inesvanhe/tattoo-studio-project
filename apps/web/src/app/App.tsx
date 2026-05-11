@@ -22,6 +22,36 @@ export function App() {
         <Route path="/portfolio" element={<PortfolioPage />} />
         <Route path="/portfolio/:slug" element={<PortfolioDetailPage />} />
         <Route path="/booking" element={<BookingPage />} />
+        <Route
+          path="/studio"
+          element={
+            <PlaceholderPage
+              eyebrow="Studio"
+              title="Studio Seite"
+              description="Hier entsteht später die Studio-Seite mit Interior, Vibe und Ablauf."
+            />
+          }
+        />
+        <Route
+          path="/impressum"
+          element={
+            <PlaceholderPage
+              eyebrow="Legal"
+              title="Impressum"
+              description="Das Impressum wird ergänzt, sobald die finalen Projektdaten feststehen."
+            />
+          }
+        />
+        <Route
+          path="/datenschutz"
+          element={
+            <PlaceholderPage
+              eyebrow="Legal"
+              title="Datenschutz"
+              description="Die Datenschutzhinweise werden ergänzt, sobald Tracking, Hosting und produktive Dienste feststehen."
+            />
+          }
+        />
         <Route path="/admin" element={<AdminPage />} />
         <Route path="/admin/booking-requests" element={<AdminBookingRequestsPage />} />
         <Route path="/admin/booking-requests/:id" element={<AdminBookingRequestDetailPage />} />
