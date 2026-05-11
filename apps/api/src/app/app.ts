@@ -3,6 +3,7 @@ import cors from 'cors'
 import express from 'express'
 
 import { adminRouter } from '../features/admin/admin.routes.js'
+import { aiRouter } from '../features/ai/ai.routes.js'
 import { artistAdminRouter } from '../features/artistAdmin/artistAdmin.routes.js'
 import { artistRouter } from '../features/artists/artist.routes.js'
 import { bookingRequestRouter } from '../features/bookingRequests/bookingRequest.routes.js'
@@ -26,6 +27,7 @@ export function createApp() {
   app.use('/api/artists', artistRouter)
   app.use('/api/booking-requests', bookingRequestRouter)
   app.use('/api/tattoos', tattooRouter)
+  app.use('/api/ai', aiRouter)
   app.use('/api/admin', adminRouter)
   app.use('/api/artist', artistAdminRouter)
 
