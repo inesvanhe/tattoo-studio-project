@@ -609,14 +609,31 @@ a {
   }
 }
 
-.portfolio-card {
+.portfolio-stage,
+.portfolio-detail-stage {
+  background:
+    radial-gradient(circle at 82% 12%, rgba(231, 186, 99, 0.12), transparent 28%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.04), transparent 30%),
+    var(--color-ink);
+}
+
+.portfolio-intro-panel p {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+
+.portfolio-grid {
   display: grid;
-  min-height: 24rem;
+  gap: 1rem;
+}
+
+.portfolio-card {
+  position: relative;
+  display: grid;
+  min-height: 32rem;
   overflow: hidden;
   border: 1px solid var(--color-line);
-  background:
-    linear-gradient(135deg, rgba(255, 193, 5, 0.08), transparent 38%),
-    rgba(245, 245, 240, 0.03);
+  background: #0b0b0a;
+  outline: none;
   transition:
     border-color 200ms ease,
     transform 200ms ease;
@@ -624,33 +641,143 @@ a {
 
 .portfolio-card:hover,
 .portfolio-card:focus-visible {
-  border-color: rgba(255, 193, 5, 0.7);
-  transform: translateY(-0.25rem);
+  border-color: rgba(231, 186, 99, 0.72);
+  transform: translateY(-0.2rem);
 }
 
-.portfolio-card-media,
-.portfolio-detail-media {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-bottom: 1px solid var(--color-line);
+.portfolio-card::after {
+  position: absolute;
+  inset: 0;
   background:
-    radial-gradient(circle at 50% 10%, rgba(255, 193, 5, 0.24), transparent 30%),
-    linear-gradient(135deg, rgba(255, 193, 5, 0.12), rgba(245, 245, 240, 0.04));
-  color: var(--color-honey);
+    linear-gradient(180deg, transparent 26%, rgba(0, 0, 0, 0.18) 54%, rgba(0, 0, 0, 0.88)),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.16), transparent 58%);
+  content: "";
+}
+
+.portfolio-card img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  transition:
+    filter 240ms ease,
+    transform 300ms ease;
+}
+
+.portfolio-card-summary,
+.portfolio-card-details {
+  position: relative;
+  z-index: 1;
+  padding: 1.25rem;
+}
+
+.portfolio-card-summary {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: grid;
+  min-height: 9.5rem;
+  align-content: end;
+  background: linear-gradient(180deg, transparent, rgba(0, 0, 0, 0.86) 48%, rgba(0, 0, 0, 0.96));
+  transition:
+    opacity 220ms ease,
+    transform 220ms ease;
+}
+
+.portfolio-card-summary p,
+.portfolio-card-file {
+  color: var(--color-neon-honey);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.72rem;
   font-weight: 900;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
 }
 
-.portfolio-card-media {
-  min-height: 12rem;
-  font-size: 4rem;
+.portfolio-card-summary h2 {
+  margin-top: 0.45rem;
+  color: var(--color-paper);
+  font-size: 2rem;
+  font-weight: 950;
+  line-height: 0.92;
+  text-transform: uppercase;
+}
+
+.portfolio-card-details {
+  display: grid;
+  align-content: end;
+  gap: 0.75rem;
+  min-height: 100%;
+  background: rgba(5, 5, 5, 0.86);
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(1rem);
+  transition:
+    opacity 220ms ease,
+    transform 220ms ease;
+}
+
+.portfolio-card-details h3 {
+  color: var(--color-paper);
+  font-size: 2.25rem;
+  font-weight: 950;
+  line-height: 0.9;
+  text-transform: uppercase;
+}
+
+.portfolio-card-details p:not(.portfolio-card-file) {
+  color: var(--color-muted);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.portfolio-card:hover img,
+.portfolio-card:focus-visible img {
+  filter: saturate(0.78) brightness(0.62);
+  transform: scale(1.04);
+}
+
+.portfolio-card:hover .portfolio-card-summary,
+.portfolio-card:focus-visible .portfolio-card-summary {
+  opacity: 0;
+  transform: translateY(0.75rem);
+}
+
+.portfolio-card:hover .portfolio-card-details,
+.portfolio-card:focus-visible .portfolio-card-details {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
 }
 
 .portfolio-detail-media {
   min-height: 24rem;
-  border: 1px solid rgba(255, 193, 5, 0.42);
-  font-size: 6rem;
+  overflow: hidden;
+  border: 1px solid var(--color-line);
+  background: #0b0b0a;
+}
+
+.portfolio-detail-media img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+@media (min-width: 760px) {
+  .portfolio-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1100px) {
+  .portfolio-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }
 
 .booking-shell {

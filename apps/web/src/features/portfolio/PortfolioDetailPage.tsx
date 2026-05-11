@@ -2,13 +2,34 @@ import { useParams } from 'react-router-dom'
 
 import { AppShell } from '../../app/AppShell'
 import { ButtonLink } from '../../shared/components/Button'
-import { findPortfolioWork } from './portfolio.data'
+import { getPortfolioImage } from './portfolio.assets'
+import { useTattooWorks } from './useTattooWorks'
+
+const artistNameBySlug: Record<string, string> = {
+  'ivy-ash': 'Ivy Ash',
+  'kade-monroe': 'Kade Monroe',
+  'luna-vex': 'Luna Vex',
+  'maya-black': 'Maya Black',
+  'nova-wren': 'Nova Wren',
+  'rico-chrome': 'Rico Chrome',
+}
 
 export function PortfolioDetailPage() {
   const { slug } = useParams()
-  const work = findPortfolioWork(slug)
+  const tattooWorksState = useTattooWorks()
+  const work = tattooWorksState.works.find((item) => item.slug === slug)
 
-  if (!work) {
+  if (tattooWorksState.status === 'loading') {
+    return (
+      <AppShell>
+        <section className="panel-frame my-12 p-6 text-[var(--color-muted)]">
+          <p>Portfolio wird geladen.</p>
+        </section>
+      </AppShell>
+    )
+  }
+
+  if (tattooWorksState.status === 'error' || !work) {
     return (
       <AppShell>
         <section className="panel-frame my-12 p-6 sm:p-10">
@@ -27,11 +48,13 @@ export function PortfolioDetailPage() {
     )
   }
 
+  const artistName = artistNameBySlug[work.artistSlug] ?? work.artistSlug
+
   return (
     <AppShell>
-      <section className="grid gap-8 border-x border-b border-[var(--color-line)] px-5 py-12 sm:px-8 lg:grid-cols-[0.9fr_1.1fr] lg:px-12">
+      <section className="portfolio-detail-stage grid gap-8 border-x border-b border-[var(--color-line)] px-5 py-12 sm:px-8 lg:grid-cols-[0.9fr_1.1fr] lg:px-12">
         <div className="portfolio-detail-media">
-          <span>{work.title.slice(0, 2)}</span>
+          <img alt="" src={getPortfolioImage(work.imageUrl)} />
         </div>
         <div className="grid content-center">
           <p className="eyebrow">Portfolio Detail</p>
@@ -58,10 +81,9 @@ export function PortfolioDetailPage() {
       <section className="grid gap-5 py-12 md:grid-cols-2">
         <div className="panel-frame p-6">
           <p className="eyebrow">Artist</p>
-          <h2 className="mt-5 text-3xl font-black uppercase">{work.artistName}</h2>
+          <h2 className="mt-5 text-3xl font-black uppercase">{artistName}</h2>
           <p className="mt-4 text-base leading-7 text-[var(--color-muted)]">
-            Verknüpfung zum Artist-Profil folgt, sobald die Mock-Daten und API-Daten
-            zusammengeführt sind.
+            Dieses Piece ist dem Artist-Profil über den Slug zugeordnet.
           </p>
         </div>
         <div className="panel-frame p-6">
