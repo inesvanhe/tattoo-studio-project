@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { AdminBookingRequestDetailPage } from '../features/admin/AdminBookingRequestDetailPage'
 import { AdminBookingRequestsPage } from '../features/admin/AdminBookingRequestsPage'
 import { AdminPage } from '../features/admin/AdminPage'
+import { InkGuidePage } from '../features/ai/InkGuidePage'
 import { ArtistBookingRequestsPage } from '../features/artistAdmin/ArtistBookingRequestsPage'
 import { ArtistDetailPage } from '../features/artists/ArtistDetailPage'
 import { ArtistsPage } from '../features/artists/ArtistsPage'
@@ -22,6 +23,7 @@ export function App() {
         <Route path="/portfolio" element={<PortfolioPage />} />
         <Route path="/portfolio/:slug" element={<PortfolioDetailPage />} />
         <Route path="/booking" element={<BookingPage />} />
+        <Route path="/ink-guide" element={<InkGuidePage />} />
         <Route
           path="/studio"
           element={

@@ -5,6 +5,7 @@ import honeyBeezLogo from '../../assets/brand/honey-beez-bw-logo.png'
 const navItems = [
   { label: 'Artists', href: '/artists' },
   { label: 'Portfolio', href: '/portfolio' },
+  { label: 'Ink Guide', href: '/ink-guide' },
   { label: 'Termin buchen', href: '/booking' },
 ]
 

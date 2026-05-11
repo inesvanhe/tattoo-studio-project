@@ -23,6 +23,7 @@ export function AppShell({ children }: AppShellProps) {
               <p>Explore</p>
               <a href="/artists">Artists</a>
               <a href="/portfolio">Portfolio</a>
+              <a href="/ink-guide">Ink Guide</a>
               <a href="/studio">Studio</a>
               <a href="/booking">Termin buchen</a>
             </nav>
