@@ -1,4 +1,4 @@
-import { type ChangeEvent, useMemo, useState } from 'react'
+import { type ChangeEvent, type DragEvent, useEffect, useMemo, useRef, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 
 import { AppShell } from '../../app/AppShell'
@@ -24,6 +24,12 @@ type BookingFormData = {
 type BookingConsentData = {
   isAdult: boolean
   acceptedLegal: boolean
+}
+
+type ReferenceImageFile = {
+  file: File
+  id: string
+  previewUrl: string
 }
 
 type BookingFeedback =
@@ -80,6 +86,9 @@ const allFormFields = Object.keys(initialFormData) as Array<keyof BookingFormDat
 const requiredFields = new Set(Object.values(requiredFieldsByStep).flat())
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 const phonePattern = /^[\d\s()+/-]+$/
+const allowedReferenceImageTypes = ['image/jpeg', 'image/png', 'image/webp']
+const maxReferenceImageSize = 5 * 1024 * 1024
+const maxReferenceImages = 5
 
 const fieldLabels: Record<keyof BookingFormData, string> = {
   customerName: 'Name',
@@ -147,6 +156,18 @@ function getSummaryValue(field: keyof BookingFormData, value: string) {
   return trimmedValue
 }
 
+function getReferenceImageId(file: File) {
+  return `${file.name}-${file.size}-${file.lastModified}`
+}
+
+function formatFileSize(size: number) {
+  if (size < 1024 * 1024) {
+    return `${Math.max(1, Math.round(size / 1024))} KB`
+  }
+
+  return `${(size / (1024 * 1024)).toFixed(1)} MB`
+}
+
 export function BookingPage() {
   const [searchParams] = useSearchParams()
   const [formData, setFormData] = useState<BookingFormData>({
@@ -156,7 +177,11 @@ export function BookingPage() {
   const [currentStep, setCurrentStep] = useState(0)
   const [consents, setConsents] = useState<BookingConsentData>(initialConsentData)
   const [bookingFeedback, setBookingFeedback] = useState<BookingFeedback>(null)
+  const [referenceImages, setReferenceImages] = useState<ReferenceImageFile[]>([])
+  const [referenceImageError, setReferenceImageError] = useState('')
+  const [isReferenceDropActive, setIsReferenceDropActive] = useState(false)
   const [touchedStep, setTouchedStep] = useState(false)
+  const referenceImagesRef = useRef<ReferenceImageFile[]>([])
   const visibleFields = currentStep === steps.length - 1 ? allFormFields : fieldsByStep[currentStep]
 
   const currentStepErrors = useMemo(
@@ -165,6 +190,16 @@ export function BookingPage() {
   )
 
   const visibleFieldErrors = touchedStep ? currentStepErrors : []
+
+  useEffect(() => {
+    referenceImagesRef.current = referenceImages
+  }, [referenceImages])
+
+  useEffect(() => {
+    return () => {
+      referenceImagesRef.current.forEach((image) => URL.revokeObjectURL(image.previewUrl))
+    }
+  }, [])
 
   function updateField(
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>,
@@ -201,6 +236,93 @@ export function BookingPage() {
     }))
   }
 
+  function addReferenceImages(files: File[]) {
+    setReferenceImageError('')
+
+    if (files.length === 0) {
+      return
+    }
+
+    const nextErrors = new Set<string>()
+    const nextImages: ReferenceImageFile[] = []
+    const existingIds = new Set(referenceImages.map((image) => image.id))
+    let availableSlots = maxReferenceImages - referenceImages.length
+
+    if (availableSlots <= 0 || files.length > availableSlots) {
+      nextErrors.add('Du kannst maximal 5 Referenzbilder hochladen.')
+    }
+
+    for (const file of files) {
+      if (!allowedReferenceImageTypes.includes(file.type)) {
+        nextErrors.add('Bitte lade nur JPG, PNG oder WEBP Dateien hoch.')
+        continue
+      }
+
+      if (file.size > maxReferenceImageSize) {
+        nextErrors.add('Ein Bild darf maximal 5 MB groß sein.')
+        continue
+      }
+
+      const id = getReferenceImageId(file)
+
+      if (existingIds.has(id) || nextImages.some((image) => image.id === id)) {
+        continue
+      }
+
+      if (availableSlots <= 0) {
+        continue
+      }
+
+      nextImages.push({
+        file,
+        id,
+        previewUrl: URL.createObjectURL(file),
+      })
+      availableSlots -= 1
+    }
+
+    if (nextImages.length > 0) {
+      setReferenceImages((current) => [...current, ...nextImages])
+    }
+
+    setReferenceImageError(Array.from(nextErrors)[0] ?? '')
+  }
+
+  function removeReferenceImage(id: string) {
+    setReferenceImages((current) => {
+      const imageToRemove = current.find((image) => image.id === id)
+
+      if (imageToRemove) {
+        URL.revokeObjectURL(imageToRemove.previewUrl)
+      }
+
+      return current.filter((image) => image.id !== id)
+    })
+    setReferenceImageError('')
+  }
+
+  function handleReferenceInputChange(event: ChangeEvent<HTMLInputElement>) {
+    addReferenceImages(Array.from(event.target.files ?? []))
+    event.target.value = ''
+  }
+
+  function handleReferenceDragOver(event: DragEvent<HTMLLabelElement>) {
+    event.preventDefault()
+    setIsReferenceDropActive(true)
+  }
+
+  function handleReferenceDragLeave(event: DragEvent<HTMLLabelElement>) {
+    if (!event.currentTarget.contains(event.relatedTarget as Node | null)) {
+      setIsReferenceDropActive(false)
+    }
+  }
+
+  function handleReferenceDrop(event: DragEvent<HTMLLabelElement>) {
+    event.preventDefault()
+    setIsReferenceDropActive(false)
+    addReferenceImages(Array.from(event.dataTransfer.files))
+  }
+
   async function handleFinalSubmit() {
     const nextFieldErrors = getFormErrors(formData, allFormFields)
     const nextConsentErrors = getConsentErrors(consents)
@@ -218,6 +340,7 @@ export function BookingPage() {
     setBookingFeedback({ type: 'saving' })
 
     try {
+      // Phase 2: upload referenceImages to Cloudinary and persist the returned metadata.
       await createBookingRequest({
         approximateSize: formData.approximateSize,
         artistSlug: formData.artistSlug,
@@ -340,6 +463,16 @@ export function BookingPage() {
                 onChange={updateField}
                 placeholder="Links, Bilder oder kreative Referenzen..."
                 value={formData.references}
+              />
+              <ReferenceImageUpload
+                error={referenceImageError}
+                images={referenceImages}
+                isDragActive={isReferenceDropActive}
+                onDragLeave={handleReferenceDragLeave}
+                onDragOver={handleReferenceDragOver}
+                onDrop={handleReferenceDrop}
+                onInputChange={handleReferenceInputChange}
+                onRemove={removeReferenceImage}
               />
             </BookingStep>
           ) : null}
@@ -480,6 +613,74 @@ function mergeAvailabilityNotes(formData: BookingFormData) {
   }
 
   return [notes, `Referenzen: ${references}`].filter(Boolean).join('\n\n')
+}
+
+function ReferenceImageUpload({
+  error,
+  images,
+  isDragActive,
+  onDragLeave,
+  onDragOver,
+  onDrop,
+  onInputChange,
+  onRemove,
+}: {
+  error: string
+  images: ReferenceImageFile[]
+  isDragActive: boolean
+  onDragLeave: (event: DragEvent<HTMLLabelElement>) => void
+  onDragOver: (event: DragEvent<HTMLLabelElement>) => void
+  onDrop: (event: DragEvent<HTMLLabelElement>) => void
+  onInputChange: (event: ChangeEvent<HTMLInputElement>) => void
+  onRemove: (id: string) => void
+}) {
+  return (
+    <div className="reference-upload">
+      <label
+        className={
+          isDragActive
+            ? 'reference-upload-zone reference-upload-zone-active'
+            : 'reference-upload-zone'
+        }
+        onDragLeave={onDragLeave}
+        onDragOver={onDragOver}
+        onDrop={onDrop}
+      >
+        <input
+          accept="image/jpeg,image/png,image/webp"
+          multiple
+          onChange={onInputChange}
+          type="file"
+        />
+        <span>Ziehe Referenzbilder hier hinein</span>
+        <strong>oder wähle Dateien aus</strong>
+        <small>JPG, PNG oder WEBP · max. 5 MB pro Bild · bis zu 5 Bilder</small>
+      </label>
+
+      {error ? (
+        <p className="reference-upload-error" role="alert">
+          {error}
+        </p>
+      ) : null}
+
+      {images.length > 0 ? (
+        <div className="reference-preview-grid">
+          {images.map((image) => (
+            <article className="reference-preview-card" key={image.id}>
+              <img alt="" src={image.previewUrl} />
+              <div>
+                <p>{image.file.name}</p>
+                <span>{formatFileSize(image.file.size)}</span>
+              </div>
+              <button onClick={() => onRemove(image.id)} type="button">
+                Entfernen
+              </button>
+            </article>
+          ))}
+        </div>
+      ) : null}
+    </div>
+  )
 }
 
 function BookingStep({
