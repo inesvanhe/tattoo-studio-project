@@ -30,6 +30,7 @@ export function AppShell({ children }: AppShellProps) {
             <nav aria-label="Rechtliches">
               <p>Info</p>
               <a href="/kontakt">Kontakt</a>
+              <a href="/agb">AGB</a>
               <a href="/impressum">Impressum</a>
               <a href="/datenschutz">Datenschutz</a>
             </nav>

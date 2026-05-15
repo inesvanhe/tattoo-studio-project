@@ -56,6 +56,16 @@ export function App() {
             />
           }
         />
+        <Route
+          path="/agb"
+          element={
+            <PlaceholderPage
+              eyebrow="Legal"
+              title="AGB"
+              description="Die Allgemeinen Geschäftsbedingungen werden ergänzt, sobald der finale Ablauf für Anfragen, Termine und Studio-Leistungen feststeht."
+            />
+          }
+        />
         <Route path="/admin" element={<AdminPage />} />
         <Route path="/admin/booking-requests" element={<AdminBookingRequestsPage />} />
         <Route path="/admin/booking-requests/:id" element={<AdminBookingRequestDetailPage />} />
