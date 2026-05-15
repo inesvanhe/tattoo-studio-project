@@ -13,33 +13,19 @@ export function AdminPage() {
           </h1>
           <div className="panel-frame p-6">
             <p className="text-lg leading-8 text-[var(--color-muted)]">
-              Interner Einstieg für Terminanfragen und spätere Studio-Arbeit.
-              Der Backend-Zugriff ist bereits geschützt; Clerk-Login im
-              Frontend folgt als nächster Schritt.
+              Steuere Anfragen, Artists und Studioabläufe an einem zentralen Ort.
             </p>
-            <div className="mt-6">
-              <ButtonLink href="/admin/booking-requests">Anfragen ansehen</ButtonLink>
-            </div>
           </div>
         </div>
       </section>
 
       <AdminAuthGate>
-        <section className="grid gap-5 py-12 md:grid-cols-3">
-          <AdminMetric label="Requests" value="API" />
-          <AdminMetric label="Auth" value="Clerk" />
-          <AdminMetric label="Status" value="Protected" />
+        <section className="admin-dashboard-entry panel-frame">
+          <ButtonLink href="/admin/booking-requests" variant="secondary">
+            Anfragen ansehen
+          </ButtonLink>
         </section>
       </AdminAuthGate>
     </AppShell>
-  )
-}
-
-function AdminMetric({ label, value }: { label: string; value: string }) {
-  return (
-    <article className="admin-metric">
-      <p className="eyebrow">{label}</p>
-      <strong>{value}</strong>
-    </article>
   )
 }

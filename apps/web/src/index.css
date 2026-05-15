@@ -1141,7 +1141,6 @@ a {
   margin-top: 2rem;
 }
 
-.admin-metric,
 .admin-request-row,
 .admin-detail,
 .admin-field,
@@ -1157,7 +1156,7 @@ a {
 }
 
 .admin-auth-panel {
-  margin-top: 3rem;
+  margin-top: 1.5rem;
   padding: 1.5rem;
 }
 
@@ -1218,7 +1217,7 @@ a {
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
-  margin-top: 3rem;
+  margin-top: 1.5rem;
   padding: 1rem;
 }
 
@@ -1233,19 +1232,11 @@ a {
   gap: 0.75rem;
 }
 
-.admin-metric {
-  display: grid;
-  min-height: 9rem;
-  align-content: space-between;
-  padding: 1.25rem;
-}
-
-.admin-metric strong {
-  color: var(--color-paper);
-  font-size: 2rem;
-  font-weight: 900;
-  line-height: 1;
-  text-transform: uppercase;
+.admin-dashboard-entry {
+  display: flex;
+  justify-content: flex-start;
+  margin: 1rem 0 3rem;
+  padding: 1rem;
 }
 
 .admin-request-list {
