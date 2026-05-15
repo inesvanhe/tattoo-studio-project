@@ -75,9 +75,46 @@ a {
 }
 
 .poster-hero {
+  position: relative;
+  overflow: hidden;
   background:
     linear-gradient(90deg, transparent, rgba(255, 193, 5, 0.05), transparent),
     var(--color-ink);
+}
+
+.admin-dashboard-hero > :not(.admin-dashboard-hero-image) {
+  position: relative;
+  z-index: 1;
+}
+
+.admin-dashboard-hero {
+  min-height: 34rem;
+  display: grid;
+  align-content: center;
+  background: #030403;
+}
+
+.admin-dashboard-hero-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 62% center;
+  opacity: 1;
+  filter: saturate(0.96) brightness(0.98);
+  pointer-events: none;
+}
+
+.admin-dashboard-hero::after {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background:
+    linear-gradient(90deg, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.48) 38%, rgba(0, 0, 0, 0.06) 78%),
+    linear-gradient(180deg, rgba(0, 0, 0, 0.04) 0%, rgba(0, 0, 0, 0.1) 62%, #050505 100%);
+  content: "";
+  pointer-events: none;
 }
 
 .artist-stage {
