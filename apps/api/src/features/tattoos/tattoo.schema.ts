@@ -6,8 +6,10 @@ const optionalQueryStringSchema = z
   .transform((value) => (Array.isArray(value) ? value[0] : value))
 
 export const tattooQuerySchema = z.object({
-  artist: optionalQueryStringSchema,
-  style: optionalQueryStringSchema,
+  artist: optionalQueryStringSchema.pipe(
+    z.string().trim().max(80).regex(/^[a-z0-9-]+$/).optional(),
+  ),
+  style: optionalQueryStringSchema.pipe(z.string().trim().max(80).optional()),
 })
 
 export const tattooWorkResponseSchema = z.object({

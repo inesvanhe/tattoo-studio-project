@@ -2,6 +2,7 @@ import { clerkClient, getAuth } from '@clerk/express'
 import type { RequestHandler } from 'express'
 
 import { env } from '../../shared/config/env.js'
+import { artistSlugSchema } from '../bookingRequests/bookingRequest.schema.js'
 
 type ClerkPublicMetadata = {
   artistSlug?: unknown
@@ -90,7 +91,10 @@ function requireRole(allowedRoles: AppRole[]): RequestHandler {
       }
 
       response.locals.adminAuth = {
-        artistSlug: typeof publicMetadata.artistSlug === 'string' ? publicMetadata.artistSlug : '',
+        artistSlug:
+          typeof publicMetadata.artistSlug === 'string'
+            ? artistSlugSchema.catch('').parse(publicMetadata.artistSlug.toLowerCase())
+            : '',
         roles,
         userId,
       }

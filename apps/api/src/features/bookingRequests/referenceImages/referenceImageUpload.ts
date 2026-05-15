@@ -50,6 +50,10 @@ export function validateReferenceImages(files: Express.Multer.File[]) {
       throw new ReferenceImageUploadError('Bitte lade nur JPG, PNG oder WEBP Dateien hoch.')
     }
 
+    if (!hasValidImageSignature(file)) {
+      throw new ReferenceImageUploadError('Bitte lade nur JPG, PNG oder WEBP Dateien hoch.')
+    }
+
     if (file.size > maxReferenceImageSize) {
       throw new ReferenceImageUploadError('Ein Bild darf maximal 5 MB groß sein.')
     }
@@ -127,7 +131,7 @@ async function uploadReferenceImage(file: Express.Multer.File, folder: string) {
     const responseBody = await response.text().catch(() => '')
 
     console.error('Cloudinary upload failed', {
-      body: responseBody,
+      bodyLength: responseBody.length,
       status: response.status,
     })
 
@@ -170,7 +174,7 @@ async function destroyCloudinaryImage(publicId: string) {
     const responseBody = await response.text().catch(() => '')
 
     console.error('Cloudinary cleanup failed', {
-      body: responseBody,
+      bodyLength: responseBody.length,
       publicId,
       status: response.status,
     })
@@ -185,6 +189,32 @@ async function destroyCloudinaryImage(publicId: string) {
       result: responseBody.result,
     })
   }
+}
+
+function hasValidImageSignature(file: Express.Multer.File) {
+  if (file.mimetype === 'image/jpeg') {
+    return file.buffer[0] === 0xff && file.buffer[1] === 0xd8 && file.buffer[2] === 0xff
+  }
+
+  if (file.mimetype === 'image/png') {
+    return (
+      file.buffer[0] === 0x89 &&
+      file.buffer[1] === 0x50 &&
+      file.buffer[2] === 0x4e &&
+      file.buffer[3] === 0x47 &&
+      file.buffer[4] === 0x0d &&
+      file.buffer[5] === 0x0a &&
+      file.buffer[6] === 0x1a &&
+      file.buffer[7] === 0x0a
+    )
+  }
+
+  if (file.mimetype === 'image/webp') {
+    return file.buffer.subarray(0, 4).toString('ascii') === 'RIFF'
+      && file.buffer.subarray(8, 12).toString('ascii') === 'WEBP'
+  }
+
+  return false
 }
 
 function createCloudinarySignature(params: Record<string, string>) {

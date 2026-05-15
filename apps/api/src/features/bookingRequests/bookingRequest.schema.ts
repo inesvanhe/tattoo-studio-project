@@ -2,6 +2,12 @@ import { z } from 'zod'
 
 import { bookingRequestStatuses } from './bookingRequest.model.js'
 
+export const artistSlugSchema = z
+  .string()
+  .trim()
+  .max(80)
+  .regex(/^[a-z0-9-]*$/, 'Artist slug can only contain lowercase letters, numbers and hyphens.')
+
 const requiredTextSchema = z.string().trim().min(1).max(2000)
 const optionalTextSchema = z.string().trim().max(1000).optional().default('')
 const adminNotesSchema = z.string().trim().max(4000).optional().default('')
@@ -18,7 +24,7 @@ export const createBookingRequestSchema = z.object({
   preferredStyle: requiredTextSchema.max(120),
   bodyPlacement: requiredTextSchema.max(120),
   approximateSize: requiredTextSchema.max(120),
-  artistSlug: optionalTextSchema.transform((value) => value.toLowerCase()),
+  artistSlug: artistSlugSchema.optional().default('').transform((value) => value.toLowerCase()),
   budgetRange: optionalTextSchema,
   availabilityNotes: optionalTextSchema,
 })
@@ -61,7 +67,7 @@ export const updateBookingRequestAdminNotesSchema = z.object({
 })
 
 export const bookingRequestParamsSchema = z.object({
-  id: z.string().trim().min(1),
+  id: z.string().trim().regex(/^[a-f\d]{24}$/i, 'Invalid booking request id.'),
 })
 
 export type CreateBookingRequestInput = z.infer<typeof createBookingRequestSchema>
