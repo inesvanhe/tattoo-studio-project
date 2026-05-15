@@ -35,7 +35,7 @@ type ReferenceImageFile = {
 type BookingFeedback =
   | { type: 'consent-error'; messages: string[] }
   | { type: 'success' }
-  | { type: 'error' }
+  | { type: 'error'; message: string }
   | { type: 'saving' }
   | null
 
@@ -324,6 +324,10 @@ export function BookingPage() {
   }
 
   async function handleFinalSubmit() {
+    if (bookingFeedback?.type === 'saving') {
+      return
+    }
+
     const nextFieldErrors = getFormErrors(formData, allFormFields)
     const nextConsentErrors = getConsentErrors(consents)
 
@@ -340,22 +344,30 @@ export function BookingPage() {
     setBookingFeedback({ type: 'saving' })
 
     try {
-      // Phase 2: upload referenceImages to Cloudinary and persist the returned metadata.
-      await createBookingRequest({
-        approximateSize: formData.approximateSize,
-        artistSlug: formData.artistSlug,
-        availabilityNotes: mergeAvailabilityNotes(formData),
-        bodyPlacement: formData.bodyPlacement,
-        budgetRange: formData.budgetRange,
-        customerEmail: formData.customerEmail,
-        customerName: formData.customerName,
-        customerPhone: formData.customerPhone,
-        ideaDescription: formData.ideaDescription,
-        preferredStyle: formData.preferredStyle,
-      })
+      await createBookingRequest(
+        {
+          approximateSize: formData.approximateSize,
+          artistSlug: formData.artistSlug,
+          availabilityNotes: mergeAvailabilityNotes(formData),
+          bodyPlacement: formData.bodyPlacement,
+          budgetRange: formData.budgetRange,
+          customerEmail: formData.customerEmail,
+          customerName: formData.customerName,
+          customerPhone: formData.customerPhone,
+          ideaDescription: formData.ideaDescription,
+          preferredStyle: formData.preferredStyle,
+        },
+        referenceImages.map((image) => image.file),
+      )
       setBookingFeedback({ type: 'success' })
-    } catch {
-      setBookingFeedback({ type: 'error' })
+    } catch (error) {
+      setBookingFeedback({
+        message:
+          error instanceof Error
+            ? error.message
+            : 'Die Anfrage konnte gerade nicht gespeichert werden.',
+        type: 'error',
+      })
     }
   }
 
@@ -575,7 +587,7 @@ export function BookingPage() {
 
           {bookingFeedback?.type === 'error' ? (
             <div className="booking-error" role="alert">
-              Die Anfrage konnte gerade nicht gespeichert werden.
+              {bookingFeedback.message}
             </div>
           ) : null}
 
@@ -593,7 +605,7 @@ export function BookingPage() {
                 onClick={handleFinalSubmit}
                 type="button"
               >
-                {bookingFeedback?.type === 'saving' ? 'Wird gesendet' : 'Anfrage senden'}
+                {bookingFeedback?.type === 'saving' ? 'Anfrage wird gesendet...' : 'Anfrage senden'}
               </Button>
             )}
           </div>

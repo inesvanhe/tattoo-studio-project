@@ -15,6 +15,9 @@ for (const envFilePath of envFileCandidates) {
 const emptyStringToUndefined = (value: unknown) => (value === '' ? undefined : value)
 
 const envSchema = z.object({
+  CLOUDINARY_API_KEY: z.preprocess(emptyStringToUndefined, z.string().trim().min(1).optional()),
+  CLOUDINARY_API_SECRET: z.preprocess(emptyStringToUndefined, z.string().trim().min(1).optional()),
+  CLOUDINARY_CLOUD_NAME: z.preprocess(emptyStringToUndefined, z.string().trim().min(1).optional()),
   CLERK_PUBLISHABLE_KEY: z.preprocess(emptyStringToUndefined, z.string().trim().min(1).optional()),
   CLERK_SECRET_KEY: z.preprocess(emptyStringToUndefined, z.string().trim().min(1).optional()),
   MONGODB_URI: z.preprocess(emptyStringToUndefined, z.string().trim().min(1).optional()),

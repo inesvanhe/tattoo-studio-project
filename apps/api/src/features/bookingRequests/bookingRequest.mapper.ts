@@ -20,6 +20,16 @@ export function toBookingRequestResponse(
     availabilityNotes: bookingRequest.availabilityNotes,
     adminNotes: bookingRequest.adminNotes ?? '',
     status: bookingRequest.status,
+    referenceImages: (bookingRequest.referenceImages ?? []).map((image) => ({
+      ...(image.height ? { height: image.height } : {}),
+      ...(image.width ? { width: image.width } : {}),
+      mimeType: image.mimeType,
+      originalName: image.originalName,
+      publicId: image.publicId,
+      size: image.size,
+      uploadedAt: image.uploadedAt.toISOString(),
+      url: image.url,
+    })),
     createdAt: bookingRequest.createdAt.toISOString(),
   }
 }

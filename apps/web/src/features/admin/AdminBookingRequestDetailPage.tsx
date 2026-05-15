@@ -9,6 +9,7 @@ import { AdminNotice, getAdminNoticeKind } from './AdminNotice'
 import {
   adminBookingRequestStatuses,
   type AdminBookingRequest,
+  type AdminBookingRequestReferenceImage,
   type AdminBookingRequestStatus,
 } from './admin.api'
 import {
@@ -149,6 +150,10 @@ export function AdminBookingRequestDetailPage() {
                 wide
               />
 
+              {request.referenceImages.length > 0 ? (
+                <ReferenceImagesGallery images={request.referenceImages} />
+              ) : null}
+
               <div className="admin-notes-control">
                 <label>
                   <span>Interne Notiz</span>
@@ -182,6 +187,23 @@ export function AdminBookingRequestDetailPage() {
   )
 }
 
+function ReferenceImagesGallery({ images }: { images: AdminBookingRequestReferenceImage[] }) {
+  return (
+    <section className="admin-reference-images">
+      <p className="eyebrow">Referenzbilder</p>
+      <div className="admin-reference-grid">
+        {images.map((image) => (
+          <a href={image.url} key={image.publicId} rel="noreferrer" target="_blank">
+            <img alt={image.originalName} src={image.url} />
+            <span>{image.originalName}</span>
+            <small>{formatFileSize(image.size)}</small>
+          </a>
+        ))}
+      </div>
+    </section>
+  )
+}
+
 function AdminField({ label, value, wide = false }: { label: string; value: string; wide?: boolean }) {
   return (
     <div className={wide ? 'admin-field admin-field-wide' : 'admin-field'}>
@@ -189,4 +211,12 @@ function AdminField({ label, value, wide = false }: { label: string; value: stri
       <strong>{value}</strong>
     </div>
   )
+}
+
+function formatFileSize(size: number) {
+  if (size < 1024 * 1024) {
+    return `${Math.max(1, Math.round(size / 1024))} KB`
+  }
+
+  return `${(size / (1024 * 1024)).toFixed(1)} MB`
 }

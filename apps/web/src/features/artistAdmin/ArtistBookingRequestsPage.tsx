@@ -44,8 +44,20 @@ export function ArtistBookingRequestsPage() {
                     <div className="admin-request-meta">
                       <span>{getContactLabel(request)}</span>
                       <span>{getBudgetLabel(request)}</span>
+                      {request.referenceImages.length > 0 ? (
+                        <span>{request.referenceImages.length} Referenzbilder</span>
+                      ) : null}
                       <span>{new Date(request.createdAt).toLocaleDateString()}</span>
                     </div>
+                    {request.referenceImages.length > 0 ? (
+                      <div className="artist-reference-strip">
+                        {request.referenceImages.slice(0, 3).map((image) => (
+                          <a href={image.url} key={image.publicId} rel="noreferrer" target="_blank">
+                            <img alt={image.originalName} src={image.url} />
+                          </a>
+                        ))}
+                      </div>
+                    ) : null}
                   </div>
                   <span className="badge badge-dark">Zugewiesen</span>
                 </article>

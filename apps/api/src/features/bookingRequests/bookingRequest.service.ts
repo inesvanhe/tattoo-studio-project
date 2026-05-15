@@ -1,14 +1,25 @@
+import { Types } from 'mongoose'
+
 import { BookingRequestModel } from './bookingRequest.model.js'
 import { toBookingRequestResponse } from './bookingRequest.mapper.js'
+import type { UploadedReferenceImage } from './referenceImages/referenceImageUpload.js'
 import type {
   CreateBookingRequestInput,
   UpdateBookingRequestAdminNotesInput,
   UpdateBookingRequestStatusInput,
 } from './bookingRequest.schema.js'
 
-export async function createBookingRequest(input: CreateBookingRequestInput) {
+export async function createBookingRequest(
+  input: CreateBookingRequestInput,
+  options: {
+    id?: Types.ObjectId
+    referenceImages?: UploadedReferenceImage[]
+  } = {},
+) {
   const bookingRequest = await BookingRequestModel.create({
+    _id: options.id,
     ...input,
+    referenceImages: options.referenceImages ?? [],
     status: 'new',
   })
 

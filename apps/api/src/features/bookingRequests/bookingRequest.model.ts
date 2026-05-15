@@ -2,6 +2,48 @@ import mongoose, { Schema, type InferSchemaType } from 'mongoose'
 
 export const bookingRequestStatuses = ['new', 'reviewed', 'contacted', 'archived'] as const
 
+const referenceImageSchema = new Schema(
+  {
+    url: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    publicId: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    originalName: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    mimeType: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    size: {
+      type: Number,
+      required: true,
+    },
+    width: {
+      type: Number,
+    },
+    height: {
+      type: Number,
+    },
+    uploadedAt: {
+      type: Date,
+      required: true,
+    },
+  },
+  {
+    _id: false,
+  },
+)
+
 const bookingRequestSchema = new Schema(
   {
     customerName: {
@@ -67,6 +109,10 @@ const bookingRequestSchema = new Schema(
       enum: bookingRequestStatuses,
       default: 'new',
       index: true,
+    },
+    referenceImages: {
+      type: [referenceImageSchema],
+      default: [],
     },
   },
   {

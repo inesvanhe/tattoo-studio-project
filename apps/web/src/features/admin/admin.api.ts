@@ -14,7 +14,19 @@ export type AdminBookingRequest = {
   availabilityNotes: string
   adminNotes: string
   status: 'new' | 'reviewed' | 'contacted' | 'archived'
+  referenceImages: AdminBookingRequestReferenceImage[]
   createdAt: string
+}
+
+export type AdminBookingRequestReferenceImage = {
+  url: string
+  publicId: string
+  originalName: string
+  mimeType: string
+  size: number
+  width?: number
+  height?: number
+  uploadedAt: string
 }
 
 export const adminBookingRequestStatuses = ['new', 'reviewed', 'contacted', 'archived'] as const

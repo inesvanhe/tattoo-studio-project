@@ -23,6 +23,17 @@ export const createBookingRequestSchema = z.object({
   availabilityNotes: optionalTextSchema,
 })
 
+const referenceImageResponseSchema = z.object({
+  url: z.string().url(),
+  publicId: z.string(),
+  originalName: z.string(),
+  mimeType: z.string(),
+  size: z.number(),
+  width: z.number().optional(),
+  height: z.number().optional(),
+  uploadedAt: z.string(),
+})
+
 export const bookingRequestResponseSchema = z.object({
   id: z.string(),
   customerName: z.string(),
@@ -37,6 +48,7 @@ export const bookingRequestResponseSchema = z.object({
   availabilityNotes: z.string(),
   adminNotes: z.string(),
   status: z.enum(bookingRequestStatuses),
+  referenceImages: z.array(referenceImageResponseSchema),
   createdAt: z.string(),
 })
 
