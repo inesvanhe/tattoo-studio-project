@@ -20,7 +20,7 @@ export function PlaceholderPage({
     <AppShell>
       <section className="panel-frame my-12 p-6 sm:p-10">
         <p className="eyebrow">{eyebrow}</p>
-        <h1 className="mt-6 max-w-4xl text-4xl font-black uppercase leading-none sm:text-6xl">
+        <h1 className="page-hero-title mt-6">
           {title}
         </h1>
         <p className="mt-6 max-w-2xl text-lg leading-8 text-[var(--color-muted)]">

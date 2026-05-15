@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 
 import { AppShell } from '../../app/AppShell'
+import portfolioHeroImage from '../../assets/portfolio/tattoo1.png'
 import { getPortfolioImage } from './portfolio.assets'
 import type { TattooWork } from './tattoos.api'
 import { useTattooWorks } from './useTattooWorks'
@@ -19,14 +20,20 @@ export function PortfolioPage() {
 
   return (
     <AppShell>
-      <section className="portfolio-stage border-x border-b border-[var(--color-line)] px-5 py-12 sm:px-8 lg:px-12">
+      <section className="portfolio-stage px-5 py-12 sm:px-8 lg:px-12">
+        <img className="portfolio-stage-image" src={portfolioHeroImage} alt="" />
         <p className="eyebrow">Portfolio</p>
-        <h1 className="mt-8 max-w-4xl text-5xl font-black uppercase leading-[0.92] sm:text-7xl">
-          Tattoo gallery.
+        <h1 className="page-hero-title page-hero-title-narrow mt-8">
+          <span>The art that</span>
+          <span>stays with you</span>
         </h1>
       </section>
 
       <section className="py-12">
+        <div className="section-heading">
+          <p>The Collective</p>
+        </div>
+
         {tattooWorksState.status === 'loading' ? <PortfolioNotice text="Portfolio wird geladen." /> : null}
 
         {tattooWorksState.status === 'error' ? <PortfolioNotice text={tattooWorksState.error} /> : null}

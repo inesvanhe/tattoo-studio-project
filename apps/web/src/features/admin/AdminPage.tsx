@@ -10,7 +10,7 @@ export function AdminPage() {
         <img className="admin-dashboard-hero-image" src={sketchesImage} alt="" />
         <p className="eyebrow">Admin</p>
         <div className="mt-8 grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-end">
-          <h1 className="text-5xl font-black uppercase leading-[0.92] sm:text-7xl">
+          <h1 className="page-hero-title">
             Studio dashboard
           </h1>
         </div>

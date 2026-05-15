@@ -24,7 +24,7 @@ export function ArtistDetailPage() {
       <AppShell>
         <section className="panel-frame my-12 p-6 sm:p-10">
           <p className="eyebrow">Artist Detail</p>
-          <h1 className="mt-6 text-4xl font-black uppercase leading-none sm:text-6xl">
+          <h1 className="page-hero-title mt-6">
             Artist nicht gefunden
           </h1>
           <p className="mt-6 max-w-2xl text-lg leading-8 text-[var(--color-muted)]">
@@ -45,7 +45,7 @@ export function ArtistDetailPage() {
         <p className="eyebrow">Artist Profile</p>
         <div className="mt-8 grid gap-8 lg:grid-cols-[0.8fr_1.2fr] lg:items-end">
           <div>
-            <h1 className="text-5xl font-black uppercase leading-[0.92] sm:text-7xl">
+            <h1 className="page-hero-title">
               {artist.name}
             </h1>
             <p className="mt-5 text-sm font-black uppercase tracking-[0.18em] text-[var(--color-honey)]">

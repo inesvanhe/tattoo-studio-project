@@ -79,7 +79,7 @@ export function AdminBookingRequestDetailPage() {
     <AppShell>
       <section className="border-x border-b border-[var(--color-line)] px-5 py-12 sm:px-8 lg:px-12">
         <p className="eyebrow">Admin Request Detail</p>
-        <h1 className="mt-8 text-5xl font-black uppercase leading-[0.92] sm:text-7xl">
+        <h1 className="page-hero-title mt-8">
           Request detail
         </h1>
       </section>

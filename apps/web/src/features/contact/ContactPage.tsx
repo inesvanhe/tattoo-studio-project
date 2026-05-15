@@ -21,7 +21,7 @@ export function ContactPage() {
     <AppShell>
       <section className="poster-hero border-x border-b border-[var(--color-line)] px-5 py-12 sm:px-8 lg:px-12">
         <p className="eyebrow">Kontakt</p>
-        <h1 className="mt-8 max-w-4xl text-5xl font-black uppercase leading-[0.92] sm:text-7xl">
+        <h1 className="page-hero-title mt-8 max-w-4xl">
           Studio Kontakt.
         </h1>
       </section>

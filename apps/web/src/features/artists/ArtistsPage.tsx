@@ -62,8 +62,9 @@ export function ArtistsPage() {
       <section className="artist-stage px-5 py-12 sm:px-8 lg:px-12">
         <img className="artist-stage-image" src={tattooMachineImage} alt="" />
         <p className="eyebrow">Resident Artists</p>
-        <h1 className="mt-8 max-w-4xl text-5xl font-black uppercase leading-[0.92] sm:text-7xl">
-          Meet the hands behind the lines.
+        <h1 className="page-hero-title page-hero-title-narrow mt-8">
+          <span>Meet the hands</span>
+          <span>behind the lines</span>
         </h1>
       </section>
 

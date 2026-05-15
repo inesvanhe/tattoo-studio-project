@@ -34,7 +34,7 @@ export function PortfolioDetailPage() {
       <AppShell>
         <section className="panel-frame my-12 p-6 sm:p-10">
           <p className="eyebrow">Portfolio Detail</p>
-          <h1 className="mt-6 text-4xl font-black uppercase leading-none sm:text-6xl">
+          <h1 className="page-hero-title mt-6">
             Arbeit nicht gefunden
           </h1>
           <p className="mt-6 max-w-2xl text-lg leading-8 text-[var(--color-muted)]">
@@ -58,7 +58,7 @@ export function PortfolioDetailPage() {
         </div>
         <div className="grid content-center">
           <p className="eyebrow">Portfolio Detail</p>
-          <h1 className="mt-6 text-5xl font-black uppercase leading-[0.92] sm:text-7xl">
+          <h1 className="page-hero-title mt-6">
             {work.title}
           </h1>
           <p className="mt-6 text-lg leading-8 text-[var(--color-muted)]">{work.description}</p>

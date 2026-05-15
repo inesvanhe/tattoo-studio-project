@@ -132,7 +132,7 @@ export function InkGuidePage() {
         <p className="eyebrow">Ink Guide</p>
         <div className="mt-8 grid gap-8 lg:grid-cols-[0.82fr_1.18fr] lg:items-end">
           <div>
-            <h1 className="text-5xl font-black uppercase leading-[0.92] sm:text-7xl">
+            <h1 className="page-hero-title">
               Tattoo ideas, sorted.
             </h1>
           </div>

@@ -119,7 +119,7 @@ a {
 
 .artist-stage {
   position: relative;
-  min-height: 34rem;
+  min-height: 28rem;
   display: grid;
   align-content: center;
   overflow: hidden;
@@ -451,6 +451,30 @@ a {
   display: block;
 }
 
+.page-hero-title {
+  max-width: 48rem;
+  color: var(--color-paper);
+  font-size: 3rem;
+  font-weight: 950;
+  letter-spacing: 0;
+  line-height: 0.92;
+  text-transform: uppercase;
+}
+
+.page-hero-title span {
+  display: block;
+}
+
+.page-hero-title-narrow {
+  max-width: 100%;
+}
+
+@media (min-width: 900px) {
+  .page-hero-title-narrow {
+    max-width: min(34rem, 52%);
+  }
+}
+
 .home-hero-text {
   max-width: 34rem;
   color: var(--color-paper);
@@ -715,7 +739,54 @@ a {
   }
 }
 
-.portfolio-stage,
+@media (min-width: 640px) {
+  .page-hero-title {
+    font-size: 4.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .page-hero-title {
+    font-size: 5.25rem;
+  }
+}
+
+.portfolio-stage {
+  position: relative;
+  min-height: 28rem;
+  display: grid;
+  align-content: center;
+  overflow: hidden;
+  background: #030403;
+}
+
+.portfolio-stage > :not(.portfolio-stage-image) {
+  position: relative;
+  z-index: 1;
+}
+
+.portfolio-stage-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 62% center;
+  filter: saturate(0.92) brightness(0.88);
+  pointer-events: none;
+}
+
+.portfolio-stage::after {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background:
+    linear-gradient(90deg, rgba(0, 0, 0, 0.96) 0%, rgba(0, 0, 0, 0.72) 34%, rgba(0, 0, 0, 0.12) 78%),
+    linear-gradient(180deg, rgba(0, 0, 0, 0.08) 0%, rgba(0, 0, 0, 0.16) 62%, #050505 100%);
+  content: "";
+  pointer-events: none;
+}
+
 .portfolio-detail-stage {
   background:
     radial-gradient(circle at 82% 12%, rgba(231, 186, 99, 0.12), transparent 28%),
