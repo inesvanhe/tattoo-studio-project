@@ -9,7 +9,6 @@ import lunaVexImage from '../../assets/artists/luna-vex.png'
 import mayaBlackImage from '../../assets/artists/maya-black.png'
 import novaWrenImage from '../../assets/artists/nova-wren.png'
 import ricoChromeImage from '../../assets/artists/rico-chrome.png'
-import { ButtonLink } from '../../shared/components/Button'
 import type { Artist } from './artists.api'
 import { useArtists } from './useArtists'
 
@@ -61,22 +60,9 @@ export function ArtistsPage() {
     <AppShell>
       <section className="artist-stage border-x border-b border-[var(--color-line)] px-5 py-12 sm:px-8 lg:px-12">
         <p className="eyebrow">Resident Artists</p>
-        <div className="mt-8 grid gap-8 lg:grid-cols-[0.85fr_1.15fr] lg:items-end">
-          <div>
-            <h1 className="text-5xl font-black uppercase leading-[0.92] sm:text-7xl">
-              Meet the hands behind the lines.
-            </h1>
-          </div>
-          <div className="panel-frame artist-intro-panel p-6">
-            <p className="text-lg leading-8 text-[var(--color-muted)]">
-              Blackwork, Neo-Traditional und Custom Pieces aus einem Studio,
-              das lieber Haltung zeigt als Hochglanz verspricht.
-            </p>
-            <div className="mt-6">
-              <ButtonLink href="/booking">Termin anfragen</ButtonLink>
-            </div>
-          </div>
-        </div>
+        <h1 className="mt-8 max-w-4xl text-5xl font-black uppercase leading-[0.92] sm:text-7xl">
+          Meet the hands behind the lines.
+        </h1>
       </section>
 
       <section className="py-12">

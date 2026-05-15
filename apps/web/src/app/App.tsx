@@ -8,6 +8,7 @@ import { ArtistBookingRequestsPage } from '../features/artistAdmin/ArtistBooking
 import { ArtistDetailPage } from '../features/artists/ArtistDetailPage'
 import { ArtistsPage } from '../features/artists/ArtistsPage'
 import { BookingPage } from '../features/booking/BookingPage'
+import { ContactPage } from '../features/contact/ContactPage'
 import { HomePage } from '../features/home/HomePage'
 import { PortfolioDetailPage } from '../features/portfolio/PortfolioDetailPage'
 import { PortfolioPage } from '../features/portfolio/PortfolioPage'
@@ -23,6 +24,7 @@ export function App() {
         <Route path="/portfolio" element={<PortfolioPage />} />
         <Route path="/portfolio/:slug" element={<PortfolioDetailPage />} />
         <Route path="/booking" element={<BookingPage />} />
+        <Route path="/kontakt" element={<ContactPage />} />
         <Route path="/ink-guide" element={<InkGuidePage />} />
         <Route
           path="/studio"

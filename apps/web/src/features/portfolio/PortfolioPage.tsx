@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom'
 
 import { AppShell } from '../../app/AppShell'
-import { ButtonLink } from '../../shared/components/Button'
 import { getPortfolioImage } from './portfolio.assets'
 import type { TattooWork } from './tattoos.api'
 import { useTattooWorks } from './useTattooWorks'
@@ -22,20 +21,9 @@ export function PortfolioPage() {
     <AppShell>
       <section className="portfolio-stage border-x border-b border-[var(--color-line)] px-5 py-12 sm:px-8 lg:px-12">
         <p className="eyebrow">Portfolio</p>
-        <div className="mt-8 grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-end">
-          <h1 className="text-5xl font-black uppercase leading-[0.92] sm:text-7xl">
-            Tattoo gallery.
-          </h1>
-          <div className="panel-frame portfolio-intro-panel p-6">
-            <p className="text-lg leading-8 text-[var(--color-muted)]">
-              Kuratierte Arbeiten, Flash Pieces und Custom Motive aus dem Studio.
-              Hover über ein Piece für Details.
-            </p>
-            <div className="mt-6">
-              <ButtonLink href="/booking">Termin anfragen</ButtonLink>
-            </div>
-          </div>
-        </div>
+        <h1 className="mt-8 max-w-4xl text-5xl font-black uppercase leading-[0.92] sm:text-7xl">
+          Tattoo gallery.
+        </h1>
       </section>
 
       <section className="py-12">
