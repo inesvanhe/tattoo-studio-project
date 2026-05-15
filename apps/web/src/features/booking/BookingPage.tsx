@@ -1,7 +1,8 @@
-import { type ChangeEvent, type FormEvent, useMemo, useState } from 'react'
+import { type ChangeEvent, useMemo, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 
 import { AppShell } from '../../app/AppShell'
+import bookingHeroImage from '../../assets/studio/sketches1.jpg'
 import { Button } from '../../shared/components/Button'
 import { formatBudgetRange } from '../../shared/formatters/budget'
 import { createBookingRequest } from './booking.api'
@@ -20,6 +21,18 @@ type BookingFormData = {
   availabilityNotes: string
 }
 
+type BookingConsentData = {
+  isAdult: boolean
+  acceptedLegal: boolean
+}
+
+type BookingFeedback =
+  | { type: 'consent-error'; messages: string[] }
+  | { type: 'success' }
+  | { type: 'error' }
+  | { type: 'saving' }
+  | null
+
 const initialFormData: BookingFormData = {
   customerName: '',
   customerEmail: '',
@@ -32,6 +45,11 @@ const initialFormData: BookingFormData = {
   artistSlug: '',
   budgetRange: '',
   availabilityNotes: '',
+}
+
+const initialConsentData: BookingConsentData = {
+  isAdult: false,
+  acceptedLegal: false,
 }
 
 const steps = [
@@ -52,9 +70,9 @@ const requiredFieldsByStep: Record<number, Array<keyof BookingFormData>> = {
 
 const fieldsByStep: Record<number, Array<keyof BookingFormData>> = {
   0: ['customerName', 'customerEmail', 'customerPhone'],
-  1: ['ideaDescription', 'preferredStyle'],
+  1: ['ideaDescription', 'preferredStyle', 'references'],
   2: ['bodyPlacement', 'approximateSize'],
-  3: ['references', 'artistSlug', 'budgetRange', 'availabilityNotes'],
+  3: ['artistSlug', 'budgetRange', 'availabilityNotes'],
   4: [],
 }
 
@@ -101,6 +119,20 @@ function getFormErrors(formData: BookingFormData, fields: Array<keyof BookingFor
     .filter((message) => message.length > 0)
 }
 
+function getConsentErrors(consents: BookingConsentData) {
+  const errors: string[] = []
+
+  if (!consents.isAdult) {
+    errors.push('Bitte bestätige, dass du mindestens 18 Jahre alt bist.')
+  }
+
+  if (!consents.acceptedLegal) {
+    errors.push('Bitte akzeptiere AGB und Datenschutzerklärung.')
+  }
+
+  return errors
+}
+
 function getSummaryValue(field: keyof BookingFormData, value: string) {
   const trimmedValue = value.trim()
 
@@ -122,9 +154,8 @@ export function BookingPage() {
     artistSlug: searchParams.get('artist') ?? '',
   })
   const [currentStep, setCurrentStep] = useState(0)
-  const [submitted, setSubmitted] = useState(false)
-  const [isSubmitting, setIsSubmitting] = useState(false)
-  const [submitError, setSubmitError] = useState('')
+  const [consents, setConsents] = useState<BookingConsentData>(initialConsentData)
+  const [bookingFeedback, setBookingFeedback] = useState<BookingFeedback>(null)
   const [touchedStep, setTouchedStep] = useState(false)
   const visibleFields = currentStep === steps.length - 1 ? allFormFields : fieldsByStep[currentStep]
 
@@ -133,11 +164,12 @@ export function BookingPage() {
     [formData, visibleFields],
   )
 
+  const visibleFieldErrors = touchedStep ? currentStepErrors : []
+
   function updateField(
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>,
   ) {
-    setSubmitted(false)
-    setSubmitError('')
+    setBookingFeedback(null)
     setFormData((current) => ({
       ...current,
       [event.target.name]: event.target.value,
@@ -151,24 +183,39 @@ export function BookingPage() {
     }
 
     setTouchedStep(false)
+    setBookingFeedback(null)
     setCurrentStep((step) => Math.min(step + 1, steps.length - 1))
   }
 
   function goToPreviousStep() {
     setTouchedStep(false)
+    setBookingFeedback(null)
     setCurrentStep((step) => Math.max(step - 1, 0))
   }
 
-  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault()
+  function updateConsent(field: keyof BookingConsentData, checked: boolean) {
+    setBookingFeedback(null)
+    setConsents((current) => ({
+      ...current,
+      [field]: checked,
+    }))
+  }
 
-    if (getFormErrors(formData, allFormFields).length > 0) {
+  async function handleFinalSubmit() {
+    const nextFieldErrors = getFormErrors(formData, allFormFields)
+    const nextConsentErrors = getConsentErrors(consents)
+
+    if (nextFieldErrors.length > 0 || nextConsentErrors.length > 0) {
       setTouchedStep(true)
+      setBookingFeedback(
+        nextConsentErrors.length > 0
+          ? { type: 'consent-error', messages: nextConsentErrors }
+          : null,
+      )
       return
     }
 
-    setIsSubmitting(true)
-    setSubmitError('')
+    setBookingFeedback({ type: 'saving' })
 
     try {
       await createBookingRequest({
@@ -183,32 +230,45 @@ export function BookingPage() {
         ideaDescription: formData.ideaDescription,
         preferredStyle: formData.preferredStyle,
       })
-      setSubmitted(true)
+      setBookingFeedback({ type: 'success' })
     } catch {
-      setSubmitError('Die Anfrage konnte gerade nicht gespeichert werden.')
-    } finally {
-      setIsSubmitting(false)
+      setBookingFeedback({ type: 'error' })
     }
   }
 
   return (
     <AppShell>
-      <section className="poster-hero border-x border-b border-[var(--color-line)] px-5 py-12 sm:px-8 lg:px-12">
-        <p className="eyebrow">Booking Request</p>
-        <div className="mt-8 grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-end">
-          <h1 className="page-hero-title">
-            Termin anfragen
-          </h1>
-          <div className="panel-frame p-6">
-            <p className="text-lg leading-8 text-[var(--color-muted)]">
-              Bereite deine Anfrage strukturiert vor. Das Studio prüft sie
-              später manuell und bestätigt keinen Termin und keinen Preis.
+      <section className="booking-stage px-5 py-12 sm:px-8 lg:px-12">
+        <img className="booking-stage-image" src={bookingHeroImage} alt="" />
+        {bookingFeedback?.type === 'success' ? (
+          <div className="booking-success-panel" role="status">
+            <p className="eyebrow">Anfrage gesendet</p>
+            <h1>Deine Anfrage wird vom Studio geprüft.</h1>
+            <p>
+              Sobald sie bearbeitet wurde, melden wir uns persönlich bei dir. Termine und Preise
+              werden individuell abgestimmt.
             </p>
           </div>
-        </div>
+        ) : (
+          <>
+            <p className="eyebrow">Booking Request</p>
+            <h1 className="page-hero-title page-hero-title-narrow mt-8">
+              <span>Turn your</span>
+              <span>idea into</span>
+              <span>something</span>
+              <span>permanent</span>
+            </h1>
+          </>
+        )}
       </section>
 
-      <form className="booking-shell py-12" onSubmit={handleSubmit}>
+      {bookingFeedback?.type === 'success' ? null : (
+        <form
+          className="booking-shell py-12"
+          onSubmit={(event) => {
+            event.preventDefault()
+          }}
+        >
         <nav aria-label="Booking Schritte" className="booking-steps">
           {steps.map((step, index) => (
             <button
@@ -218,6 +278,7 @@ export function BookingPage() {
                 if (index <= currentStep) {
                   setCurrentStep(index)
                   setTouchedStep(false)
+                  setBookingFeedback(null)
                 }
               }}
               type="button"
@@ -230,7 +291,7 @@ export function BookingPage() {
 
         <section className="booking-panel">
           {currentStep === 0 ? (
-            <BookingStep title="Kontakt" description="Wie darf das Studio dich erreichen?">
+            <BookingStep eyebrow="Kontakt" title="First things first">
               <BookingInput
                 label="Name"
                 name="customerName"
@@ -257,7 +318,7 @@ export function BookingPage() {
           ) : null}
 
           {currentStep === 1 ? (
-            <BookingStep title="Motividee" description="Was soll entstehen und in welchem Stil?">
+            <BookingStep eyebrow="Motividee" title="Your vision">
               <BookingTextarea
                 label="Motividee"
                 name="ideaDescription"
@@ -273,11 +334,18 @@ export function BookingPage() {
                 required
                 value={formData.preferredStyle}
               />
+              <BookingTextarea
+                label="Referenzen"
+                name="references"
+                onChange={updateField}
+                placeholder="Links, Bilder oder kreative Referenzen..."
+                value={formData.references}
+              />
             </BookingStep>
           ) : null}
 
           {currentStep === 2 ? (
-            <BookingStep title="Platzierung und Größe" description="Wo soll das Tattoo sitzen?">
+            <BookingStep eyebrow="Platzierung" title="The right placement">
               <BookingInput
                 label="Körperstelle"
                 name="bodyPlacement"
@@ -298,14 +366,7 @@ export function BookingPage() {
           ) : null}
 
           {currentStep === 3 ? (
-            <BookingStep title="Zusatzinfos" description="Alles, was beim Einschätzen hilft.">
-              <BookingTextarea
-                label="Referenzen"
-                name="references"
-                onChange={updateField}
-                placeholder="Links oder kurze Beschreibung deiner Referenzen"
-                value={formData.references}
-              />
+            <BookingStep eyebrow="Zusatzinfos" title="Tell us more">
               <BookingInput
                 label="Artist-Wunsch"
                 name="artistSlug"
@@ -330,10 +391,7 @@ export function BookingPage() {
           ) : null}
 
           {currentStep === 4 ? (
-            <BookingStep
-              title="Zusammenfassung"
-              description="Prüfe deine Angaben. Danach wird die Anfrage an das Studio übermittelt."
-            >
+            <BookingStep eyebrow="Zusammenfassung" title="Ready when you are">
               <div className="booking-summary">
                 {Object.entries(formData).map(([field, value]) => (
                   <div className="booking-summary-row" key={field}>
@@ -342,27 +400,49 @@ export function BookingPage() {
                   </div>
                 ))}
               </div>
+              <div className="booking-consents">
+                <label className="booking-consent">
+                  <input
+                    checked={consents.isAdult}
+                    onChange={(event) => updateConsent('isAdult', event.target.checked)}
+                    type="checkbox"
+                  />
+                  <span>Ich bestätige, dass ich mindestens 18 Jahre alt bin.</span>
+                </label>
+                <label className="booking-consent">
+                  <input
+                    checked={consents.acceptedLegal}
+                    onChange={(event) => updateConsent('acceptedLegal', event.target.checked)}
+                    type="checkbox"
+                  />
+                  <span>
+                    Ich habe die <a href="/agb">AGB</a> und{' '}
+                    <a href="/datenschutz">Datenschutzerklärung</a> gelesen und akzeptiere diese.
+                  </span>
+                </label>
+              </div>
             </BookingStep>
           ) : null}
 
-          {touchedStep && currentStepErrors.length > 0 ? (
+          {visibleFieldErrors.length > 0 ? (
             <div className="booking-error" role="alert">
-              {currentStepErrors.map((message) => (
+              {visibleFieldErrors.map((message) => (
                 <p key={message}>{message}</p>
               ))}
             </div>
           ) : null}
 
-          {submitted ? (
-            <div className="booking-success" role="status">
-              Anfrage gespeichert. Das Studio prüft deine Angaben und meldet sich
-              persönlich. Es wurde kein Termin bestätigt und kein Preis zugesagt.
+          {bookingFeedback?.type === 'consent-error' ? (
+            <div className="booking-error" role="alert">
+              {bookingFeedback.messages.map((message) => (
+                <p key={message}>{message}</p>
+              ))}
             </div>
           ) : null}
 
-          {submitError ? (
+          {bookingFeedback?.type === 'error' ? (
             <div className="booking-error" role="alert">
-              {submitError}
+              Die Anfrage konnte gerade nicht gespeichert werden.
             </div>
           ) : null}
 
@@ -375,13 +455,18 @@ export function BookingPage() {
                 Weiter
               </Button>
             ) : (
-              <Button disabled={isSubmitting} type="submit">
-                {isSubmitting ? 'Wird gesendet' : 'Anfrage senden'}
+              <Button
+                disabled={bookingFeedback?.type === 'saving'}
+                onClick={handleFinalSubmit}
+                type="button"
+              >
+                {bookingFeedback?.type === 'saving' ? 'Wird gesendet' : 'Anfrage senden'}
               </Button>
             )}
           </div>
         </section>
-      </form>
+        </form>
+      )}
     </AppShell>
   )
 }
@@ -400,17 +485,21 @@ function mergeAvailabilityNotes(formData: BookingFormData) {
 function BookingStep({
   children,
   description,
+  eyebrow,
   title,
 }: {
   children: React.ReactNode
-  description: string
+  description?: string
+  eyebrow?: string
   title: string
 }) {
   return (
     <div>
-      <p className="eyebrow">{title}</p>
+      <p className="eyebrow">{eyebrow ?? title}</p>
       <h2 className="mt-4 text-3xl font-black uppercase leading-none sm:text-5xl">{title}</h2>
-      <p className="mt-4 max-w-2xl text-base leading-7 text-[var(--color-muted)]">{description}</p>
+      {description ? (
+        <p className="mt-4 max-w-2xl text-base leading-7 text-[var(--color-muted)]">{description}</p>
+      ) : null}
       <div className="mt-8 grid gap-5">{children}</div>
     </div>
   )
