@@ -358,7 +358,7 @@ a {
   gap: 0.15rem;
   justify-items: start;
   max-width: 35rem;
-  color: rgba(245, 245, 240, 0.84);
+  color: var(--color-paper);
   font-size: clamp(3.2rem, 8.2vw, 5.8rem);
   font-weight: 950;
   letter-spacing: 0;
