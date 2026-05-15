@@ -11,7 +11,7 @@ const navItems = [
 
 export function SiteHeader() {
   return (
-    <header className="flex items-center justify-between border-b border-[var(--color-line)] pb-5">
+    <header className="mb-10 flex items-center justify-between border-b border-[var(--color-line)] pb-5">
       <Link className="brand-mark" to="/" aria-label="HONEY | BEEZ ink Startseite">
         <img src={honeyBeezLogo} alt="HONEY | BEEZ ink" />
       </Link>

@@ -9,6 +9,7 @@ import lunaVexImage from '../../assets/artists/luna-vex.png'
 import mayaBlackImage from '../../assets/artists/maya-black.png'
 import novaWrenImage from '../../assets/artists/nova-wren.png'
 import ricoChromeImage from '../../assets/artists/rico-chrome.png'
+import tattooMachineImage from '../../assets/studio/tattoo-machine.jpg'
 import type { Artist } from './artists.api'
 import { useArtists } from './useArtists'
 
@@ -58,7 +59,8 @@ export function ArtistsPage() {
 
   return (
     <AppShell>
-      <section className="artist-stage border-x border-b border-[var(--color-line)] px-5 py-12 sm:px-8 lg:px-12">
+      <section className="artist-stage px-5 py-12 sm:px-8 lg:px-12">
+        <img className="artist-stage-image" src={tattooMachineImage} alt="" />
         <p className="eyebrow">Resident Artists</p>
         <h1 className="mt-8 max-w-4xl text-5xl font-black uppercase leading-[0.92] sm:text-7xl">
           Meet the hands behind the lines.
@@ -66,6 +68,10 @@ export function ArtistsPage() {
       </section>
 
       <section className="py-12">
+        <div className="section-heading">
+          <p>The Crew</p>
+        </div>
+
         {artistsState.status === 'loading' ? <ArtistsNotice text="Artists werden geladen." /> : null}
 
         {artistsState.status === 'error' ? <ArtistsNotice text={artistsState.error} /> : null}

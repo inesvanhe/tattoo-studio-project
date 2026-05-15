@@ -118,14 +118,59 @@ a {
 }
 
 .artist-stage {
-  background:
-    radial-gradient(circle at 75% 15%, rgba(231, 186, 99, 0.12), transparent 28%),
-    linear-gradient(180deg, rgba(255, 255, 255, 0.04), transparent 30%),
-    var(--color-ink);
+  position: relative;
+  min-height: 34rem;
+  display: grid;
+  align-content: center;
+  overflow: hidden;
+  background: #030403;
 }
 
-.artist-intro-panel p {
+.artist-stage > :not(.artist-stage-image) {
+  position: relative;
+  z-index: 1;
+}
+
+.artist-stage-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 64% center;
+  filter: saturate(0.92) brightness(0.88);
+  pointer-events: none;
+}
+
+.artist-stage::after {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background:
+    linear-gradient(90deg, rgba(0, 0, 0, 0.96) 0%, rgba(0, 0, 0, 0.72) 34%, rgba(0, 0, 0, 0.12) 78%),
+    linear-gradient(180deg, rgba(0, 0, 0, 0.08) 0%, rgba(0, 0, 0, 0.16) 62%, #050505 100%);
+  content: "";
+  pointer-events: none;
+}
+
+.section-heading {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  color: var(--color-neon-honey);
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.75rem;
+  font-weight: 900;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.section-heading::after {
+  flex: 1;
+  height: 1px;
+  background: rgba(255, 207, 74, 0.58);
+  content: "";
 }
 
 .artists-grid {
@@ -340,7 +385,6 @@ a {
   min-height: calc(100vh - 6rem);
   overflow: hidden;
   align-items: center;
-  margin-top: 2rem;
   background: #030403;
 }
 
